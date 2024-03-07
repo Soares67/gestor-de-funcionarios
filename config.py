@@ -42,4 +42,4 @@ def read(nome=None):
     return dados
 
 
-print(read("Santt"))
+create("Junim", "01/08/1997", "junimgrau@gmail.com", "Faz NADA", 0, "17/08/2001", "Aposentado")
