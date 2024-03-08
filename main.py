@@ -2,6 +2,7 @@ import tkinter as tk
 import customtkinter as ctk
 import iconspath
 
+#Janela de configurações
 class ConfigEdge(tk.Toplevel):
 
     def __init__(self, parent):
@@ -34,6 +35,34 @@ class ConfigEdge(tk.Toplevel):
         return self.switch_var.get()
 
 
+#Janela de Login ADM
+class AuthAdmin(tk.Toplevel):
+
+    def __init__(self, parent, tema):
+        super().__init__(parent)
+        self.geometry("300x300")
+        self.title("Admin Login")
+        self.configure(bg=tema)
+
+
+        self.user = ctk.CTkEntry(self,
+                                 width=200,
+                                 height=30
+                                 )
+        self.user.place(x=20,y=5)
+
+
+#Janela de funções ADM
+class ADM(tk.Toplevel):
+
+    def __init__(self, parent, tema):
+        super().__init__(parent)
+        self.geometry("300x300")
+        self.title("ADM")
+        self.configure(bg=tema)
+
+
+#Janela principal
 class Gestor(tk.Tk):
 
     def __init__(self):
@@ -44,12 +73,14 @@ class Gestor(tk.Tk):
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
         self.bar_status = 'reduced'
+        self.admin_logged = False
         
         # Fundo da barra lateral inicial
         self.sidebar_bg = tk.Frame(self,
                               bg='#0d9488',
                               width=52,
-                              height=1000)
+                              height=1000,
+                            )
         self.sidebar_bg.place(x=0, y=0)
         
 
@@ -78,6 +109,7 @@ class Gestor(tk.Tk):
         self.config_btn.place(x=2, y=553)
 
 
+        #Botão de Fechar a barra lateral
         self.close_sidebar = ctk.CTkButton(self.sidebar_bg,
                                            width=45,
                                            height=45,
@@ -89,6 +121,17 @@ class Gestor(tk.Tk):
                                            )
         self.close_sidebar.place(x=250,y=4)
 
+        #Botão admin (Autenticar/Ações)
+        self.admin_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.ADMIN_ICON,
+                                       command=self.admin_cmd
+                                       )
+        self.admin_btn.place(x=2,y=500)
 
 
     def open_config(self):
@@ -120,8 +163,21 @@ class Gestor(tk.Tk):
         elif self.bar_status == "expanded":
             self.reduce()
 
-        
-        
+    
+    def open_auth_adm(self):
+        auth = AuthAdmin(self, self.tema_atual)
+        auth.grab_set()
+    
+    def open_adm(self):
+        adm = ADM(self, self.tema_atual)
+        adm.grab_set()
+
+    def admin_cmd(self):
+        if self.admin_logged == False:
+            self.open_auth_adm()
+        elif self.admin_logged == True:
+            self.open_adm()
+
         
 
 

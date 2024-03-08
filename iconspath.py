@@ -11,3 +11,6 @@ SETTINGS_ICON = CTkImage(light_image=img1, size=(32, 31))
 
 img2 =  Image.open(r'icons\icons8-close-250.png')
 CLOSE_ICON = CTkImage(light_image=img2, size=(32, 31))
+
+img3 = Image.open(r'icons\icons8-admin-90.png')
+ADMIN_ICON = CTkImage(light_image=img3, size=(32, 31))
