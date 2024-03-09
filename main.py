@@ -60,7 +60,7 @@ class AuthAdmin(tk.Toplevel):
         self.admin_status = admin_status
         self.geometry("300x300")
         self.title("Admin Login")
-        self.configure(bg='#171717')
+        self.configure(bg='#0d9488')
         self.resizable(False, False)
         self.senha_oculta = True
 
@@ -72,7 +72,7 @@ class AuthAdmin(tk.Toplevel):
                                    placeholder_text_color='#0d9488',
                                    font=("Arial", 14),
                                     border_width=2,
-                                    border_color='#0d9488',
+                                    border_color='white',
                                     corner_radius=20,
                                     fg_color="#171717",
                                     )
@@ -86,7 +86,7 @@ class AuthAdmin(tk.Toplevel):
                                 placeholder_text_color='#0d9488',
                                 placeholder_text="Senha",
                                 border_width=2,
-                                border_color='#0d9488',
+                                border_color='white',
                                 corner_radius=20,
                                 fg_color="#171717",
                                 show="*"
@@ -101,7 +101,7 @@ class AuthAdmin(tk.Toplevel):
                                     width=8,
                                     height=8,
                                     hover_color="#115e59",
-                                    text_color="#0d9488",
+                                    text_color="white",
                                     corner_radius=20
                                     )
         self.link_recover.place(x=55,y=140)
@@ -111,12 +111,12 @@ class AuthAdmin(tk.Toplevel):
                                 width=70,
                                 height=40,
                                 text="Login",
-                                font=("Arial", 14),
+                                font=("Arial", 15),
                                 command=lambda: self.autenticacao(),
                                 border_width=2,
                                 corner_radius=20,
                                 fg_color="#171717",
-                                border_color="#0d9488",
+                                border_color="white",
                                 text_color="#0d9488",
                                 hover_color='#115e59',
                                    )
@@ -129,7 +129,8 @@ class AuthAdmin(tk.Toplevel):
                                            width=10,
                                            height=10,
                                            corner_radius=50,
-                                           fg_color="transparent",
+                                           fg_color="#171717",
+                                           bg_color="#171717",
                                            hover_color="#115e59",
                                            command=self.show_hide
                                            )
@@ -142,7 +143,8 @@ class AuthAdmin(tk.Toplevel):
                                             width=10,
                                             height=10,
                                             corner_radius=50,
-                                            fg_color="transparent",
+                                            fg_color="#171717",
+                                            bg_color="#171717",
                                             hover_color="#115e59",
                                             command=self.show_hide
                                            )
@@ -192,6 +194,7 @@ class Gestor(tk.Tk):
         super().__init__()
         self.geometry("1000x600")
         self.title("Gerenciamento")
+        self.iconbitmap(r'icons\icons8-management-90.ico')
         self.resizable(False, False)
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
@@ -199,12 +202,14 @@ class Gestor(tk.Tk):
         self.admin_status = AdminStatus()
         
         # Fundo da barra lateral inicial
-        self.sidebar_bg = tk.Frame(self,
-                              bg='#0d9488',
-                              width=52,
+        self.sidebar_bg = ctk.CTkFrame(self,
+                              fg_color='#0d9488',
+                              width=55,
                               height=1000,
+                              border_width=2,
+                              border_color='#fde047'
                             )
-        self.sidebar_bg.place(x=0, y=0)
+        self.sidebar_bg.place(x=-2, y=-3)
         
 
         # Botão da barra lateral
@@ -213,11 +218,11 @@ class Gestor(tk.Tk):
                                          height=45,
                                          text="",
                                          image=iconspath.SIDEBAR_ICON,
-                                         fg_color="transparent",  # Transparent background
+                                         fg_color="transparent",
                                          hover_color="#115e59",
                                          command=self.onclick,
                                          )
-        self.sidebar_btn.place(x=2, y=3)
+        self.sidebar_btn.place(x=2, y=6)
 
         # Botão de configurações
         self.config_btn = ctk.CTkButton(master=self.sidebar_bg,
@@ -248,13 +253,94 @@ class Gestor(tk.Tk):
         self.admin_btn = ctk.CTkButton(self.sidebar_bg,
                                        width=45,
                                        height=45,
-                                       fg_color="transparent",  # Transparent background
+                                       fg_color="transparent",
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.ADMIN_ICON,
                                        command=self.admin_cmd
                                        )
-        self.admin_btn.place(x=2, y=500)
+        self.admin_btn.place(x=2, y=490)
+
+        #Linha que separa as opções de admin/configurações das demais opções
+        self.limitador = ctk.CTkFrame(self.sidebar_bg,
+                                      width=30,
+                                      height=3,
+                                      fg_color="#fde047",
+                                      corner_radius=20,
+                                      )
+        self.limitador.place(x=12,y=461)
+
+        #Botão de feriados
+        self.ferias_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.FERIAS_ICON,
+                                       command=lambda: print("Férias")
+                                       )
+        self.ferias_btn.place(x=2, y=390)
+
+        #Botão de Promover
+        self.promover_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.PROMOVER_ICON,
+                                       command=lambda: print("Promover")
+                                       )
+        self.promover_btn.place(x=2, y=326)
+
+        #Botão de Horas extras
+        self.hora_extra_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.HORA_EXTRA_ICON,
+                                       command=lambda: print("Hora extra")
+                                       )
+        self.hora_extra_btn.place(x=2, y=262)
+
+        #Botãode Relatórios
+        self.relatorio_bt = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.RELATORIO_ICON,
+                                       command=lambda: print("Relatório")
+                                       )
+        self.relatorio_bt.place(x=2, y=198)
+
+        #Botão de Folha de pagamento
+        self.folha_pagamento_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.FOLHA_PAGAMENTO_ICON,
+                                       command=lambda: print("Folha de pagamento")
+                                       )
+        self.folha_pagamento_btn.place(x=2, y=134)
+
+        #Botão de cadastro
+        self.cadastro_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#115e59",
+                                       text="",
+                                       image=iconspath.CADASTRO_ICON,
+                                       command=lambda: print("Cadastrar")
+                                       )
+        self.cadastro_btn.place(x=2, y=70)
 
 
     def open_config(self):
@@ -272,12 +358,19 @@ class Gestor(tk.Tk):
         self.sidebar_bg.configure(width=300)
         self.bar_status = "expanded"
         self.sidebar_btn.place_forget()
+        self.admin_btn.place(x=55, y=553)
+        self.limitador.configure(width=300, height=3)
+        self.limitador.place(x=0,y=543)
     
 
     def reduce(self):
         self.sidebar_bg.configure(width=52)
         self.bar_status = "reduced"
         self.sidebar_btn.place(x=2, y=3)
+        self.admin_btn.place(x=2, y=490)
+        self.limitador.configure(width=30, height=3)
+        self.limitador.place(x=12,y=461)
+        
 
 
     def onclick(self):
