@@ -1,6 +1,9 @@
 import tkinter as tk
+from tkinter import messagebox
 import customtkinter as ctk
 import iconspath
+import config
+
 
 #Janela de configurações
 class ConfigEdge(tk.Toplevel):
@@ -46,6 +49,8 @@ class AuthAdmin(tk.Toplevel):
         self.configure(bg='#171717')
         self.resizable(False, False)
         self.senha_oculta = True
+        self.logged_admin = False
+        self.parent = parent
 
         #Entry do usuário
         self.user_entry = ctk.CTkEntry(self,
@@ -95,14 +100,13 @@ class AuthAdmin(tk.Toplevel):
                                    height=40,
                                    text="Login",
                                    font=("Arial", 14),
-                                   command=lambda: print("Botão Pressionado"),
+                                   command=lambda: self.autenticacao(),
                                    border_width=2,
                                    corner_radius=20,
                                    fg_color="#171717",
                                    border_color="#0d9488",
                                    text_color="#0d9488",
                                    hover_color='#115e59',
-
                                    )
         self.login_btn.place(x=110, y=200)
 
@@ -146,6 +150,22 @@ class AuthAdmin(tk.Toplevel):
             self.show_pass_btn.place_forget()
             self.hide_pass_btn.place(x=210, y=99)
             self.senha_oculta = True
+        
+    
+    def autenticacao(self):
+        if len(self.user_entry.get()) >= 5:
+            if len(self.senha_entry.get()) >= 8:
+                if config.auth_admin(self.user_entry.get(), self.senha_entry.get()):
+                    messagebox.showinfo("hey", "Admin logado com sucesso")
+                    self.logged_admin = True
+                    self.destroy()
+                else:
+                    messagebox.showerror("Erro", "Login ou senha incorretos")
+            else:
+                messagebox.showerror("Atenção", "A senha deve possuir no mínimo 8 dígitos")
+        else:
+            messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
+
 
 
 #Janela de funções ADM
@@ -231,6 +251,7 @@ class Gestor(tk.Tk):
 
 
     def open_config(self):
+        print(self.admin_logged)
         config = ConfigEdge(self)
         config.grab_set()
 
@@ -273,9 +294,6 @@ class Gestor(tk.Tk):
             self.open_auth_adm()
         elif self.admin_logged == True:
             self.open_adm()
-
-        
-
 
 
 if __name__ == "__main__":
