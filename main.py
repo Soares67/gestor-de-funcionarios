@@ -4,6 +4,20 @@ import customtkinter as ctk
 import iconspath
 import config
 
+#Classe que controla o status do admin
+class AdminStatus:
+    def __init__(self):
+        self.logged = False
+
+    def login(self):
+        self.logged = True
+
+    def logout(self):
+        self.logged = False
+
+    def is_logged(self):
+        return self.logged
+
 
 #Janela de configurações
 class ConfigEdge(tk.Toplevel):
@@ -41,16 +55,14 @@ class ConfigEdge(tk.Toplevel):
 
 #Janela de Login ADM
 class AuthAdmin(tk.Toplevel):
-
-    def __init__(self, parent, tema):
+    def __init__(self, parent, tema, admin_status):
         super().__init__(parent)
+        self.admin_status = admin_status
         self.geometry("300x300")
         self.title("Admin Login")
         self.configure(bg='#171717')
         self.resizable(False, False)
         self.senha_oculta = True
-        self.logged_admin = False
-        self.parent = parent
 
         #Entry do usuário
         self.user_entry = ctk.CTkEntry(self,
@@ -59,26 +71,26 @@ class AuthAdmin(tk.Toplevel):
                                    placeholder_text="Usuário",
                                    placeholder_text_color='#0d9488',
                                    font=("Arial", 14),
-                                   border_width=2,
-                                   border_color='#0d9488',
-                                   corner_radius=20,
-                                   fg_color="#171717",
-                                   )
+                                    border_width=2,
+                                    border_color='#0d9488',
+                                    corner_radius=20,
+                                    fg_color="#171717",
+                                    )
         self.user_entry.place(x=50, y=15)
 
         #Entry da senha
         self.senha_entry = ctk.CTkEntry(self,
-                                   width=200,
-                                   height=40,
-                                   font=("Arial", 14),
-                                   placeholder_text_color='#0d9488',
-                                   placeholder_text="Senha",
-                                   border_width=2,
-                                   border_color='#0d9488',
-                                   corner_radius=20,
-                                   fg_color="#171717",
-                                   show="*"
-                                   )
+                                width=200,
+                                height=40,
+                                font=("Arial", 14),
+                                placeholder_text_color='#0d9488',
+                                placeholder_text="Senha",
+                                border_width=2,
+                                border_color='#0d9488',
+                                corner_radius=20,
+                                fg_color="#171717",
+                                show="*"
+                                )
         self.senha_entry.place(x=50, y=90)
 
         #Botão de recuperar senha
@@ -96,17 +108,17 @@ class AuthAdmin(tk.Toplevel):
 
         #Botão de fazer login
         self.login_btn = ctk.CTkButton(self,
-                                   width=70,
-                                   height=40,
-                                   text="Login",
-                                   font=("Arial", 14),
-                                   command=lambda: self.autenticacao(),
-                                   border_width=2,
-                                   corner_radius=20,
-                                   fg_color="#171717",
-                                   border_color="#0d9488",
-                                   text_color="#0d9488",
-                                   hover_color='#115e59',
+                                width=70,
+                                height=40,
+                                text="Login",
+                                font=("Arial", 14),
+                                command=lambda: self.autenticacao(),
+                                border_width=2,
+                                corner_radius=20,
+                                fg_color="#171717",
+                                border_color="#0d9488",
+                                text_color="#0d9488",
+                                hover_color='#115e59',
                                    )
         self.login_btn.place(x=110, y=200)
 
@@ -125,20 +137,19 @@ class AuthAdmin(tk.Toplevel):
 
         #Botão de ocultar a senha
         self.hide_pass_btn = ctk.CTkButton(self,
-                                           text="",
-                                           image=iconspath.EYE_ICON,
-                                           width=10,
-                                           height=10,
-                                           corner_radius=50,
-                                           fg_color="transparent",
-                                           hover_color="#115e59",
-                                           command=self.show_hide
+                                            text="",
+                                            image=iconspath.EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="transparent",
+                                            hover_color="#115e59",
+                                            command=self.show_hide
                                            )
         self.hide_pass_btn.place(x=210, y=99)
 
-    # 
     
-    #Função que oculta/exibe a senha e altera os ícones
+    # oculta/exibe a senha e altera os ícones
     def show_hide(self):
         if self.senha_oculta:
             self.senha_entry.configure(show="")
@@ -150,19 +161,17 @@ class AuthAdmin(tk.Toplevel):
             self.show_pass_btn.place_forget()
             self.hide_pass_btn.place(x=210, y=99)
             self.senha_oculta = True
-        
     
+    #Autentica os admins
     def autenticacao(self):
         if len(self.user_entry.get()) >= 5:
             if len(self.senha_entry.get()) >= 8:
                 if config.auth_admin(self.user_entry.get(), self.senha_entry.get()):
                     messagebox.showinfo("hey", "Admin logado com sucesso")
-                    self.logged_admin = True
+                    self.admin_status.login()
                     self.destroy()
                 else:
                     messagebox.showerror("Erro", "Login ou senha incorretos")
-            else:
-                messagebox.showerror("Atenção", "A senha deve possuir no mínimo 8 dígitos")
         else:
             messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
 
@@ -170,17 +179,15 @@ class AuthAdmin(tk.Toplevel):
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
-
-    def __init__(self, parent, tema):
+    def __init__(self, parent, tema, admin_status):
         super().__init__(parent)
-        self.geometry("300x300")
+        self.admin_status = admin_status
         self.title("ADM")
-        self.configure(bg=tema)
+        self.geometry("300x300")
 
 
 #Janela principal
 class Gestor(tk.Tk):
-
     def __init__(self):
         super().__init__()
         self.geometry("1000x600")
@@ -189,7 +196,7 @@ class Gestor(tk.Tk):
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
         self.bar_status = 'reduced'
-        self.admin_logged = False
+        self.admin_status = AdminStatus()
         
         # Fundo da barra lateral inicial
         self.sidebar_bg = tk.Frame(self,
@@ -251,7 +258,6 @@ class Gestor(tk.Tk):
 
 
     def open_config(self):
-        print(self.admin_logged)
         config = ConfigEdge(self)
         config.grab_set()
 
@@ -282,17 +288,17 @@ class Gestor(tk.Tk):
 
     
     def open_auth_adm(self):
-        auth = AuthAdmin(self, self.tema_atual)
+        auth = AuthAdmin(self, self.tema_atual, self.admin_status)
         auth.grab_set()
-    
+
     def open_adm(self):
-        adm = ADM(self, self.tema_atual)
+        adm = ADM(self, self.tema_atual, self.admin_status)
         adm.grab_set()
 
     def admin_cmd(self):
-        if self.admin_logged == False:
+        if not self.admin_status.is_logged():
             self.open_auth_adm()
-        elif self.admin_logged == True:
+        else:
             self.open_adm()
 
 
