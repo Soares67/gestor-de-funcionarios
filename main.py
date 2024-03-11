@@ -3,6 +3,8 @@ from tkinter import messagebox
 import customtkinter as ctk
 import iconspath
 import config
+from CTkToolTip import *
+
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -192,14 +194,14 @@ class ADM(tk.Toplevel):
 class Gestor(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry("1000x600")
+        self.geometry("1400x718")
         self.title("Gerenciamento")
         self.iconbitmap(r'icons\icons8-management-90.ico')
-        self.resizable(False, False)
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
         self.bar_status = 'reduced'
         self.admin_status = AdminStatus()
+        self.resizable(False, False)
         
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,
@@ -211,7 +213,6 @@ class Gestor(tk.Tk):
                             )
         self.sidebar_bg.place(x=-2, y=-3)
         
-
         # Botão da barra lateral
         self.sidebar_btn = ctk.CTkButton(master=self.sidebar_bg,
                                          width=45,
@@ -234,8 +235,8 @@ class Gestor(tk.Tk):
                                    hover_color="#115e59",
                                    command=self.open_config,
                                    )
-        self.config_btn.place(x=2, y=553)
-
+        self.config_btn.place(x=2, y=675)
+        self.tooltip8 = CTkToolTip(self.config_btn, "Configurações", delay=0.1)
 
         #Botão de Fechar a barra lateral
         self.close_sidebar = ctk.CTkButton(self.sidebar_bg,
@@ -259,7 +260,8 @@ class Gestor(tk.Tk):
                                        image=iconspath.ADMIN_ICON,
                                        command=self.admin_cmd
                                        )
-        self.admin_btn.place(x=2, y=490)
+        self.admin_btn.place(x=2, y=600)
+        self.tooltip7 = CTkToolTip(self.admin_btn, "Administrador", delay=0.1)
 
         #Linha que separa as opções de admin/configurações das demais opções
         self.limitador = ctk.CTkFrame(self.sidebar_bg,
@@ -268,7 +270,7 @@ class Gestor(tk.Tk):
                                       fg_color="#fde047",
                                       corner_radius=20,
                                       )
-        self.limitador.place(x=12,y=461)
+        self.limitador.place(x=12,y=561)
 
         #Botão de feriados
         self.ferias_btn = ctk.CTkButton(self.sidebar_bg,
@@ -280,7 +282,8 @@ class Gestor(tk.Tk):
                                        image=iconspath.FERIAS_ICON,
                                        command=lambda: print("Férias")
                                        )
-        self.ferias_btn.place(x=2, y=390)
+        self.ferias_btn.place(x=2, y=475)
+        self.tooltip6 = CTkToolTip(self.ferias_btn, "Férias", delay=0.1)
 
         #Botão de Promover
         self.promover_btn = ctk.CTkButton(self.sidebar_bg,
@@ -292,7 +295,8 @@ class Gestor(tk.Tk):
                                        image=iconspath.PROMOVER_ICON,
                                        command=lambda: print("Promover")
                                        )
-        self.promover_btn.place(x=2, y=326)
+        self.promover_btn.place(x=2, y=398)
+        self.tooltip5 = CTkToolTip(self.promover_btn, "Promover", delay=0.1)
 
         #Botão de Horas extras
         self.hora_extra_btn = ctk.CTkButton(self.sidebar_bg,
@@ -304,7 +308,8 @@ class Gestor(tk.Tk):
                                        image=iconspath.HORA_EXTRA_ICON,
                                        command=lambda: print("Hora extra")
                                        )
-        self.hora_extra_btn.place(x=2, y=262)
+        self.hora_extra_btn.place(x=2, y=316)
+        self.tooltip4 = CTkToolTip(self.hora_extra_btn, "Horas Extras", delay=0.1)
 
         #Botãode Relatórios
         self.relatorio_bt = ctk.CTkButton(self.sidebar_bg,
@@ -316,7 +321,8 @@ class Gestor(tk.Tk):
                                        image=iconspath.RELATORIO_ICON,
                                        command=lambda: print("Relatório")
                                        )
-        self.relatorio_bt.place(x=2, y=198)
+        self.relatorio_bt.place(x=2, y=232)
+        self.tooltip3 = CTkToolTip(self.relatorio_bt, "Relatório", delay=0.1)
 
         #Botão de Folha de pagamento
         self.folha_pagamento_btn = ctk.CTkButton(self.sidebar_bg,
@@ -326,9 +332,10 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.FOLHA_PAGAMENTO_ICON,
-                                       command=lambda: print("Folha de pagamento")
+                                       command=lambda: print(self.state())
                                        )
-        self.folha_pagamento_btn.place(x=2, y=134)
+        self.folha_pagamento_btn.place(x=2, y=154)
+        self.tooltip2 = CTkToolTip(self.folha_pagamento_btn, "Folha de Pagamento", delay=0.1)
 
         #Botão de cadastro
         self.cadastro_btn = ctk.CTkButton(self.sidebar_bg,
@@ -340,59 +347,47 @@ class Gestor(tk.Tk):
                                        image=iconspath.CADASTRO_ICON,
                                        command=lambda: print("Cadastrar")
                                        )
-        self.cadastro_btn.place(x=2, y=70)
+        self.cadastro_btn.place(x=2, y=76)
+        self.tooltip1 = CTkToolTip(self.cadastro_btn, "Cadastrar", delay=0.1)
 
-
+    #Abre a janela de configurações
     def open_config(self):
         config = ConfigEdge(self)
         config.grab_set()
 
+        #Define o tema que será a´licado nas demais janelas
         def on_switch_change(*args):
             tema_atual_edge = config.get_tema_atual()
             self.tema_atual = tema_atual_edge
             self.configure(bg=self.tema_atual)
-        config.switch_var.trace("w", on_switch_change)
-    
-
-    def expand(self):
-        self.sidebar_bg.configure(width=300)
-        self.bar_status = "expanded"
-        self.sidebar_btn.place_forget()
-        self.admin_btn.place(x=55, y=553)
-        self.limitador.configure(width=300, height=3)
-        self.limitador.place(x=0,y=543)
-    
-
-    def reduce(self):
-        self.sidebar_bg.configure(width=52)
-        self.bar_status = "reduced"
-        self.sidebar_btn.place(x=2, y=3)
-        self.admin_btn.place(x=2, y=490)
-        self.limitador.configure(width=30, height=3)
-        self.limitador.place(x=12,y=461)
+        config.switch_var.trace("w", on_switch_change)  #Aplica o tema que foi definido
         
-
-
+    #Recua/Expande a barra lateral
     def onclick(self):
         if self.bar_status == "reduced":
-            self.expand()
+            self.sidebar_bg.configure(width=300)
+            self.bar_status = "expanded"
+            self.sidebar_btn.place_forget()
+            self.admin_btn.place(x=70, y=675)
+            self.limitador.configure(width=300, height=3)
+            self.limitador.place(x=0,y=650)
+
         elif self.bar_status == "expanded":
-            self.reduce()
-
-    
-    def open_auth_adm(self):
-        auth = AuthAdmin(self, self.tema_atual, self.admin_status)
-        auth.grab_set()
-
-    def open_adm(self):
-        adm = ADM(self, self.tema_atual, self.admin_status)
-        adm.grab_set()
-
+            self.sidebar_bg.configure(width=55)
+            self.bar_status = "reduced"
+            self.sidebar_btn.place(x=2, y=3)
+            self.admin_btn.place(x=2, y=600)
+            self.limitador.configure(width=30, height=3)
+            self.limitador.place(x=12,y=561)
+  
+    #Abre a janela de adm (Se estiver logado), se não estiver, abre a janela de autenticação
     def admin_cmd(self):
         if not self.admin_status.is_logged():
-            self.open_auth_adm()
+            auth = AuthAdmin(self, self.tema_atual, self.admin_status)
+            auth.grab_set()
         else:
-            self.open_adm()
+            adm = ADM(self, self.tema_atual, self.admin_status)
+            adm.grab_set()
 
 
 if __name__ == "__main__":

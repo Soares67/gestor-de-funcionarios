@@ -1,7 +1,6 @@
 from customtkinter import CTkImage
-from PIL import Image, ImageOps
-
-
+from PIL import Image
+ 
 
 img = Image.open(r"icons\icons8-menu-250.png")
 SIDEBAR_ICON = CTkImage(light_image=img, size=(32, 31))
