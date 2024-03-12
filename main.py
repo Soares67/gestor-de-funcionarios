@@ -199,10 +199,60 @@ class Gestor(tk.Tk):
         self.iconbitmap(r'icons\icons8-management-90.ico')
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
-        self.bar_status = 'reduced'
+        self.bar_status = "reduced"
         self.admin_status = AdminStatus()
         self.resizable(False, False)
         
+        
+        
+        #Frame da opção de férias
+        self.ferias_frame = ctk.CTkFrame(self,
+                                         width=1,
+                                         height=720,
+                                         fg_color="red"
+                                         )
+        self.ferias_frame.place(x=0,y=0)
+
+        #Frame da opção de Promover
+        self.promover_frame = ctk.CTkFrame(self,
+                                         width=1,
+                                         height=720,
+                                         fg_color="green"
+                                         )
+        self.promover_frame.place(x=0,y=0)
+
+        #Frame da opção de Horas extras
+        self.hora_extra_frame = ctk.CTkFrame(self,
+                                         width=1,
+                                         height=720,
+                                         fg_color="pink"
+                                         )
+        self.hora_extra_frame.place(x=0,y=0)
+
+        #Frame da opção de Relatório
+        self.relatorio_frame = ctk.CTkFrame(self,
+                                         width=1,
+                                         height=720,
+                                         fg_color="blue"
+                                         )
+        self.relatorio_frame.place(x=0,y=0)
+
+        #Frame da opção de Folha de pagamento
+        self.folha_pagamento_frame = ctk.CTkFrame(self,
+                                         width=1,
+                                         height=720,
+                                         fg_color="purple"
+                                         )
+        self.folha_pagamento_frame.place(x=0,y=0)
+
+        #Frame da opção de Cadastrar
+        self.cadastrar_frame = ctk.CTkFrame(self,
+                                         width=1,
+                                         height=720,
+                                         fg_color="yellow"
+                                         )
+        self.cadastrar_frame.place(x=0,y=0)
+
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,
                               fg_color='#0d9488',
@@ -272,7 +322,7 @@ class Gestor(tk.Tk):
                                       )
         self.limitador.place(x=12,y=561)
 
-        #Botão de feriados
+        #Botão de ferias
         self.ferias_btn = ctk.CTkButton(self.sidebar_bg,
                                        width=45,
                                        height=45,
@@ -280,9 +330,10 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.FERIAS_ICON,
-                                       command=lambda: print("Férias")
+                                       command=lambda: self.open_frame(self.ferias_btn, self.states)
                                        )
         self.ferias_btn.place(x=2, y=475)
+        self.ferias_btn.name = "ferias"
         self.tooltip6 = CTkToolTip(self.ferias_btn, "Férias", delay=0.1)
 
         #Botão de Promover
@@ -296,6 +347,7 @@ class Gestor(tk.Tk):
                                        command=lambda: print("Promover")
                                        )
         self.promover_btn.place(x=2, y=398)
+        self.promover_btn.name = "promover"
         self.tooltip5 = CTkToolTip(self.promover_btn, "Promover", delay=0.1)
 
         #Botão de Horas extras
@@ -309,10 +361,11 @@ class Gestor(tk.Tk):
                                        command=lambda: print("Hora extra")
                                        )
         self.hora_extra_btn.place(x=2, y=316)
+        self.hora_extra_btn.name = "hora extra"
         self.tooltip4 = CTkToolTip(self.hora_extra_btn, "Horas Extras", delay=0.1)
 
         #Botãode Relatórios
-        self.relatorio_bt = ctk.CTkButton(self.sidebar_bg,
+        self.relatorio_btn = ctk.CTkButton(self.sidebar_bg,
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
@@ -321,8 +374,9 @@ class Gestor(tk.Tk):
                                        image=iconspath.RELATORIO_ICON,
                                        command=lambda: print("Relatório")
                                        )
-        self.relatorio_bt.place(x=2, y=232)
-        self.tooltip3 = CTkToolTip(self.relatorio_bt, "Relatório", delay=0.1)
+        self.relatorio_btn.place(x=2, y=232)
+        self.relatorio_btn.name = "relatorio"
+        self.tooltip3 = CTkToolTip(self.relatorio_btn, "Relatório", delay=0.1)
 
         #Botão de Folha de pagamento
         self.folha_pagamento_btn = ctk.CTkButton(self.sidebar_bg,
@@ -332,9 +386,10 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.FOLHA_PAGAMENTO_ICON,
-                                       command=lambda: print(self.state())
+                                       command=lambda: print("Folha de pagamento")
                                        )
         self.folha_pagamento_btn.place(x=2, y=154)
+        self.folha_pagamento_btn.name = "folha pagamento"
         self.tooltip2 = CTkToolTip(self.folha_pagamento_btn, "Folha de Pagamento", delay=0.1)
 
         #Botão de cadastro
@@ -348,7 +403,25 @@ class Gestor(tk.Tk):
                                        command=lambda: print("Cadastrar")
                                        )
         self.cadastro_btn.place(x=2, y=76)
+        self.cadastro_btn.name = "cadastro"
         self.tooltip1 = CTkToolTip(self.cadastro_btn, "Cadastrar", delay=0.1)
+
+
+        self.states = {
+            "ferias": [self.ferias_frame, "reduced"],
+            "promover": [self.promover_frame, "reduced"],
+            "hora extra": [self.hora_extra_frame, "reduced"],
+            "relatorio": [self.relatorio_frame, "reduced"],
+            "folha pagamento": [self.folha_pagamento_frame, "reduced"],
+            "cadastrar": [self.cadastrar_frame, "reduced"]
+
+        }
+
+    def open_frame(self, botao, states):
+        if states[botao.name][1] == "reduced":
+            states[botao.name][0].configure(width=1200)
+        
+    
 
     #Abre a janela de configurações
     def open_config(self):
@@ -365,6 +438,7 @@ class Gestor(tk.Tk):
     #Recua/Expande a barra lateral
     def onclick(self):
         if self.bar_status == "reduced":
+            self.open_frame(self.ferias_btn, self.states)
             self.sidebar_bg.configure(width=300)
             self.bar_status = "expanded"
             self.sidebar_btn.place_forget()
