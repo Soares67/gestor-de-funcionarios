@@ -35,15 +35,36 @@ class ConfigEdge(tk.Toplevel):
         self.switch_var = ctk.StringVar(value="#171717")
         
         
+        
         self.mudar_tema()
-        tema = ctk.CTkSwitch(self,
+
+        #Switch que muda o tema
+        self.tema = ctk.CTkSwitch(self,
                              text="",
                              command=self.mudar_tema,
                              variable=self.switch_var,
                              onvalue="#171717",
-                             offvalue="#d4d4d4"
+                             offvalue="#d4d4d4",
+                             button_color="#0d9488",
+                             button_hover_color="#115e59",
+                             progress_color="#d4d4d4",
+                             fg_color="#171717"
                              )
-        tema.place(x=130, y=3)
+        self.tema.place(x=130, y=15)
+
+        #Ícone modo escuro
+        self.moon_icon = ctk.CTkLabel(self,
+                                      text="",
+                                      image=iconspath.MOON_ICON
+                                      )
+        self.moon_icon.place(x=173,y=8)
+
+        #Ícone modo claro
+        self.sun_icon = ctk.CTkLabel(self,
+                                     text="",
+                                     image=iconspath.SUN_ICON
+                                     )
+        self.sun_icon.place(x=93,y=9)
 
 
     def mudar_tema(self):
@@ -53,6 +74,7 @@ class ConfigEdge(tk.Toplevel):
 
     def get_tema_atual(self):
         return self.switch_var.get()
+
 
 
 #Janela de Login ADM
@@ -186,8 +208,111 @@ class ADM(tk.Toplevel):
     def __init__(self, parent, tema, admin_status):
         super().__init__(parent)
         self.admin_status = admin_status
-        self.title("ADM")
-        self.geometry("300x300")
+        self.title("Administrador")
+        self.geometry("600x400")
+        self.resizable(False, False)
+        self.configure(bg="#0d9488")
+
+        self.adm_lb = ctk.CTkLabel(self,
+                      text="Administrador",
+                      font=("Bold", 27),
+                      text_color="black",
+                      anchor="center",
+                      )
+        self.adm_lb.place(x=211, y=6)
+
+        self.cad_lb = ctk.CTkLabel(self,
+                            text="Cadastrar ADM",
+                            font=("Bold", 17),
+                            text_color="black",
+                            anchor="center",
+                            )
+        self.cad_lb.place(x=240, y=85)
+
+        self.nome_entry = ctk.CTkEntry(self,
+                                width=160,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                border_color="white",
+                                font=("Arial", 15),
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Nome",
+                                )
+        self.nome_entry.place(x=20,y=130)
+
+        self.user_entry = ctk.CTkEntry(self,
+                                width=160,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                font=("Arial", 15),
+                                border_color="white",
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Usuário",
+                                )
+        self.user_entry.place(x=218,y=130)
+
+        self.email_entry = ctk.CTkEntry(self,
+                                width=160,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                border_color="white",
+                                font=("Arial", 15),
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Email",
+                                )
+        self.email_entry.place(x=413,y=130)
+
+        self.senha_entry = ctk.CTkEntry(self,
+                                width=160,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                border_color="white",
+                                font=("Arial", 15),
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Senha",
+                                )
+        self.senha_entry.place(x=115,y=215)
+
+        self.c_senha_entry = ctk.CTkEntry(self,
+                                width=160,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                border_color="white",
+                                font=("Arial", 15),
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Confirmar Senha",
+                                )
+        self.c_senha_entry.place(x=315,y=215)
+
+        self.cadastrar_btn = ctk.CTkButton(self,
+                                    width=30,
+                                    height=40,
+                                    text="Cadastrar",
+                                    command=lambda: print("Cadastrar"),
+                                    border_width=2,
+                                    border_color="white",
+                                    corner_radius=20,
+                                    font=("Arial", 16),
+                                    fg_color='#171717',
+                                    text_color='#0d9488',
+                                    hover_color='#115e59'
+                                    )
+        self.cadastrar_btn.place(x=240, y=300)
 
 
 #Janela principal
@@ -204,50 +329,62 @@ class Gestor(tk.Tk):
         self.resizable(False, False)
         
         #Frame da opção de férias
-        self.ferias_frame = ctk.CTkFrame(self,
-                                         width=1,
+        self.ferias_frame = ctk.CTkScrollableFrame(self,
+                                         width=0,
                                          height=720,
-                                         fg_color="red"
+                                         fg_color=self.tema_atual,
+                                         scrollbar_button_color="#0d9488",
+                                         scrollbar_button_hover_color="#115e59"
                                          )
         self.ferias_frame.place(x=0,y=0)
 
         #Frame da opção de Promover
-        self.promover_frame = ctk.CTkFrame(self,
-                                         width=1,
+        self.promover_frame = ctk.CTkScrollableFrame(self,
+                                         width=0,
                                          height=720,
-                                         fg_color="green"
+                                         fg_color=self.tema_atual,
+                                         scrollbar_button_color="#0d9488",
+                                         scrollbar_button_hover_color="#115e59"
                                          )
         self.promover_frame.place(x=0,y=0)
 
         #Frame da opção de Horas extras
-        self.hora_extra_frame = ctk.CTkFrame(self,
-                                         width=1,
+        self.hora_extra_frame = ctk.CTkScrollableFrame(self,
+                                         width=0,
                                          height=720,
-                                         fg_color="pink"
+                                         fg_color=self.tema_atual,
+                                         scrollbar_button_color="#0d9488",
+                                         scrollbar_button_hover_color="#115e59"
                                          )
         self.hora_extra_frame.place(x=0,y=0)
 
         #Frame da opção de Relatório
-        self.relatorio_frame = ctk.CTkFrame(self,
-                                         width=1,
+        self.relatorio_frame = ctk.CTkScrollableFrame(self,
+                                         width=0,
                                          height=720,
-                                         fg_color="blue"
+                                         fg_color=self.tema_atual,
+                                         scrollbar_button_color="#0d9488",
+                                         scrollbar_button_hover_color="#115e59"
                                          )
         self.relatorio_frame.place(x=0,y=0)
 
         #Frame da opção de Folha de pagamento
-        self.folha_pagamento_frame = ctk.CTkFrame(self,
-                                         width=1,
+        self.folha_pagamento_frame = ctk.CTkScrollableFrame(self,
+                                         width=0,
                                          height=720,
-                                         fg_color="purple"
+                                         fg_color=self.tema_atual,
+                                         scrollbar_button_color="#0d9488",
+                                         scrollbar_button_hover_color="#115e59"
                                          )
         self.folha_pagamento_frame.place(x=0,y=0)
 
         #Frame da opção de Cadastrar
-        self.cadastrar_frame = ctk.CTkFrame(self,
-                                         width=1,
+        self.cadastrar_frame = ctk.CTkScrollableFrame(self,
+                                         width=0,
                                          height=720,
-                                         fg_color="yellow"
+                                         fg_color=self.tema_atual,
+                                         scrollbar_button_color="#0d9488",
+                                         scrollbar_button_hover_color="#115e59"
                                          )
         self.cadastrar_frame.place(x=0,y=0)
 
@@ -425,6 +562,12 @@ class Gestor(tk.Tk):
             tema_atual_edge = config.get_tema_atual()
             self.tema_atual = tema_atual_edge
             self.configure(bg=self.tema_atual)
+            self.ferias_frame.configure(fg_color=self.tema_atual)
+            self.promover_frame.configure(fg_color=self.tema_atual)
+            self.hora_extra_frame.configure(fg_color=self.tema_atual)
+            self.relatorio_frame.configure(fg_color=self.tema_atual)
+            self.folha_pagamento_frame.configure(fg_color=self.tema_atual)
+            self.cadastrar_frame.configure(fg_color=self.tema_atual)
         config.switch_var.trace("w", on_switch_change)  #Aplica o tema que foi definido
         
     #Recua/Expande a barra lateral

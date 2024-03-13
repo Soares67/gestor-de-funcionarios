@@ -37,3 +37,9 @@ HORA_EXTRA_ICON = CTkImage(light_image=img10, size=(32, 31))
 
 img11 = Image.open(r'icons\icons8-graphic-64.png')
 PROMOVER_ICON = CTkImage(light_image=img11, size=(32, 31))
+
+img12 = Image.open(r'icons\icons8-moon-100.png')
+MOON_ICON = CTkImage(light_image=img12, size=(32, 31))
+
+img13 = Image.open(r'icons\icons8-sun-50.png')
+SUN_ICON = CTkImage(light_image=img13, size=(32, 31))
