@@ -4,7 +4,7 @@ import customtkinter as ctk
 import iconspath
 import config
 from CTkToolTip import *
-
+import functions
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -203,8 +203,6 @@ class Gestor(tk.Tk):
         self.admin_status = AdminStatus()
         self.resizable(False, False)
         
-        
-        
         #Frame da opção de férias
         self.ferias_frame = ctk.CTkFrame(self,
                                          width=1,
@@ -330,7 +328,7 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.FERIAS_ICON,
-                                       command=lambda: self.open_frame(self.ferias_btn, self.states)
+                                       command=lambda: functions.open_close_frame(self.ferias_btn, self.states)
                                        )
         self.ferias_btn.place(x=2, y=475)
         self.ferias_btn.name = "ferias"
@@ -344,7 +342,7 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.PROMOVER_ICON,
-                                       command=lambda: print("Promover")
+                                       command=lambda: functions.open_close_frame(self.promover_btn, self.states)
                                        )
         self.promover_btn.place(x=2, y=398)
         self.promover_btn.name = "promover"
@@ -358,7 +356,7 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.HORA_EXTRA_ICON,
-                                       command=lambda: print("Hora extra")
+                                       command=lambda: functions.open_close_frame(self.hora_extra_btn, self.states)
                                        )
         self.hora_extra_btn.place(x=2, y=316)
         self.hora_extra_btn.name = "hora extra"
@@ -372,7 +370,7 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.RELATORIO_ICON,
-                                       command=lambda: print("Relatório")
+                                       command=lambda: functions.open_close_frame(self.relatorio_btn, self.states)
                                        )
         self.relatorio_btn.place(x=2, y=232)
         self.relatorio_btn.name = "relatorio"
@@ -386,7 +384,7 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.FOLHA_PAGAMENTO_ICON,
-                                       command=lambda: print("Folha de pagamento")
+                                       command=lambda: functions.open_close_frame(self.folha_pagamento_btn, self.states)
                                        )
         self.folha_pagamento_btn.place(x=2, y=154)
         self.folha_pagamento_btn.name = "folha pagamento"
@@ -400,13 +398,13 @@ class Gestor(tk.Tk):
                                        hover_color="#115e59",
                                        text="",
                                        image=iconspath.CADASTRO_ICON,
-                                       command=lambda: print("Cadastrar")
+                                       command=lambda: functions.open_close_frame(self.cadastro_btn, self.states)
                                        )
         self.cadastro_btn.place(x=2, y=76)
-        self.cadastro_btn.name = "cadastro"
+        self.cadastro_btn.name = "cadastrar"
         self.tooltip1 = CTkToolTip(self.cadastro_btn, "Cadastrar", delay=0.1)
 
-
+        #Controlador dos frames
         self.states = {
             "ferias": [self.ferias_frame, "reduced"],
             "promover": [self.promover_frame, "reduced"],
@@ -416,13 +414,7 @@ class Gestor(tk.Tk):
             "cadastrar": [self.cadastrar_frame, "reduced"]
 
         }
-
-    def open_frame(self, botao, states):
-        if states[botao.name][1] == "reduced":
-            states[botao.name][0].configure(width=1200)
-        
-    
-
+            
     #Abre a janela de configurações
     def open_config(self):
         config = ConfigEdge(self)
@@ -438,7 +430,6 @@ class Gestor(tk.Tk):
     #Recua/Expande a barra lateral
     def onclick(self):
         if self.bar_status == "reduced":
-            self.open_frame(self.ferias_btn, self.states)
             self.sidebar_bg.configure(width=300)
             self.bar_status = "expanded"
             self.sidebar_btn.place_forget()
