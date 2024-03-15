@@ -209,10 +209,13 @@ class ADM(tk.Toplevel):
         super().__init__(parent)
         self.admin_status = admin_status
         self.title("Administrador")
-        self.geometry("600x400")
+        self.geometry("577x400")
         self.resizable(False, False)
         self.configure(bg="#0d9488")
+        self.senha_oculta = True
+        self.c_senha_oculta = True
 
+        #Texto maior
         self.adm_lb = ctk.CTkLabel(self,
                       text="Administrador",
                       font=("Bold", 27),
@@ -221,6 +224,7 @@ class ADM(tk.Toplevel):
                       )
         self.adm_lb.place(x=211, y=6)
 
+        #texto menor
         self.cad_lb = ctk.CTkLabel(self,
                             text="Cadastrar ADM",
                             font=("Bold", 17),
@@ -229,8 +233,9 @@ class ADM(tk.Toplevel):
                             )
         self.cad_lb.place(x=240, y=85)
 
+        #Entry do nome
         self.nome_entry = ctk.CTkEntry(self,
-                                width=160,
+                                width=176,
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
@@ -241,10 +246,11 @@ class ADM(tk.Toplevel):
                                 placeholder_text_color="#0d9488",
                                 placeholder_text="Nome",
                                 )
-        self.nome_entry.place(x=20,y=130)
+        self.nome_entry.place(x=4,y=130)
 
+        #Entry do usuário
         self.user_entry = ctk.CTkEntry(self,
-                                width=160,
+                                width=176,
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
@@ -255,10 +261,11 @@ class ADM(tk.Toplevel):
                                 placeholder_text_color="#0d9488",
                                 placeholder_text="Usuário",
                                 )
-        self.user_entry.place(x=218,y=130)
+        self.user_entry.place(x=202,y=130)
 
+        #Entry do email
         self.email_entry = ctk.CTkEntry(self,
-                                width=160,
+                                width=176,
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
@@ -269,10 +276,11 @@ class ADM(tk.Toplevel):
                                 placeholder_text_color="#0d9488",
                                 placeholder_text="Email",
                                 )
-        self.email_entry.place(x=413,y=130)
+        self.email_entry.place(x=397,y=130)
 
+        #Entry da senha
         self.senha_entry = ctk.CTkEntry(self,
-                                width=160,
+                                width=176,
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
@@ -282,11 +290,13 @@ class ADM(tk.Toplevel):
                                 text_color="white",
                                 placeholder_text_color="#0d9488",
                                 placeholder_text="Senha",
+                                show="*"
                                 )
-        self.senha_entry.place(x=115,y=215)
+        self.senha_entry.place(x=99,y=215)
 
+        #Entry de confirmação da senha
         self.c_senha_entry = ctk.CTkEntry(self,
-                                width=160,
+                                width=176,
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
@@ -296,9 +306,11 @@ class ADM(tk.Toplevel):
                                 text_color="white",
                                 placeholder_text_color="#0d9488",
                                 placeholder_text="Confirmar Senha",
+                                show="*"
                                 )
         self.c_senha_entry.place(x=315,y=215)
 
+        #Botão de cadastrar
         self.cadastrar_btn = ctk.CTkButton(self,
                                     width=30,
                                     height=40,
@@ -312,7 +324,93 @@ class ADM(tk.Toplevel):
                                     text_color='#0d9488',
                                     hover_color='#115e59'
                                     )
-        self.cadastrar_btn.place(x=240, y=300)
+        self.cadastrar_btn.place(x=238, y=300)
+
+        #Botão de exibir a senha do entry da senha
+        self.show_btn1 = ctk.CTkButton(self,
+                                            text="",
+                                            image=iconspath.CLOSED_EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=self.show_hide_senha
+                                           )
+        self.show_btn1.place(x=234,y=224)
+
+        #Botão de ocultar a senha do entry da senha
+        self.hide_btn1 = ctk.CTkButton(self,
+                                            text="",
+                                            image=iconspath.EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=self.show_hide_senha
+                                            
+                                            )
+        self.hide_btn1.place(x=234,y=224)
+
+        #Botão de exibir a senha do entry de confirmação de senha
+        self.show_btn2 = ctk.CTkButton(self,
+                                            text="",
+                                            image=iconspath.CLOSED_EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=self.show_hide_c_senha
+                                            
+                                            )
+        self.show_btn2.place(x=450,y=224)
+
+        #Botão de ocultar a senha do entry de confirmação de senha
+        self.hide_btn2 = ctk.CTkButton(self,
+                                            text="",
+                                            image=iconspath.EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=self.show_hide_c_senha
+                                            
+                                            )
+        self.hide_btn2.place(x=450,y=224)
+    
+    #Exibe/Esconde a senha do entry da senha
+    def show_hide_senha(self):
+        if self.senha_oculta:
+            self.senha_entry.configure(show="")
+            self.hide_btn1.place_forget()
+            self.show_btn1.place(x=234,y=224)
+            self.senha_oculta = False
+        else:
+            self.senha_entry.configure(show="*")
+            self.show_btn1.place_forget()
+            self.hide_btn1.place(x=234,y=224)
+            self.senha_oculta = True
+        
+    #Exibe/Esconde a senha do entry de confirmação de senha
+    def show_hide_c_senha(self):
+        if self.c_senha_oculta:
+            self.c_senha_entry.configure(show="")
+            self.hide_btn2.place_forget()
+            self.show_btn2.place(x=450,y=224)
+            self.c_senha_oculta = False
+        else:
+            self.c_senha_entry.configure(show="*")
+            self.show_btn2.place_forget()
+            self.hide_btn2.place(x=450,y=224)
+            self.c_senha_oculta = True
+
 
 
 #Janela principal
