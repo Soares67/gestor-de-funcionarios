@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
 import iconspath
-import config
+import config  ###remover do gitignore
 from CTkToolTip import *
 import functions
 
@@ -198,6 +198,8 @@ class AuthAdmin(tk.Toplevel):
                     self.destroy()
                 else:
                     messagebox.showerror("Erro", "Login ou senha incorretos")
+            else:
+                messagebox.showwarning("Atenção", "A senha deve possuir no mínimo 8 dígitos")
         else:
             messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
 
@@ -315,7 +317,13 @@ class ADM(tk.Toplevel):
                                     width=30,
                                     height=40,
                                     text="Cadastrar",
-                                    command=lambda: print("Cadastrar"),
+                                    command=lambda: self.onclick(
+                                                                self.nome_entry.get(),
+                                                                self.user_entry.get(),
+                                                                self.email_entry.get(),
+                                                                self.senha_entry.get(),
+                                                                self.c_senha_entry.get(),
+                                                                ),
                                     border_width=2,
                                     border_color="white",
                                     corner_radius=20,
@@ -411,7 +419,26 @@ class ADM(tk.Toplevel):
             self.hide_btn2.place(x=450,y=224)
             self.c_senha_oculta = True
 
-
+    #Cadastra um novo Administrador
+    def onclick(self, nome, usuario, email, senha1, senha2):
+        if functions.check_field(usuario, 5):
+            user = usuario
+            if functions.check_req(senha1, senha2):
+                if functions.check(senha1, senha2):
+                    senha = senha2
+                    try:
+                        config.create_admin(nome, user, senha, email, config.timenow())
+                        messagebox.showinfo("Hey", "Admin cadastrado com sucesso")
+                        ### implementar a limpeza de todos os campos ao cadastrar
+                    except:
+                        messagebox.showwarning("Erro", "Não foi possível realizar o cadastro. Tente novamente")
+                else:
+                    messagebox.showerror("Erro", "As senhas não se coincidem")
+            else:
+                messagebox.showerror("Erro", "As senhas devem possuir no mínimo 8 dígitos")
+            
+        else:
+            messagebox.showerror("Erro", f"O Usuário deve ter no mínimo 5 caracteres")
 
 #Janela principal
 class Gestor(tk.Tk):
