@@ -162,7 +162,6 @@ cython_debug/
 testes.py
 estrutura.txt
 db_funcionarios.db
-config.py
 gerenciador.db
 ideas.py
 anotações.txt
