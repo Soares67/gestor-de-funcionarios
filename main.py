@@ -174,7 +174,6 @@ class AuthAdmin(tk.Toplevel):
                                            )
         self.hide_pass_btn.place(x=210, y=99)
 
-    
     # oculta/exibe a senha e altera os ícones
     def show_hide(self):
         if self.senha_oculta:
@@ -202,8 +201,6 @@ class AuthAdmin(tk.Toplevel):
                 messagebox.showwarning("Atenção", "A senha deve possuir no mínimo 8 dígitos")
         else:
             messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
-
-
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
@@ -392,6 +389,19 @@ class ADM(tk.Toplevel):
                                             
                                             )
         self.hide_btn2.place(x=450,y=224)
+
+        #Botão para deletar um admin
+        self.delete_admin = ctk.CTkButton(self,
+                                          width=5,
+                                          height=20,
+                                          text="Deletar admin?",
+                                          fg_color="transparent",
+                                          text_color="white",
+                                          font=("Arial", 13),
+                                          command=lambda: print("deletar"),
+                                          hover_color='#115e59',
+        )
+        self.delete_admin.place(x=5, y=378)
     
     #Exibe/Esconde a senha do entry da senha
     def show_hide_senha(self):
