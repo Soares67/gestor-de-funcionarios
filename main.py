@@ -20,7 +20,6 @@ class AdminStatus:
     def is_logged(self):
         return self.logged
 
-
 #Janela de configurações
 class ConfigEdge(tk.Toplevel):
 
@@ -74,8 +73,6 @@ class ConfigEdge(tk.Toplevel):
 
     def get_tema_atual(self):
         return self.switch_var.get()
-
-
 
 #Janela de Login ADM
 class AuthAdmin(tk.Toplevel):
