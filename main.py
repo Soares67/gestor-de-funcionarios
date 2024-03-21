@@ -85,6 +85,13 @@ class AuthAdmin(tk.Toplevel):
         self.resizable(False, False)
         self.senha_oculta = True
 
+        self.lb = ctk.CTkLabel(self,
+                               text="Login",
+                               text_color="black",
+                               font=("Arial", 29)
+                               )
+        self.lb.place(x=112, y=10)
+
         #Entry do usuário
         self.user_entry = ctk.CTkEntry(self,
                                    width=200,
@@ -97,7 +104,7 @@ class AuthAdmin(tk.Toplevel):
                                     corner_radius=20,
                                     fg_color="#171717",
                                     )
-        self.user_entry.place(x=50, y=15)
+        self.user_entry.place(x=50, y=65)
 
         #Entry da senha
         self.senha_entry = ctk.CTkEntry(self,
@@ -112,7 +119,7 @@ class AuthAdmin(tk.Toplevel):
                                 fg_color="#171717",
                                 show="*"
                                 )
-        self.senha_entry.place(x=50, y=90)
+        self.senha_entry.place(x=50, y=130)
 
         #Botão de recuperar senha
         self.link_recover = ctk.CTkButton(self,
@@ -125,7 +132,7 @@ class AuthAdmin(tk.Toplevel):
                                     text_color="white",
                                     corner_radius=20
                                     )
-        self.link_recover.place(x=55,y=140)
+        self.link_recover.place(x=55,y=180)
 
         #Botão de fazer login
         self.login_btn = ctk.CTkButton(self,
@@ -141,7 +148,7 @@ class AuthAdmin(tk.Toplevel):
                                 text_color="#0d9488",
                                 hover_color='#115e59',
                                    )
-        self.login_btn.place(x=110, y=200)
+        self.login_btn.place(x=110, y=240)
 
         #Botão de mostrar a senha   (São dois botões pois altera o ícone quando pressionado)
         self.show_pass_btn = ctk.CTkButton(self,
@@ -155,7 +162,7 @@ class AuthAdmin(tk.Toplevel):
                                            hover_color="#115e59",
                                            command=self.show_hide
                                            )
-        self.show_pass_btn.place(x=210, y=99)
+        self.show_pass_btn.place(x=210, y=139)
 
         #Botão de ocultar a senha
         self.hide_pass_btn = ctk.CTkButton(self,
@@ -169,19 +176,19 @@ class AuthAdmin(tk.Toplevel):
                                             hover_color="#115e59",
                                             command=self.show_hide
                                            )
-        self.hide_pass_btn.place(x=210, y=99)
+        self.hide_pass_btn.place(x=210, y=139)
 
     # oculta/exibe a senha e altera os ícones
     def show_hide(self):
         if self.senha_oculta:
             self.senha_entry.configure(show="")
             self.hide_pass_btn.place_forget()
-            self.show_pass_btn.place(x=210, y=99)
+            self.show_pass_btn.place(x=210, y=139)
             self.senha_oculta = False
         else:
             self.senha_entry.configure(show="*")
             self.show_pass_btn.place_forget()
-            self.hide_pass_btn.place(x=210, y=99)
+            self.hide_pass_btn.place(x=210, y=139)
             self.senha_oculta = True
     
     #Autentica os admins
@@ -198,6 +205,98 @@ class AuthAdmin(tk.Toplevel):
                 messagebox.showwarning("Atenção", "A senha deve possuir no mínimo 8 dígitos")
         else:
             messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
+
+class DeleteAdmin(tk.Toplevel):
+     def __init__(self, parent):
+        super().__init__(parent)
+        self.geometry("384x410")
+        self.title("Deletar Admin")
+        self.configure(bg='#0d9488')
+        self.resizable(False, False)
+    
+        self.lb = ctk.CTkLabel(self,
+                    text="Deletar Administrador",
+                    text_color="black",
+                    fg_color="transparent",
+                    font=("Arial", 23),
+                    
+                    )
+        self.lb.place(x=90,y=10)
+
+        self.user_entry = ctk.CTkEntry(self,
+                            width=176,
+                            height=40,
+                            corner_radius=20,
+                            border_width=2,
+                            font=("Arial", 15),
+                            border_color="white",
+                            fg_color="#171717",
+                            text_color="white",
+                            placeholder_text_color="#0d9488",
+                            placeholder_text="Usuário",
+                            )
+        self.user_entry.place(x=8,y=70)
+
+        self.email_entry = ctk.CTkEntry(self,
+                            width=176,
+                            height=40,
+                            corner_radius=20,
+                            border_width=2,
+                            font=("Arial", 15),
+                            border_color="white",
+                            fg_color="#171717",
+                            text_color="white",
+                            placeholder_text_color="#0d9488",
+                            placeholder_text="E-mail",
+                            )
+        self.email_entry.place(x=200,y=70)
+
+        self.search_btn = ctk.CTkButton(self,
+                            width=30,
+                            height=40,
+                            text="Buscar",
+                            command=lambda: functions.insert(self.info_txb),
+                            border_width=2,
+                            border_color="white",
+                            corner_radius=20,
+                            font=("Arial", 16),
+                            fg_color='#171717',
+                            text_color='#0d9488',
+                            hover_color='#115e59',
+                            anchor="center",
+                            )
+        self.search_btn.place(x=145,y=140)
+
+        self.info_txb = ctk.CTkTextbox(self,
+                                width=384,
+                                height=130,
+                                corner_radius=15,
+                                border_width=1,
+                                border_color='white',
+                                text_color="white",
+                                fg_color="#171717",
+                                font=("Arial", 17),
+                                activate_scrollbars=False,
+                                wrap="none",
+                                )
+        self.info_txb.place(x=0,y=200)
+
+
+        self.delete_btn = ctk.CTkButton(self,
+                            width=30,
+                            height=40,
+                            text="Deletar",
+                            command=lambda: print("Deletado"),
+                            border_width=2,
+                            border_color="#dc2626",
+                            corner_radius=20,
+                            font=("Arial", 16),
+                            fg_color='#171717',
+                            text_color='#dc2626',
+                            hover_color='#115e59',
+                            anchor="center",
+                            )
+        self.delete_btn.place(x=147,y=352)
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
@@ -395,11 +494,16 @@ class ADM(tk.Toplevel):
                                           fg_color="transparent",
                                           text_color="white",
                                           font=("Arial", 13),
-                                          command=lambda: print("deletar"),
+                                          command=lambda: self.deletar_admin(),
                                           hover_color='#115e59',
         )
         self.delete_admin.place(x=5, y=378)
     
+    #Abre a janela de deletar admins
+    def deletar_admin(self):
+        deletar = DeleteAdmin(self)
+        deletar.grab_set()
+
     #Exibe/Esconde a senha do entry da senha
     def show_hide_senha(self):
         if self.senha_oculta:

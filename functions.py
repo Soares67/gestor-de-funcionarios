@@ -37,3 +37,12 @@ def check_field(field, min_len):
         return True
     else:
         return False
+
+def insert(where):
+    text = """Nome: John Doe
+
+E-mail: john@gmail.com
+
+Último acesso: 21/03/2024 16:12:38"""
+    where.delete("0.0", "end")
+    where.insert("0.0", text)
