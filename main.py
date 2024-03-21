@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
 import iconspath
-import config  ###remover do gitignore
+import config
 from CTkToolTip import *
 import functions
 
@@ -29,7 +29,7 @@ class ConfigEdge(tk.Toplevel):
         self.title("Configurações")
         self.resizable(False, False)
         self.tema_atual = "#171717"
-        self.configure(bg=self.tema_atual)  # Set background color
+        self.configure(bg=self.tema_atual)
         self.iconbitmap(r"icons\icons8-settings-256.ico")
         self.switch_var = ctk.StringVar(value="#171717")
         
@@ -76,7 +76,7 @@ class ConfigEdge(tk.Toplevel):
 
 #Janela de Login ADM
 class AuthAdmin(tk.Toplevel):
-    def __init__(self, parent, tema, admin_status):
+    def __init__(self, parent, admin_status):
         super().__init__(parent)
         self.admin_status = admin_status
         self.geometry("300x300")
@@ -300,7 +300,7 @@ class DeleteAdmin(tk.Toplevel):
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
-    def __init__(self, parent, tema, admin_status):
+    def __init__(self, parent, admin_status):
         super().__init__(parent)
         self.admin_status = admin_status
         self.title("Administrador")
@@ -326,7 +326,7 @@ class ADM(tk.Toplevel):
                             text_color="black",
                             anchor="center",
                             )
-        self.cad_lb.place(x=240, y=85)
+        self.cad_lb.place(x=238, y=85)
 
         #Entry do nome
         self.nome_entry = ctk.CTkEntry(self,
@@ -827,10 +827,10 @@ class Gestor(tk.Tk):
     #Abre a janela de adm (Se estiver logado), se não estiver, abre a janela de autenticação
     def admin_cmd(self):
         if not self.admin_status.is_logged():
-            auth = AuthAdmin(self, self.tema_atual, self.admin_status)
+            auth = AuthAdmin(self, self.admin_status)
             auth.grab_set()
         else:
-            adm = ADM(self, self.tema_atual, self.admin_status)
+            adm = ADM(self, self.admin_status)
             adm.grab_set()
 
 
