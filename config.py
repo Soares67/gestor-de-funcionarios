@@ -143,17 +143,9 @@ def timenow():
     fuso_br = pytz.timezone("America/Sao_Paulo")
     return datetime.now(fuso_br).strftime("%d/%m/%Y %H:%M:%S")
 
-def generate_token():
-    """Gera um token único de redefinição de senha
-
-    Returns:
-        Código de 5 dígitos alfanumérico
-    
-    """
-    return "".join(random.choices(string.ascii_letters.upper() + string.digits, k=5))
 
 def recover_pass(email, user):
-    code = generate_token()
+    code = "".join(random.choices(string.ascii_letters.upper() + string.digits, k=5))  # Cria o código de recuperação
     def send_mail():
         # Configurações do servidor SMTP do Gmail
         smtp_server = 'smtp.gmail.com'
@@ -201,5 +193,6 @@ def recover_pass(email, user):
         except Exception as e:
             print(e)
             return False
+    
     if insert_code():
         send_mail()
