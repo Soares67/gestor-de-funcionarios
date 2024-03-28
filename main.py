@@ -130,7 +130,8 @@ class AuthAdmin(tk.Toplevel):
                                     height=8,
                                     hover_color="#115e59",
                                     text_color="white",
-                                    corner_radius=20
+                                    corner_radius=20,
+                                    command=lambda: self.open_recover()
                                     )
         self.link_recover.place(x=55,y=180)
 
@@ -206,6 +207,12 @@ class AuthAdmin(tk.Toplevel):
         else:
             messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
 
+    #Abre a janela de recuperação de senha
+    def open_recover(self):
+        recover_edge = RecoverEdge(self)
+        recover_edge.grab_set()
+
+#Janela para remover um administrador
 class DeleteAdmin(tk.Toplevel):
      def __init__(self, parent):
         super().__init__(parent)
@@ -281,7 +288,6 @@ class DeleteAdmin(tk.Toplevel):
                                 )
         self.info_txb.place(x=0,y=200)
 
-
         self.delete_btn = ctk.CTkButton(self,
                             width=30,
                             height=40,
@@ -297,6 +303,14 @@ class DeleteAdmin(tk.Toplevel):
                             anchor="center",
                             )
         self.delete_btn.place(x=147,y=352)
+
+class RecoverEdge(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.geometry("384x410")
+        self.title("Recuperar senha")
+        self.configure(bg='#0d9488')
+        self.resizable(False, False)
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
