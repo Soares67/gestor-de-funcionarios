@@ -304,10 +304,86 @@ class DeleteAdmin(tk.Toplevel):
                             )
         self.delete_btn.place(x=147,y=352)
 
+#Janela de recuperação de senha (Enviar o código)
 class RecoverEdge(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.geometry("384x410")
+        self.geometry("300x280")
+        self.title("Recuperar senha")
+        self.configure(bg='#0d9488')
+        self.resizable(False, False)
+
+        self.lb = ctk.CTkLabel(self,
+                               text="Recuperar senha",
+                               text_color="black",
+                               font=("Arial", 25)
+                               )
+        self.lb.place(x=52, y=10)
+
+        #Entry do Email
+        self.email_entry = ctk.CTkEntry(self,
+                                   width=200,
+                                   height=40,
+                                   placeholder_text="Email",
+                                   placeholder_text_color='#0d9488',
+                                   font=("Arial", 14),
+                                    border_width=2,
+                                    border_color='white',
+                                    corner_radius=20,
+                                    fg_color="#171717",
+                                    )
+        self.email_entry.place(x=50, y=65)
+
+        #Entry do usuário
+        self.user_entry = ctk.CTkEntry(self,
+                                width=200,
+                                height=40,
+                                font=("Arial", 14),
+                                placeholder_text_color='#0d9488',
+                                placeholder_text="Usuário",
+                                border_width=2,
+                                border_color='white',
+                                corner_radius=20,
+                                fg_color="#171717",
+                                show="*"
+                                )
+        self.user_entry.place(x=50, y=130)
+
+        #Botão de enviar o código
+        self.send_btn = ctk.CTkButton(self,
+                                width=70,
+                                height=40,
+                                text="Enviar",
+                                font=("Arial", 15),
+                                command=lambda: self.open_check(self.email_entry.get(), self.user_entry.get()),
+                                border_width=2,
+                                corner_radius=20,
+                                fg_color="#171717",
+                                border_color="white",
+                                text_color="#0d9488",
+                                hover_color='#115e59',
+                                   )
+        self.send_btn.place(x=109, y=220)
+
+    #Envia o código de recuperação e abre a janela de checagem
+    def open_check(self, email, user):
+        if config.verify_email(email):
+            if config.verify_user(email, user):
+                config.recover_pass(email, user)
+                messagebox.showinfo("Atenção", "Um código de verificação foi enviado para o e-mail inserido.")
+                check_edge = CheckCodeEdge(self)
+                check_edge.grab_set()
+            else:
+                messagebox.showerror("Erro", "O usuário não corresponde ao e-mail inserido.")
+        else:
+            messagebox.showerror("Erro", "E-mail não identificado.")
+
+
+#Janela de verificação do código
+class CheckCodeEdge(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.geometry("300x280")
         self.title("Recuperar senha")
         self.configure(bg='#0d9488')
         self.resizable(False, False)

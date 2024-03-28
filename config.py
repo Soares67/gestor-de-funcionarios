@@ -196,3 +196,41 @@ def recover_pass(email, user):
 
     if create_code():
         send_mail()
+
+#Verifica se um email está no BD
+def verify_email(email):
+    #Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Email FROM admins WHERE Email = ?", (email))
+    resultado = cursor.fetchone()  #Resultado da busca
+    cursor.close()
+
+    if resultado is not None:
+        return True
+    else:
+        return False
+
+#Verifica se o usuário corresponde ao email inserido
+def verify_user(email, user):
+    #Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Usuario FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
+    resultado = cursor.fetchval()  #Resultado da busca
+    cursor.close()
+
+    if resultado is not None:
+        return True
+    else:
+        return False
