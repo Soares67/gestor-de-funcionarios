@@ -178,7 +178,7 @@ def recover_pass(email, user):
         finally:
             server.quit()  # Encerrar conexão com o servidor SMTP
 
-    def insert_code():
+    def create_code():
         try:
             dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                     "Server=localhost;"
@@ -193,6 +193,6 @@ def recover_pass(email, user):
         except Exception as e:
             print(e)
             return False
-    
-    if insert_code():
+
+    if create_code():
         send_mail()
