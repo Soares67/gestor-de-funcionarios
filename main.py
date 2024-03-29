@@ -528,7 +528,11 @@ class RecoverEdge(tk.Toplevel):
                         height=40,
                         text="Redefinir",
                         font=("Arial", 15),
-                        command=lambda: print("Redefinir"),
+                        command=lambda: self.redefinir(self.email_entry.get(),
+                                                       self.user_entry.get(),
+                                                       self.senha_entry.get(),
+                                                       self.c_senha_entry.get()
+                                                       ),
                         border_width=2,
                         corner_radius=20,
                         fg_color="#171717",
@@ -595,6 +599,20 @@ class RecoverEdge(tk.Toplevel):
             self.destroy()
             self.tentativas = 0
 
+    def redefinir(self, email, user, senha1, senha2):
+        if functions.check_req(senha1, senha2):
+            if functions.check(senha1, senha2):
+                nova_senha = senha2
+                if config.update_pass(email, user, nova_senha):
+                    messagebox.showinfo("Atenção", "Senha redefinida com sucesso.")
+                    self.destroy()
+                else:
+                    messagebox.showerror("Erro", "Ocorreu um erro ao redefinir sua senha. Tente novamente.")
+            else:
+                messagebox.showwarning("Atenção", "As senhas não se coincidem.")
+        else:
+            messagebox.showwarning("Atenção", "As senhas devem ter no mínimo 8 caracteres.")
+                
 #Janela de funções ADM
 class ADM(tk.Toplevel):
     def __init__(self, parent, admin_status):
