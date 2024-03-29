@@ -189,6 +189,7 @@ def recover_pass(email, user):
             cursor.execute("UPDATE admins SET [Codigo Temporario] = ? WHERE Email = ? AND Usuario = ?", (code, email, user))
             cursor.commit()
             cursor.close()
+            conexao.close()
             return True
         except Exception as e:
             print(e)
@@ -210,6 +211,7 @@ def verify_email(email):
     cursor.execute(f"SELECT Email FROM admins WHERE Email = ?", (email))
     resultado = cursor.fetchone()  #Resultado da busca
     cursor.close()
+    conexao.close()
 
     if resultado is not None:
         return True
@@ -229,6 +231,7 @@ def verify_user(email, user):
     cursor.execute(f"SELECT Usuario FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
     resultado = cursor.fetchval()  #Resultado da busca
     cursor.close()
+    conexao.close()
 
     if resultado is not None:
         return True
@@ -252,4 +255,25 @@ def verify_code(email, user, entry_code):
     if entry_code == resultado:
         return True
     else:
+        return False
+
+def update_pass(email, user, nova_senha):
+    try:
+        #Conexão com o banco de dados
+        dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                    "Server=localhost;"
+                    "Database=gerenciador.db")
+        conexao = pyodbc.connect(dados_conexao)
+
+        cursor = conexao.cursor()
+
+        cursor.execute("UPDATE admins SET Senha = ? WHERE Email = ? AND Usuario = ?", (hash_password(nova_senha), email, user))
+
+        cursor.commit()
+
+        cursor.close()
+        conexao.close()
+        return True
+    except Exception as e:
+        print(e)
         return False
