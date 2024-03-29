@@ -312,6 +312,8 @@ class RecoverEdge(tk.Toplevel):
         self.title("Recuperar senha")
         self.configure(bg='#0d9488')
         self.resizable(False, False)
+        self.senha_oculta = True
+        self.c_senha_oculta = True
 
 
         self.frame1 = ctk.CTkFrame(self,
@@ -418,6 +420,140 @@ class RecoverEdge(tk.Toplevel):
                           )
         self.check_btn.place(x=102, y=140)
 
+        self.frame3 = ctk.CTkFrame(self,
+                                   width=0,
+                                   height=300,
+                                   fg_color="red",
+        )
+        self.frame3.place(x=0,y=0)
+
+        self.lb3 = ctk.CTkLabel(self.frame3,
+                text="Redefinir Senha",
+                text_color="black",
+                font=("Arial", 25)
+                                )
+        self.lb3.place(x=52, y=10)
+
+        #Entry da nova senha
+        self.senha_entry = ctk.CTkEntry(self.frame3,
+                                width=176,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                border_color="white",
+                                font=("Arial", 15),
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Nova Senha",
+                                show="*"
+                                )
+        self.senha_entry.place(x=50, y=65)
+
+        #Entry de confirmação da nova senha
+        self.c_senha_entry = ctk.CTkEntry(self.frame3,
+                                width=176,
+                                height=40,
+                                corner_radius=20,
+                                border_width=2,
+                                border_color="white",
+                                font=("Arial", 15),
+                                fg_color="#171717",
+                                text_color="white",
+                                placeholder_text_color="#0d9488",
+                                placeholder_text="Confirmar Senha",
+                                show="*"
+                                )
+        self.c_senha_entry.place(x=50, y=130)
+
+        self.show_btn1 = ctk.CTkButton(self.frame3,
+                                            text="",
+                                            image=iconspath.CLOSED_EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=lambda: self.show_hide_senha(),
+                                           )
+        self.show_btn1.place(x=185,y=74)
+
+        #Botão de ocultar a senha do entry da senha
+        self.hide_btn1 = ctk.CTkButton(self.frame3,
+                                            text="",
+                                            image=iconspath.EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=lambda: self.show_hide_senha(),
+                                            )
+        self.hide_btn1.place(x=185,y=74)
+
+        #Botão de exibir a senha do entry de confirmação de senha
+        self.show_btn2 = ctk.CTkButton(self.frame3,
+                                            text="",
+                                            image=iconspath.CLOSED_EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=lambda: print("S")
+                                            
+                                            )
+        self.show_btn2.place(x=185,y=139)
+
+        #Botão de ocultar a senha do entry de confirmação de senha
+        self.hide_btn2 = ctk.CTkButton(self.frame3,
+                                            text="",
+                                            image=iconspath.EYE_ICON,
+                                            width=10,
+                                            height=10,
+                                            corner_radius=50,
+                                            fg_color="#171717",
+                                            bg_color="#171717",
+                                            hover_color="#115e59",
+                                            command=lambda: print("Mostrar")
+                                            
+                                            )
+        self.hide_btn2.place(x=185,y=139)
+
+        #Botão de redefinir a senha
+        self.red_btn = ctk.CTkButton(self.frame3,
+                        width=70,
+                        height=40,
+                        text="Redefinir",
+                        font=("Arial", 15),
+                        command=lambda: print("Redefinir"),
+                        border_width=2,
+                        corner_radius=20,
+                        fg_color="#171717",
+                        border_color="white",
+                        text_color="#0d9488",
+                        hover_color='#115e59',
+                          )
+        self.red_btn.place(x=90, y=220)
+
+
+    #Exibe/Esconde a senha do entry da senha
+    def show_hide_senha(self):
+        if self.senha_oculta:
+            self.senha_entry.configure(show="")
+            self.hide_btn1.place_forget()
+            self.show_btn1.place(x=234,y=224)
+            self.senha_oculta = False
+        else:
+            self.senha_entry.configure(show="*")
+            self.show_btn1.place_forget()
+            self.hide_btn1.place(x=234,y=224)
+            self.senha_oculta = True
+
+
     #Envia o código de recuperação e abre a janela de checagem
     def open_check(self, email, user):
         if config.verify_email(email):
@@ -435,6 +571,9 @@ class RecoverEdge(tk.Toplevel):
     def verify(self, email, user, code_entry):
         if config.verify_code(email, user, code_entry):
             messagebox.showinfo("Atenção", "Código confirmado com sucesso")
+            self.geometry("275x280")
+            self.frame2.configure(width=0)
+            self.frame3.configure(width=300)
         else:
             messagebox.showerror("Erro", "O código inserido não corresponde ao código enviado por e-mail.")
 
