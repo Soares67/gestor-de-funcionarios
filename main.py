@@ -314,6 +314,7 @@ class RecoverEdge(tk.Toplevel):
         self.resizable(False, False)
         self.senha_oculta = True
         self.c_senha_oculta = True
+        self.tentativas = 0
 
 
         self.frame1 = ctk.CTkFrame(self,
@@ -378,7 +379,7 @@ class RecoverEdge(tk.Toplevel):
         self.frame2 = ctk.CTkFrame(self,
                                    width=0,
                                    height=200,
-                                   fg_color="red",
+                                   fg_color="#0d9488",
 
                                    )
         self.frame2.place(x=0,y=0)
@@ -423,7 +424,7 @@ class RecoverEdge(tk.Toplevel):
         self.frame3 = ctk.CTkFrame(self,
                                    width=0,
                                    height=300,
-                                   fg_color="red",
+                                   fg_color="#0d9488",
         )
         self.frame3.place(x=0,y=0)
 
@@ -432,7 +433,7 @@ class RecoverEdge(tk.Toplevel):
                 text_color="black",
                 font=("Arial", 25)
                                 )
-        self.lb3.place(x=52, y=10)
+        self.lb3.place(x=46, y=10)
 
         #Entry da nova senha
         self.senha_entry = ctk.CTkEntry(self.frame3,
@@ -503,8 +504,7 @@ class RecoverEdge(tk.Toplevel):
                                             fg_color="#171717",
                                             bg_color="#171717",
                                             hover_color="#115e59",
-                                            command=lambda: print("S")
-                                            
+                                            command=lambda: self.show_hide_c_senha(),                                            
                                             )
         self.show_btn2.place(x=185,y=139)
 
@@ -518,8 +518,7 @@ class RecoverEdge(tk.Toplevel):
                                             fg_color="#171717",
                                             bg_color="#171717",
                                             hover_color="#115e59",
-                                            command=lambda: print("Mostrar")
-                                            
+                                            command=lambda: self.show_hide_c_senha(),                                            
                                             )
         self.hide_btn2.place(x=185,y=139)
 
@@ -537,7 +536,7 @@ class RecoverEdge(tk.Toplevel):
                         text_color="#0d9488",
                         hover_color='#115e59',
                           )
-        self.red_btn.place(x=90, y=220)
+        self.red_btn.place(x=90, y=210)
 
 
     #Exibe/Esconde a senha do entry da senha
@@ -545,14 +544,26 @@ class RecoverEdge(tk.Toplevel):
         if self.senha_oculta:
             self.senha_entry.configure(show="")
             self.hide_btn1.place_forget()
-            self.show_btn1.place(x=234,y=224)
+            self.show_btn1.place(x=185,y=74)
             self.senha_oculta = False
         else:
             self.senha_entry.configure(show="*")
             self.show_btn1.place_forget()
-            self.hide_btn1.place(x=234,y=224)
+            self.hide_btn1.place(x=185,y=74)
             self.senha_oculta = True
 
+    #Exibe/Esconde a senha do entry de confirmação de senha
+    def show_hide_c_senha(self):
+        if self.c_senha_oculta:
+            self.c_senha_entry.configure(show="")
+            self.hide_btn2.place_forget()
+            self.show_btn2.place(x=185,y=139)
+            self.c_senha_oculta = False
+        else:
+            self.c_senha_entry.configure(show="*")
+            self.show_btn2.place_forget()
+            self.hide_btn2.place(x=185,y=139)
+            self.c_senha_oculta = True
 
     #Envia o código de recuperação e abre a janela de checagem
     def open_check(self, email, user):
@@ -568,14 +579,21 @@ class RecoverEdge(tk.Toplevel):
         else:
             messagebox.showerror("Erro", "E-mail não identificado.")
 
+    #Verifica se o código inserido está correto, e abre a janela de redefinição
     def verify(self, email, user, code_entry):
-        if config.verify_code(email, user, code_entry):
-            messagebox.showinfo("Atenção", "Código confirmado com sucesso")
-            self.geometry("275x280")
-            self.frame2.configure(width=0)
-            self.frame3.configure(width=300)
+        if self.tentativas < 3:
+            if config.verify_code(email, user, code_entry):
+                messagebox.showinfo("Atenção", "Código confirmado com sucesso")
+                self.geometry("275x270")
+                self.frame2.configure(width=0)
+                self.frame3.configure(width=300)
+            else:
+                messagebox.showerror("Erro", "O código inserido não corresponde ao código enviado por e-mail.")
+                self.tentativas += 1
         else:
-            messagebox.showerror("Erro", "O código inserido não corresponde ao código enviado por e-mail.")
+            messagebox.showerror("Erro", "Muitas tentativas de redefinição de senha")
+            self.destroy()
+            self.tentativas = 0
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
