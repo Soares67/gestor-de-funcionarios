@@ -15,6 +15,17 @@ from private import APP_KEY, MAIL
 
 #Cria um usuário
 def create_user(nome, data_nascimento, email, cargo, salario, data_admissao, status_emprego):
+    """Cadastra um funcionário no banco de dados
+
+    Args:
+        nome (str): Nome do funcionário
+        data_nascimento (str): Data de nascimento do funcionario no formato DD/MM/AAAA
+        email (str): Email do funcionário
+        cargo (str): Cargo do funcionário
+        salario (int/float): Salário do funcionário
+        data_admissao (str): Data de admissão do funcionário no formato DD/MM/AAAA H:M:S
+        status_emprego (str): Status de emprego do funcionrio (empregado/afastado/aposentado)
+    """
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
@@ -57,6 +68,15 @@ def read_user(nome=None):
 
 #Cria um admin
 def create_admin(nome, user, senha, email, ultimo_acesso):
+    """Cadastra um administrador no banco de dados
+
+    Args:
+        nome (str): Nome do administrador
+        user (str): Nome de usuário do administrador (Usado para fazer login)
+        senha (str): Senha do administrador
+        email (str): E-mail do administrador
+        ultimo_acesso (str): último acesso do administrador no formato DD/MM/AAAA H:M:S
+    """
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
@@ -119,7 +139,7 @@ def auth_admin(login, password):
     else:
         return False
 
-
+#Criptografa uma determinada senha
 def hash_password(password):
     """Criptografa a senha determinada
 
@@ -133,7 +153,7 @@ def hash_password(password):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     return hashed_password.decode('utf-8')
 
-
+#Pega data e hora atuais
 def timenow():
     """Pega a data e hora atuais
 
@@ -143,7 +163,7 @@ def timenow():
     fuso_br = pytz.timezone("America/Sao_Paulo")
     return datetime.now(fuso_br).strftime("%d/%m/%Y %H:%M:%S")
 
-
+#Cria um código de recuperação, atribui ao BD e envia por e-mail
 def recover_pass(email, user):
     code = "".join(random.choices(string.ascii_letters.upper() + string.digits, k=5))  # Cria o código de recuperação
     def send_mail():
@@ -257,6 +277,7 @@ def verify_code(email, user, entry_code):
     else:
         return False
 
+#Redefine a senha de admin
 def update_pass(email, user, nova_senha):
     try:
         #Conexão com o banco de dados
