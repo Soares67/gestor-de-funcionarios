@@ -234,3 +234,22 @@ def verify_user(email, user):
         return True
     else:
         return False
+
+#Verifica se o código inserido corresponde ao recebido por email
+def verify_code(email, user, entry_code):
+    #Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT [Codigo Temporario] FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
+    resultado = cursor.fetchval()  #Resultado da busca
+    cursor.close()
+
+    if entry_code == resultado:
+        return True
+    else:
+        return False

@@ -313,7 +313,16 @@ class RecoverEdge(tk.Toplevel):
         self.configure(bg='#0d9488')
         self.resizable(False, False)
 
-        self.lb = ctk.CTkLabel(self,
+
+        self.frame1 = ctk.CTkFrame(self,
+                                   width=300,
+                                   height=280,
+                                   fg_color="#0d9488",
+
+                                   )
+        self.frame1.place(x=0,y=0)
+
+        self.lb = ctk.CTkLabel(self.frame1,
                                text="Recuperar senha",
                                text_color="black",
                                font=("Arial", 25)
@@ -321,7 +330,7 @@ class RecoverEdge(tk.Toplevel):
         self.lb.place(x=52, y=10)
 
         #Entry do Email
-        self.email_entry = ctk.CTkEntry(self,
+        self.email_entry = ctk.CTkEntry(self.frame1,
                                    width=200,
                                    height=40,
                                    placeholder_text="Email",
@@ -335,7 +344,7 @@ class RecoverEdge(tk.Toplevel):
         self.email_entry.place(x=50, y=65)
 
         #Entry do usuário
-        self.user_entry = ctk.CTkEntry(self,
+        self.user_entry = ctk.CTkEntry(self.frame1,
                                 width=200,
                                 height=40,
                                 font=("Arial", 14),
@@ -345,12 +354,11 @@ class RecoverEdge(tk.Toplevel):
                                 border_color='white',
                                 corner_radius=20,
                                 fg_color="#171717",
-                                show="*"
                                 )
         self.user_entry.place(x=50, y=130)
 
         #Botão de enviar o código
-        self.send_btn = ctk.CTkButton(self,
+        self.send_btn = ctk.CTkButton(self.frame1,
                                 width=70,
                                 height=40,
                                 text="Enviar",
@@ -365,28 +373,70 @@ class RecoverEdge(tk.Toplevel):
                                    )
         self.send_btn.place(x=109, y=220)
 
+        self.frame2 = ctk.CTkFrame(self,
+                                   width=0,
+                                   height=200,
+                                   fg_color="red",
+
+                                   )
+        self.frame2.place(x=0,y=0)
+
+        self.lb2 = ctk.CTkLabel(self.frame2,
+                text="Verificar Código",
+                text_color="black",
+                font=("Arial", 25)
+                                )
+        self.lb2.place(x=55, y=10)
+
+        #Entry do código de confirmação
+        self.code_entry = ctk.CTkEntry(self.frame2,
+                        width=200,
+                        height=40,
+                        placeholder_text="Código recebido",
+                        placeholder_text_color='#0d9488',
+                        font=("Arial", 14),
+                        border_width=2,
+                        border_color='white',
+                        corner_radius=20,
+                        fg_color="#171717",
+                          )
+        self.code_entry.place(x=50, y=65)
+
+        #Botão de verificação do código
+        self.check_btn = ctk.CTkButton(self.frame2,
+                        width=70,
+                        height=40,
+                        text="Verificar",
+                        font=("Arial", 15),
+                        command=lambda: self.verify(self.email_entry.get(), self.user_entry.get(), self.code_entry.get().upper()),
+                        border_width=2,
+                        corner_radius=20,
+                        fg_color="#171717",
+                        border_color="white",
+                        text_color="#0d9488",
+                        hover_color='#115e59',
+                          )
+        self.check_btn.place(x=102, y=140)
+
     #Envia o código de recuperação e abre a janela de checagem
     def open_check(self, email, user):
         if config.verify_email(email):
             if config.verify_user(email, user):
                 config.recover_pass(email, user)
                 messagebox.showinfo("Atenção", "Um código de verificação foi enviado para o e-mail inserido.")
-                check_edge = CheckCodeEdge(self)
-                check_edge.grab_set()
+                self.frame1.configure(width=0)
+                self.frame2.configure(width=300)
+                self.geometry("300x200")
             else:
                 messagebox.showerror("Erro", "O usuário não corresponde ao e-mail inserido.")
         else:
             messagebox.showerror("Erro", "E-mail não identificado.")
 
-
-#Janela de verificação do código
-class CheckCodeEdge(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.geometry("300x280")
-        self.title("Recuperar senha")
-        self.configure(bg='#0d9488')
-        self.resizable(False, False)
+    def verify(self, email, user, code_entry):
+        if config.verify_code(email, user, code_entry):
+            messagebox.showinfo("Atenção", "Código confirmado com sucesso")
+        else:
+            messagebox.showerror("Erro", "O código inserido não corresponde ao código enviado por e-mail.")
 
 #Janela de funções ADM
 class ADM(tk.Toplevel):
