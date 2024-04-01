@@ -325,4 +325,10 @@ def get_admin_info(user, email):
     cursor.execute(f"SELECT Nome, Email, [Ultimo Acesso] FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
     resultado = cursor.fetchall()  #Resultado da busca
     cursor.close()
-    return resultado
+    
+    texto = f"""Nome: {resultado[0][0]}
+
+E-mail: {resultado[0][1]}
+
+Último acesso: {resultado[0][2]}"""
+    return texto
