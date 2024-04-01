@@ -311,3 +311,18 @@ def update_last_access(login, senha):
     cursor.commit()
     cursor.close()
     conexao.close()
+
+#Pega as informações de um administrador
+def get_admin_info(user, email):
+     #Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Nome, Email, [Ultimo Acesso] FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
+    resultado = cursor.fetchall()  #Resultado da busca
+    cursor.close()
+    return resultado
