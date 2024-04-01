@@ -216,7 +216,7 @@ class AuthAdmin(tk.Toplevel):
 
 #Janela para remover um administrador
 class DeleteAdmin(tk.Toplevel):
-     def __init__(self, parent):
+    def __init__(self, parent):
         super().__init__(parent)
         self.geometry("384x410")
         self.iconbitmap(r'icons\icons8-admin-90.ico')
@@ -265,7 +265,9 @@ class DeleteAdmin(tk.Toplevel):
                             width=30,
                             height=40,
                             text="Buscar",
-                            command=lambda: functions.insert(self.info_txb),
+                            command=lambda: self.insert_info(self.user_entry.get(),
+                                                             self.email_entry.get(),
+                                                             self.info_txb),
                             border_width=2,
                             border_color="white",
                             corner_radius=20,
@@ -306,6 +308,15 @@ class DeleteAdmin(tk.Toplevel):
                             anchor="center",
                             )
         self.delete_btn.place(x=147,y=352)
+
+    def insert_info(self, user, email, where):
+        if config.verify_user(email, user):
+            texto = config.get_admin_info(user, email)
+            where.delete("0.0", "end")
+            where.insert("0.0", texto)
+        else:
+            messagebox.showerror("Erro", "Dados inválidos")
+    
 
 #Janela de recuperação de senha (Enviar o código)
 class RecoverEdge(tk.Toplevel):
