@@ -1,5 +1,5 @@
 import messagebox as msg
-
+import config
 
 
 #Abre/Fecha um frame
@@ -72,18 +72,3 @@ def check_field(field, min_len):
         return True
     else:
         return False
-
-#Insere um texto em uma textbox
-def insert(where):
-    """Insere um texto em um textbox
-
-    Args:
-        where (Textbox): Campo em que o texto será inserido
-    """
-    text = """Nome: John Doe
-
-E-mail: john@gmail.com
-
-Último acesso: 21/03/2024 16:12:38"""
-    where.delete("0.0", "end")
-    where.insert("0.0", text)
