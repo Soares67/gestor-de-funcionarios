@@ -298,3 +298,16 @@ def update_pass(email, user, nova_senha):
     except Exception as e:
         print(e)
         return False
+
+#Atualiza a data e hora do ultimo acesso do administrador
+def update_last_access(login, senha):
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                    "Server=localhost;"
+                    "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE admins SET [Ultimo Acesso] = ? WHERE Usuario = ? or Email = ? AND Senha = ?", (timenow(), login, login, hash_password(senha)))
+    cursor.commit()
+    cursor.close()
+    conexao.close()
