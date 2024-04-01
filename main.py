@@ -81,6 +81,7 @@ class AuthAdmin(tk.Toplevel):
         self.admin_status = admin_status
         self.geometry("300x300")
         self.title("Admin Login")
+        self.iconbitmap(r'icons\icons8-admin-90.ico')
         self.configure(bg='#0d9488')
         self.resizable(False, False)
         self.senha_oculta = True
@@ -199,6 +200,7 @@ class AuthAdmin(tk.Toplevel):
                 if config.auth_admin(self.user_entry.get(), self.senha_entry.get()):
                     messagebox.showinfo("hey", "Admin logado com sucesso")
                     self.admin_status.login()
+                    config.update_last_access(self.user_entry.get(), self.senha_entry.get())
                     self.destroy()
                 else:
                     messagebox.showerror("Erro", "Login ou senha incorretos")
@@ -217,6 +219,7 @@ class DeleteAdmin(tk.Toplevel):
      def __init__(self, parent):
         super().__init__(parent)
         self.geometry("384x410")
+        self.iconbitmap(r'icons\icons8-admin-90.ico')
         self.title("Deletar Admin")
         self.configure(bg='#0d9488')
         self.resizable(False, False)
@@ -309,6 +312,7 @@ class RecoverEdge(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.geometry("300x280")
+        self.iconbitmap(r'icons\icons8-admin-90.ico')
         self.title("Recuperar senha")
         self.configure(bg='#0d9488')
         self.resizable(False, False)
@@ -620,6 +624,7 @@ class ADM(tk.Toplevel):
         self.admin_status = admin_status
         self.title("Administrador")
         self.geometry("577x400")
+        self.iconbitmap(r'icons\icons8-admin-90.ico')
         self.resizable(False, False)
         self.configure(bg="#0d9488")
         self.senha_oculta = True
