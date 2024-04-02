@@ -353,3 +353,17 @@ def delete_admin(user, email):
         cursor.close() 
         conexao.close()
         return False
+
+#Exclui o código temporário do BD
+def del_code(email, user):
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE admins SET [Codigo Temporario] = NULL WHERE Email = ? AND Usuario = ?", (email, user))
+
+    cursor.commit()
+    cursor.close()
+    conexao.close()
