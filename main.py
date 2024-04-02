@@ -622,6 +622,7 @@ class RecoverEdge(tk.Toplevel):
         if self.tentativas < 3:
             if config.verify_code(email, user, code_entry):
                 messagebox.showinfo("Atenção", "Código confirmado com sucesso")
+                config.del_code(email, user)
                 self.geometry("275x270")
                 self.frame2.configure(width=0)
                 self.frame3.configure(width=300)
