@@ -33,8 +33,7 @@ class ConfigEdge(tk.Toplevel):
         self.iconbitmap(r"icons\icons8-settings-256.ico")
         self.switch_var = ctk.StringVar(value="#171717")
         
-        
-        
+    
         self.mudar_tema()
 
         #Switch que muda o tema
@@ -65,12 +64,12 @@ class ConfigEdge(tk.Toplevel):
                                      )
         self.sun_icon.place(x=93,y=9)
 
-
+    #Muda o tema atual da janela
     def mudar_tema(self):
         self.tema_atual = self.switch_var.get()
         self.configure(bg=self.tema_atual)
     
-
+    #Pega o tema atual da janela
     def get_tema_atual(self):
         return self.switch_var.get()
 
@@ -197,10 +196,10 @@ class AuthAdmin(tk.Toplevel):
     def autenticacao(self):
         if len(self.user_entry.get()) >= 5:
             if len(self.senha_entry.get()) >= 8:
-                if config.auth_admin(self.user_entry.get(), self.senha_entry.get()):
+                if config.auth_admin(self.user_entry.get().lower(), self.senha_entry.get()):
                     messagebox.showinfo("hey", "Admin logado com sucesso")
                     self.admin_status.login()
-                    config.update_last_access(self.user_entry.get(), self.senha_entry.get())
+                    config.update_last_access(self.user_entry.get().lower(), self.senha_entry.get())
                     self.destroy()
                 else:
                     messagebox.showerror("Erro", "Login ou senha incorretos")
@@ -265,8 +264,8 @@ class DeleteAdmin(tk.Toplevel):
                             width=30,
                             height=40,
                             text="Buscar",
-                            command=lambda: self.insert_info(self.user_entry.get(),
-                                                             self.email_entry.get(),
+                            command=lambda: self.insert_info(self.user_entry.get().lower(),
+                                                             self.email_entry.get().lower(),
                                                              self.info_txb
                                                              ),
                             border_width=2,
@@ -334,8 +333,6 @@ class DeleteAdmin(tk.Toplevel):
                     self.destroy()
         else:
             pass
-        
-
 
 #Janela de recuperação de senha (Enviar o código)
 class RecoverEdge(tk.Toplevel):
@@ -400,7 +397,7 @@ class RecoverEdge(tk.Toplevel):
                                 height=40,
                                 text="Enviar",
                                 font=("Arial", 15),
-                                command=lambda: self.open_check(self.email_entry.get(), self.user_entry.get()),
+                                command=lambda: self.open_check(self.email_entry.get().lower(), self.user_entry.get().lower()),
                                 border_width=2,
                                 corner_radius=20,
                                 fg_color="#171717",
@@ -566,8 +563,8 @@ class RecoverEdge(tk.Toplevel):
                         font=("Arial", 15),
                         command=lambda: self.redefinir(self.email_entry.get().lower(),
                                                        self.user_entry.get().lower(),
-                                                       self.senha_entry.get().lower(),
-                                                       self.c_senha_entry.get().lower()
+                                                       self.senha_entry.get(),
+                                                       self.c_senha_entry.get(),
                                                        ),
                         border_width=2,
                         corner_radius=20,
@@ -764,11 +761,11 @@ class ADM(tk.Toplevel):
                                     height=40,
                                     text="Cadastrar",
                                     command=lambda: self.onclick(
-                                                                self.nome_entry.get().lower(),
+                                                                self.nome_entry.get().capitalize(),
                                                                 self.user_entry.get().lower(),
                                                                 self.email_entry.get().lower(),
-                                                                self.senha_entry.get().lower(),
-                                                                self.c_senha_entry.get().lower(),
+                                                                self.senha_entry.get(),
+                                                                self.c_senha_entry.get(),
                                                                 ),
                                     border_width=2,
                                     border_color="white",
