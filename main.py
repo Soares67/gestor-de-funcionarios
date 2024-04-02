@@ -32,6 +32,7 @@ class ConfigEdge(tk.Toplevel):
         self.configure(bg=self.tema_atual)
         self.iconbitmap(r"icons\icons8-settings-256.ico")
         self.switch_var = ctk.StringVar(value="#171717")
+        self.idioma_atual = "Português"
         
     
         self.mudar_tema()
@@ -63,6 +64,22 @@ class ConfigEdge(tk.Toplevel):
                                      image=iconspath.SUN_ICON
                                      )
         self.sun_icon.place(x=93,y=9)
+
+        #Dropdown dos idiomas
+        self.langs_dbx = ctk.CTkComboBox(self,
+                                        values=["Português", "Inglês", "Espanhol", "Francês", "Alemão"],
+                                        fg_color="#0d9488",
+                                        font=("Roboto", 15),
+                                        dropdown_font=("Roboto", 15),
+                                        dropdown_fg_color="#0d9488",
+                                        dropdown_hover_color="#115e59",
+                                        state="readonly",
+                                        border_color="#fde047",
+                                        button_color="#475569",
+                                        button_hover_color="#1f2937",
+                                         )
+        self.langs_dbx.set("Português")
+        self.langs_dbx.place(x=82,y=90)
 
     #Muda o tema atual da janela
     def mudar_tema(self):
@@ -1143,7 +1160,7 @@ class Gestor(tk.Tk):
         config = ConfigEdge(self)
         config.grab_set()
 
-        #Define o tema que será a´licado nas demais janelas
+        #Define o tema que será aplicado nas demais janelas
         def on_switch_change(*args):
             tema_atual_edge = config.get_tema_atual()
             self.tema_atual = tema_atual_edge
