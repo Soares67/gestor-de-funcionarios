@@ -1068,7 +1068,7 @@ class Gestor(tk.Tk):
                                        image=iconspath.PROMOVER_ICON,
                                        command=lambda: functions.open_close_frame(self.promover_btn, self.states)
                                        )
-        self.promover_btn.place(x=2, y=398)
+        self.promover_btn.place(x=2, y=385)
         self.promover_btn.name = "promover"
         self.tooltip5 = CTkToolTip(self.promover_btn, "Promover", delay=0.1)
 
@@ -1082,23 +1082,9 @@ class Gestor(tk.Tk):
                                        image=iconspath.HORA_EXTRA_ICON,
                                        command=lambda: functions.open_close_frame(self.hora_extra_btn, self.states)
                                        )
-        self.hora_extra_btn.place(x=2, y=316)
+        self.hora_extra_btn.place(x=2, y=286)
         self.hora_extra_btn.name = "hora extra"
         self.tooltip4 = CTkToolTip(self.hora_extra_btn, "Horas Extras", delay=0.1)
-
-        #Botãode Relatórios
-        self.relatorio_btn = ctk.CTkButton(self.sidebar_bg,
-                                       width=45,
-                                       height=45,
-                                       fg_color="transparent",
-                                       hover_color="#115e59",
-                                       text="",
-                                       image=iconspath.RELATORIO_ICON,
-                                       command=lambda: functions.open_close_frame(self.relatorio_btn, self.states)
-                                       )
-        self.relatorio_btn.place(x=2, y=232)
-        self.relatorio_btn.name = "relatorio"
-        self.tooltip3 = CTkToolTip(self.relatorio_btn, "Relatório", delay=0.1)
 
         #Botão de Folha de pagamento
         self.folha_pagamento_btn = ctk.CTkButton(self.sidebar_bg,
@@ -1110,7 +1096,7 @@ class Gestor(tk.Tk):
                                        image=iconspath.FOLHA_PAGAMENTO_ICON,
                                        command=lambda: functions.open_close_frame(self.folha_pagamento_btn, self.states)
                                        )
-        self.folha_pagamento_btn.place(x=2, y=154)
+        self.folha_pagamento_btn.place(x=2, y=187)
         self.folha_pagamento_btn.name = "folha pagamento"
         self.tooltip2 = CTkToolTip(self.folha_pagamento_btn, "Folha de Pagamento", delay=0.1)
 
@@ -1124,7 +1110,7 @@ class Gestor(tk.Tk):
                                        image=iconspath.CADASTRO_ICON,
                                        command=lambda: functions.open_close_frame(self.cadastro_btn, self.states)
                                        )
-        self.cadastro_btn.place(x=2, y=76)
+        self.cadastro_btn.place(x=2, y=93)
         self.cadastro_btn.name = "cadastrar"
         self.tooltip1 = CTkToolTip(self.cadastro_btn, "Cadastrar", delay=0.1)
 
