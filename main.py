@@ -298,7 +298,9 @@ class DeleteAdmin(tk.Toplevel):
                             width=30,
                             height=40,
                             text="Deletar",
-                            command=lambda: print("Deletado"),
+                            command=lambda: self.delete_admin(self.user_entry.get().lower(),
+                                                              self.email_entry.get().lower()
+                                                              ),
                             border_width=2,
                             border_color="#dc2626",
                             corner_radius=20,
@@ -310,6 +312,7 @@ class DeleteAdmin(tk.Toplevel):
                             )
         self.delete_btn.place(x=147,y=352)
 
+    #Insere as informações do admin no textbox
     def insert_info(self, user, email, where):
         if config.verify_user(email, user):
             texto = config.get_admin_info(user, email)
@@ -318,6 +321,21 @@ class DeleteAdmin(tk.Toplevel):
         else:
             messagebox.showerror("Erro", "Dados inválidos")
     
+    #Deleta o administrador
+    def delete_admin(self, user, email):
+        if messagebox.askyesno("Atenção", "Deseja realmente excluir esse administrador? Essa ação não poderá ser desfeita."):
+            if config.delete_admin(user, email):
+                messagebox.showinfo("Atenção", "Administrador exluído com sucesso.")
+                self.destroy()
+            else:
+                if messagebox.askretrycancel("Atenção", "Ocorreu um erro ao excluir esse administrador. Gostaria de tentar novamente?"):
+                    pass
+                else:
+                    self.destroy()
+        else:
+            pass
+        
+
 
 #Janela de recuperação de senha (Enviar o código)
 class RecoverEdge(tk.Toplevel):
@@ -427,7 +445,9 @@ class RecoverEdge(tk.Toplevel):
                         height=40,
                         text="Verificar",
                         font=("Arial", 15),
-                        command=lambda: self.verify(self.email_entry.get(), self.user_entry.get(), self.code_entry.get().upper()),
+                        command=lambda: self.verify(self.email_entry.get().lower(),
+                                                    self.user_entry.get().lower(),
+                                                    self.code_entry.get().upper()),
                         border_width=2,
                         corner_radius=20,
                         fg_color="#171717",
@@ -544,10 +564,10 @@ class RecoverEdge(tk.Toplevel):
                         height=40,
                         text="Redefinir",
                         font=("Arial", 15),
-                        command=lambda: self.redefinir(self.email_entry.get(),
-                                                       self.user_entry.get(),
-                                                       self.senha_entry.get(),
-                                                       self.c_senha_entry.get()
+                        command=lambda: self.redefinir(self.email_entry.get().lower(),
+                                                       self.user_entry.get().lower(),
+                                                       self.senha_entry.get().lower(),
+                                                       self.c_senha_entry.get().lower()
                                                        ),
                         border_width=2,
                         corner_radius=20,
@@ -615,6 +635,7 @@ class RecoverEdge(tk.Toplevel):
             self.destroy()
             self.tentativas = 0
 
+    #Redefine a senha
     def redefinir(self, email, user, senha1, senha2):
         if functions.check_req(senha1, senha2):
             if functions.check(senha1, senha2):
@@ -743,11 +764,11 @@ class ADM(tk.Toplevel):
                                     height=40,
                                     text="Cadastrar",
                                     command=lambda: self.onclick(
-                                                                self.nome_entry.get(),
-                                                                self.user_entry.get(),
-                                                                self.email_entry.get(),
-                                                                self.senha_entry.get(),
-                                                                self.c_senha_entry.get(),
+                                                                self.nome_entry.get().lower(),
+                                                                self.user_entry.get().lower(),
+                                                                self.email_entry.get().lower(),
+                                                                self.senha_entry.get().lower(),
+                                                                self.c_senha_entry.get().lower(),
                                                                 ),
                                     border_width=2,
                                     border_color="white",
@@ -872,7 +893,7 @@ class ADM(tk.Toplevel):
                     try:
                         config.create_admin(nome, user, senha, email, config.timenow())
                         messagebox.showinfo("Hey", "Admin cadastrado com sucesso")
-                        ### implementar a limpeza de todos os campos ao cadastrar
+                        self.destroy()
                     except:
                         messagebox.showwarning("Erro", "Não foi possível realizar o cadastro. Tente novamente")
                 else:

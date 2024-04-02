@@ -325,10 +325,31 @@ def get_admin_info(user, email):
     cursor.execute(f"SELECT Nome, Email, [Ultimo Acesso] FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
     resultado = cursor.fetchall()  #Resultado da busca
     cursor.close()
-    
+    conexao.close()
     texto = f"""Nome: {resultado[0][0]}
 
 E-mail: {resultado[0][1]}
 
 Último acesso: {resultado[0][2]}"""
     return texto
+
+#Exclui um administrador
+def delete_admin(user, email):
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                "Database=gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+    cursor.execute("DELETE FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
+
+    cursor.commit()
+
+    if cursor.rowcount > 0:
+        cursor.close() 
+        conexao.close()
+        return True
+    else:
+        cursor.close() 
+        conexao.close()
+        return False
