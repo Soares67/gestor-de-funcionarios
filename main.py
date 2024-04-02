@@ -97,7 +97,7 @@ class AuthAdmin(tk.Toplevel):
         self.user_entry = ctk.CTkEntry(self,
                                    width=200,
                                    height=40,
-                                   placeholder_text="Usuário",
+                                   placeholder_text="E-mail ou Usuário",
                                    placeholder_text_color='#0d9488',
                                    font=("Arial", 14),
                                     border_width=2,
@@ -205,9 +205,9 @@ class AuthAdmin(tk.Toplevel):
                 else:
                     messagebox.showerror("Erro", "Login ou senha incorretos")
             else:
-                messagebox.showwarning("Atenção", "A senha deve possuir no mínimo 8 dígitos")
+                messagebox.showwarning("Atenção", "Senha inválida")
         else:
-            messagebox.showwarning("Atenção", "O login deve possuir no mínimo 5 dígitos")
+            messagebox.showwarning("Atenção", "E-mail ou Usuário inválido")
 
     #Abre a janela de recuperação de senha
     def open_recover(self):
@@ -267,7 +267,8 @@ class DeleteAdmin(tk.Toplevel):
                             text="Buscar",
                             command=lambda: self.insert_info(self.user_entry.get(),
                                                              self.email_entry.get(),
-                                                             self.info_txb),
+                                                             self.info_txb
+                                                             ),
                             border_width=2,
                             border_color="white",
                             corner_radius=20,
@@ -347,11 +348,11 @@ class RecoverEdge(tk.Toplevel):
                                )
         self.lb.place(x=52, y=10)
 
-        #Entry do Email
+        #Entry do E-mail
         self.email_entry = ctk.CTkEntry(self.frame1,
                                    width=200,
                                    height=40,
-                                   placeholder_text="Email",
+                                   placeholder_text="E-mail",
                                    placeholder_text_color='#0d9488',
                                    font=("Arial", 14),
                                     border_width=2,
@@ -689,7 +690,7 @@ class ADM(tk.Toplevel):
                                 )
         self.user_entry.place(x=202,y=130)
 
-        #Entry do email
+        #Entry do E-mail
         self.email_entry = ctk.CTkEntry(self,
                                 width=176,
                                 height=40,
@@ -700,7 +701,7 @@ class ADM(tk.Toplevel):
                                 fg_color="#171717",
                                 text_color="white",
                                 placeholder_text_color="#0d9488",
-                                placeholder_text="Email",
+                                placeholder_text="E-mail",
                                 )
         self.email_entry.place(x=397,y=130)
 
