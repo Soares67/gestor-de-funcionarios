@@ -5,6 +5,7 @@ import iconspath
 import config
 from CTkToolTip import *
 import functions
+from Home.widgets import home_widgets
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -915,6 +916,9 @@ class Gestor(tk.Tk):
         self.bar_status = "reduced"
         self.admin_status = AdminStatus()
         self.resizable(False, False)
+
+        #Home
+        home_widgets(self)
         
         #Frame da opção de férias
         self.ferias_frame = ctk.CTkScrollableFrame(self,
@@ -978,11 +982,11 @@ class Gestor(tk.Tk):
 
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,
-                              fg_color='#0d9488',
+                              fg_color='#0891b2',
                               width=55,
                               height=1000,
                               border_width=2,
-                              border_color='#fde047'
+                              border_color='#ffa500'
                             )
         self.sidebar_bg.place(x=-2, y=-3)
         
@@ -993,7 +997,7 @@ class Gestor(tk.Tk):
                                          text="",
                                          image=iconspath.SIDEBAR_ICON,
                                          fg_color="transparent",
-                                         hover_color="#115e59",
+                                         hover_color="#155e75",
                                          command=self.onclick,
                                          )
         self.sidebar_btn.place(x=2, y=6)
@@ -1005,7 +1009,7 @@ class Gestor(tk.Tk):
                                    text="",
                                    image=iconspath.SETTINGS_ICON,
                                    fg_color="transparent",
-                                   hover_color="#115e59",
+                                   hover_color="#155e75",
                                    command=self.open_config,
                                    )
         self.config_btn.place(x=2, y=675)
@@ -1016,7 +1020,7 @@ class Gestor(tk.Tk):
                                            width=45,
                                            height=45,
                                            fg_color="transparent",
-                                           hover_color="#115e59",
+                                           hover_color="#155e75",
                                            text="",
                                            image=iconspath.CLOSE_ICON,
                                            command=self.onclick,
@@ -1028,7 +1032,7 @@ class Gestor(tk.Tk):
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
-                                       hover_color="#115e59",
+                                       hover_color="#155e75",
                                        text="",
                                        image=iconspath.ADMIN_ICON,
                                        command=self.admin_cmd
@@ -1040,7 +1044,7 @@ class Gestor(tk.Tk):
         self.limitador = ctk.CTkFrame(self.sidebar_bg,
                                       width=30,
                                       height=3,
-                                      fg_color="#fde047",
+                                      fg_color="#ffa500",
                                       corner_radius=20,
                                       )
         self.limitador.place(x=12,y=561)
@@ -1050,7 +1054,7 @@ class Gestor(tk.Tk):
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
-                                       hover_color="#115e59",
+                                       hover_color="#155e75",
                                        text="",
                                        image=iconspath.FERIAS_ICON,
                                        command=lambda: functions.open_close_frame(self.ferias_btn, self.states)
@@ -1064,7 +1068,7 @@ class Gestor(tk.Tk):
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
-                                       hover_color="#115e59",
+                                       hover_color="#155e75",
                                        text="",
                                        image=iconspath.PROMOVER_ICON,
                                        command=lambda: functions.open_close_frame(self.promover_btn, self.states)
@@ -1078,7 +1082,7 @@ class Gestor(tk.Tk):
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
-                                       hover_color="#115e59",
+                                       hover_color="#155e75",
                                        text="",
                                        image=iconspath.HORA_EXTRA_ICON,
                                        command=lambda: functions.open_close_frame(self.hora_extra_btn, self.states)
@@ -1092,7 +1096,7 @@ class Gestor(tk.Tk):
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
-                                       hover_color="#115e59",
+                                       hover_color="#155e75",
                                        text="",
                                        image=iconspath.FOLHA_PAGAMENTO_ICON,
                                        command=lambda: functions.open_close_frame(self.folha_pagamento_btn, self.states)
@@ -1106,7 +1110,7 @@ class Gestor(tk.Tk):
                                        width=45,
                                        height=45,
                                        fg_color="transparent",
-                                       hover_color="#115e59",
+                                       hover_color="#155e75",
                                        text="",
                                        image=iconspath.CADASTRO_ICON,
                                        command=lambda: functions.open_close_frame(self.cadastro_btn, self.states)
