@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
-import iconspath
+import Icons.iconspath as iconspath
 import config
 from CTkToolTip import *
 import functions
@@ -31,7 +31,7 @@ class ConfigEdge(tk.Toplevel):
         self.resizable(False, False)
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
-        self.iconbitmap(r"icons\icons8-settings-256.ico")
+        self.iconbitmap(r"Icons\imgs\icons8-settings-256.ico")
         self.switch_var = ctk.StringVar(value="#171717")
         self.idioma_atual = "ptbr"
         
@@ -82,7 +82,7 @@ class AuthAdmin(tk.Toplevel):
         self.admin_status = admin_status
         self.geometry("300x300")
         self.title("Admin Login")
-        self.iconbitmap(r'icons\icons8-admin-90.ico')
+        self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.configure(bg='#0d9488')
         self.resizable(False, False)
         self.senha_oculta = True
@@ -220,7 +220,7 @@ class DeleteAdmin(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.geometry("384x410")
-        self.iconbitmap(r'icons\icons8-admin-90.ico')
+        self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.title("Deletar Admin")
         self.configure(bg='#0d9488')
         self.resizable(False, False)
@@ -341,7 +341,7 @@ class RecoverEdge(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.geometry("300x280")
-        self.iconbitmap(r'icons\icons8-admin-90.ico')
+        self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.title("Recuperar senha")
         self.configure(bg='#0d9488')
         self.resizable(False, False)
@@ -657,7 +657,7 @@ class ADM(tk.Toplevel):
         self.admin_status = admin_status
         self.title("Administrador")
         self.geometry("577x400")
-        self.iconbitmap(r'icons\icons8-admin-90.ico')
+        self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.resizable(False, False)
         self.configure(bg="#0d9488")
         self.senha_oculta = True
@@ -910,7 +910,7 @@ class Gestor(tk.Tk):
         super().__init__()
         self.geometry("1400x718")
         self.title("Gerenciamento")
-        self.iconbitmap(r'icons\icons8-management-90.ico')
+        self.iconbitmap(r'Icons\imgs\icons8-management-90.ico')
         self.tema_atual = "#171717"
         self.configure(bg=self.tema_atual)
         self.bar_status = "reduced"
