@@ -5,7 +5,8 @@ import Icons.iconspath as iconspath
 import config
 from CTkToolTip import *
 import functions
-from Home.widgets import home_widgets
+from Widgets.Home.widgets import home_widgets
+from Widgets.Register.widgets import register_widgets
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -971,14 +972,13 @@ class Gestor(tk.Tk):
         self.folha_pagamento_frame.place(x=0,y=0)
 
         #Frame da opção de Cadastrar
-        self.cadastrar_frame = ctk.CTkScrollableFrame(self,
+        self.cadastrar_frame = ctk.CTkFrame(self,
                                          width=0,
                                          height=720,
                                          fg_color=self.tema_atual,
-                                         scrollbar_button_color="#0d9488",
-                                         scrollbar_button_hover_color="#115e59"
                                          )
-        self.cadastrar_frame.place(x=0,y=0)
+        self.cadastrar_frame.place(x=53,y=0)
+        register_widgets(self.cadastrar_frame)
 
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,
