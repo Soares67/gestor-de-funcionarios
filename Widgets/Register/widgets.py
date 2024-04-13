@@ -60,15 +60,17 @@ def register_widgets(master):
                          )
     title.place(x=331,y=29)
     
+    # Entry do nome
     name_entry = ctk.CTkEntry(main_frame,
                               width=365,
                               height=56,
                               placeholder_text="Nome completo",
-                              font=("Arial", 16),
+                              font=("Arial", 16, "bold"),
                               corner_radius=20,
                               )
     name_entry.place(x=55, y=117)
-
+    
+    # Entry da data de nascimento
     bdt_entry = DateEntry(main_frame,
                           width=16,
                           year=2024,
@@ -77,16 +79,60 @@ def register_widgets(master):
                           )
     bdt_entry.place(x=55,y=230)
 
-    # gen_options
+    gen_options = ctk.CTkComboBox(main_frame,
+                                  width=365,
+                                  height=56,
+                                  values=["Masculino", "Feminino", "Outros"],
+                                  font=("Arial", 16, "bold"),
+                                  dropdown_font=("Arial", 16, "bold"),
+                                  corner_radius=20
+                                  )
+    gen_options.set("Gênero")
+    gen_options.place(x=55,y=343)
 
-    # email_entry
+    email_entry = ctk.CTkEntry(main_frame,
+                              width=365,
+                              height=56,
+                              placeholder_text="E-mail",
+                              font=("Arial", 16, "bold"),
+                              corner_radius=20,
+                              )
+    email_entry.place(x=55, y=456)
 
-    # area_entry
+    area_entry = ctk.CTkEntry(main_frame,
+                              width=365,
+                              height=56,
+                              placeholder_text="Área",
+                              font=("Arial", 16, "bold"),
+                              corner_radius=20,
+                              )
+    area_entry.place(x=524, y=174)
 
-    # pos_entry
+    pos_entry = ctk.CTkEntry(main_frame,
+                              width=365,
+                              height=56,
+                              placeholder_text="Cargo",
+                              font=("Arial", 16, "bold"),
+                              corner_radius=20,
+                              )
+    pos_entry.place(x=524, y=287)
 
-    # wag_entry
+    wag_entry = ctk.CTkEntry(main_frame,
+                              width=365,
+                              height=56,
+                              placeholder_text="Salário",
+                              font=("Arial", 16, "bold"),
+                              corner_radius=20,
+                              )
+    wag_entry.place(x=524, y=400)
 
-    # reg_btn
+    reg_btn = ctk.CTkButton(main_frame,
+                            width=170,
+                            height=56,
+                            text="Cadastrar",
+                            font=("Arial", 20, "bold"),
+                            corner_radius=20
+                            )
+    reg_btn.place(x=387,y=610)
 
 
