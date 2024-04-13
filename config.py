@@ -29,7 +29,7 @@ def create_user(nome, data_nascimento, email, cargo, salario, data_admissao, sta
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -55,7 +55,7 @@ def read_user(nome=None):
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -80,7 +80,7 @@ def create_admin(nome, user, senha, email, ultimo_acesso):
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -101,7 +101,7 @@ def delete_admin(user, email):
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
     cursor = conexao.cursor()
 
@@ -116,7 +116,7 @@ def auth_admin(login, password):
     #Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -202,7 +202,7 @@ def recover_pass(email, user):
         try:
             dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                     "Server=localhost;"
-                    "Database=gerenciador.db")
+                    "Database=DB\gerenciador.db")
             conexao = pyodbc.connect(dados_conexao)
 
             cursor = conexao.cursor()
@@ -223,7 +223,7 @@ def verify_email(email):
     #Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -243,7 +243,7 @@ def verify_user(email, user):
     #Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -263,7 +263,7 @@ def verify_code(email, user, entry_code):
     #Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -283,7 +283,7 @@ def update_pass(email, user, nova_senha):
         #Conexão com o banco de dados
         dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                     "Server=localhost;"
-                    "Database=gerenciador.db")
+                    "Database=DB\gerenciador.db")
         conexao = pyodbc.connect(dados_conexao)
 
         cursor = conexao.cursor()
@@ -303,7 +303,7 @@ def update_pass(email, user, nova_senha):
 def update_last_access(login, senha):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                     "Server=localhost;"
-                    "Database=gerenciador.db")
+                    "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -317,7 +317,7 @@ def get_admin_info(user, email):
      #Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -337,7 +337,7 @@ E-mail: {resultado[0][1]}
 def delete_admin(user, email):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
@@ -358,7 +358,7 @@ def delete_admin(user, email):
 def del_code(email, user):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
-                "Database=gerenciador.db")
+                "Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
