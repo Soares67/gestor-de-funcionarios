@@ -43,3 +43,6 @@ MOON_ICON = CTkImage(light_image=img12, size=(32, 31))
 
 img13 = Image.open(r'Icons\imgs\icons8-sun-50.png')
 SUN_ICON = CTkImage(light_image=img13, size=(32, 31))
+
+employees_img = Image.open(r'Icons\imgs\employees.png')
+EMPLOYEES_IMG = CTkImage(light_image=employees_img, size=(368, 269))
