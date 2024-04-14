@@ -46,3 +46,6 @@ SUN_ICON = CTkImage(light_image=img13, size=(32, 31))
 
 employees_img = Image.open(r'Icons\imgs\employees.png')
 EMPLOYEES_IMG = CTkImage(light_image=employees_img, size=(368, 269))
+
+refresh_icon = Image.open(r'Icons\imgs\icons8-refresh-32.png')
+REFRESH_ICON = CTkImage(light_image=refresh_icon, size=(32, 31))

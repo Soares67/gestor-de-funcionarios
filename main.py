@@ -917,6 +917,7 @@ class Gestor(tk.Tk):
         self.bar_status = "reduced"
         self.admin_status = AdminStatus()
         self.resizable(False, False)
+        self.lista_funcionarios = config.get_funcionarios()
 
         #Home
         home_widgets(self)
@@ -977,8 +978,8 @@ class Gestor(tk.Tk):
                                          height=720,
                                          fg_color=self.tema_atual,
                                          )
-        self.cadastrar_frame.place(x=53,y=0)
-        register_widgets(self.cadastrar_frame)
+        self.cadastrar_frame.place(x=52,y=0)
+        register_widgets(self.cadastrar_frame, self.lista_funcionarios)
 
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,
@@ -1075,7 +1076,7 @@ class Gestor(tk.Tk):
                                        )
         self.promover_btn.place(x=2, y=385)
         self.promover_btn.name = "promover"
-        self.tooltip5 = CTkToolTip(self.promover_btn, "Promover", delay=0.1)
+        self.tooltip5 = CTkToolTip(self.promover_btn, "Promover/Demitir", delay=0.1)
 
         #Botão de Horas extras
         self.hora_extra_btn = ctk.CTkButton(self.sidebar_bg,
