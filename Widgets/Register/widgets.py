@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from Icons.iconspath import EMPLOYEES_IMG, REFRESH_ICON
+import functions
 
+# Função principal
 def register_widgets(master, lista_funcionarios):
 
     # Control Vars
