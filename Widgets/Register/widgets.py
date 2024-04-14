@@ -37,18 +37,34 @@ def register_widgets(master, lista_funcionarios):
             refresh_list()
 
     # Função do botão de registro
-    def register_checker(name, bn_date, email, area, position, salary):
+    def register_checker(name, bn_date, email, area, position, salary, gender):
         if functions.check_name(name):
             if functions.check_date(bn_date):
-                if functions.check_email(email):
-                    if functions.check_field(area, 2):
-                        if functions.check_field(position, 2):
-                            if functions.check_salary(salary):
-                                print('Tudo OK')
-                        else:
-                            msg.showwarning("Erro", "O campo de cargo deve ter no mínimo 2 dígitos")
-                    else:
-                            msg.showwarning("Erro", "O campo de área deve ter no mínimo 2 dígitos")
+                if gender != "Gênero":
+                  if functions.check_email(email):
+                      if functions.check_field(area, 2):
+                          if functions.check_field(position, 2):
+                              if functions.check_salary(salary):
+                                if msg.askyesnocancel("Atenção", f"""
+O funcionário será cadastrado com os seguintes dados:
+                                                     
+Nome: {name}
+Data de nascimento: {bn_date}
+Genero: {gender}
+E-mail: {email}
+Área: {area}
+Cargo: {position}
+Salário: {salary}
+
+Deseja confirmar a ação?
+"""):
+                                    print('Funcionário Cadastrado')
+                          else:
+                              msg.showwarning("Erro", "O campo de cargo deve ter no mínimo 2 dígitos")
+                      else:
+                              msg.showwarning("Erro", "O campo de área deve ter no mínimo 2 dígitos")
+                else:
+                    msg.showwarning("Erro", "Escolha uma opção para o gênero")
             
             
 
@@ -250,7 +266,8 @@ def register_widgets(master, lista_funcionarios):
                                                              email_entry.get(),
                                                              area_entry.get(),
                                                              pos_entry.get(),
-                                                             wag_entry.get()
+                                                             wag_entry.get(),
+                                                             gen_options.get()
                                                              )
                             )
     reg_btn.place(x=387,y=610)
