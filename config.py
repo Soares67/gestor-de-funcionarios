@@ -20,11 +20,13 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
     Args:
         nome (str): Nome do funcionário
         data_nascimento (str): Data de nascimento do funcionario no formato DD/MM/AAAA
+        genero (str): Gênero do funcionário, podendo ser (Masculino/Feminino/Outros)
         email (str): Email do funcionário
+        area (str): Área de atuação do funcionário
         cargo (str): Cargo do funcionário
         salario (int/float): Salário do funcionário
         data_admissao (str): Data de admissão do funcionário no formato DD/MM/AAAA H:M:S
-        status_emprego (str): Status de emprego do funcionrio (empregado/afastado/aposentado)
+        status_emprego (str): Status de emprego do funcionário (empregado/afastado/aposentado)
     """
     #Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"

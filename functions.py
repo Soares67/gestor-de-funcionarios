@@ -150,8 +150,16 @@ def check_date(date):
         msg.showwarning("Erro", "O campo deve estar preenchido")
         return False
 
-
+# Checa se um email é válido
 def check_email(email):
+    """Verifica se um endereço de email é válido de acordo com os critérios especificados.
+
+    Args:
+        email (str): O endereço de email a ser verificado.
+
+    Returns:
+        bool: True se o endereço de email for válido, False caso contrário.
+    """
     SERVERS = [
     "gmail.com",
     "outlook.com",
@@ -192,8 +200,31 @@ def check_email(email):
         msg.showwarning("Erro", "O email não pode estar em branco")
         return False
 
+# Checa um campo de salário
+def check_salary(salary):
+    """
+    Verifica se o salário fornecido atende aos critérios.
 
+    Args:
+        salary (float or str): O salário a ser verificado.
 
+    Returns:
+        bool: True se o salário atender aos critérios, False caso contrário.
+    """
+    if len(str(salary).replace(",", "").replace(".", "")) >= 4:  # Deve ter no mínimo 4 dígtos
+        return True
+    else:
+        msg.showwarning("Erro", "O salário deve ter no mínimo 4 dígitos")
+        return False
 
-email = "santtdev@gmail.com"
-check_email(email=email)
+# Converte um número padrão brasileiro em float
+def convert_salary(salary):
+    try:
+        salary = float(salary.replace(".", "").replace(",", "."))  # No caso de "1.200,50"
+    except:
+        salary = float(salary.replace(",", "."))  # No caso de "1200,50"
+    else:
+        salary = float(salary)  # No caso de nenhuma das alternativas acima
+    finally:
+        return salary
+
