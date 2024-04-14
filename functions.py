@@ -63,7 +63,7 @@ def check_field(field, min_len):
     """Checa se um campo possui a qtde mínima de dígitos
     
     Args:
-        field (tkinter.Entry): Campo que será checado
+        field (str): Campo que será checado
         min_len (int): Quantidade mínima de caracteres
     
     Returns:
@@ -89,13 +89,13 @@ def check_name(name):
             if len(name.split()) >= 2:  # No mínimo 2 palavras (deve ser composto)
                 return True
             else:
-               msg.showwarning("Erro", "O nome deve ter pelo menos duas palavras.")
+               msg.showwarning("Erro", "O nome deve ter pelo menos duas palavras")
                return False
         else:
-            msg.showwarning("Erro", "O nome deve ter no mínimo 5 caracteres.")
+            msg.showwarning("Erro", "O nome deve ter no mínimo 5 caracteres")
             return False
     else:
-        msg.showwarning("Erro", "O nome não pode estar em branco.")
+        msg.showwarning("Erro", "O nome não pode estar em branco")
         return False
             
 # Checa um campo de datas com regras específicas
@@ -109,39 +109,42 @@ def check_date(date):
         bool: True se a data estiver no formato válido e dentro dos limites permitidos, False caso contrário.
     """
     if date:  # Não pode estar em branco
-        if len(date.split("/")) == 3:  # DD/MM/AAAA
-            if date.count("/") == 2:  # 2 barras
-                if len(date.split("/")[0]) == 2:  # Dois dígitos no dia
-                    if len(date.split("/")[1]) == 2:  # Dois dígitos no mês
-                        if len(date.split("/")[2]) == 4:  # Quatro dígitos no ano
-                            if int(date.split("/")[0]) <= 31:  # Dia deve ser no máximo 31
-                                if int(date.split("/")[1]) == 2 and int(date.split("/")[0]) <= 29 or int(date.split("/")[0]) <= 28:  # Fevereiro
-                                    if int(date.split("/")[1]) <= 12:  # Mês deve ser no máximo 12
-                                        if int(date.split("/")[2]) >= int(config.timenow()[6:10]) - 70:  # funcionário deve ter no máximo 70 anos
-                                            return True
-                                        else:
-                                            msg.showwarning("Erro", "A idade máxima é de 70 anos")
-                                            return False
-                                    else:
-                                        msg.showwarning("Erro", "O mês deve ser no máximo 12")
-                                        return False
-                                else:
-                                    msg.showwarning("Erro", "Data inválida para fevereiro")
-                                    return False
-                            else:
-                                msg.showwarning("Erro", "O dia deve ser no máximo 31")
-                                return False
+        parts = date.split("/")
+        if len(parts) == 3:  # DD/MM/AAAA
+            day, month, year = parts
+            try:
+                day = int(day)
+                month = int(month)
+                year = int(year)
+            except ValueError:
+                msg.showwarning("Erro", "A data deve conter apenas números")
+                return False
+            
+            if 1 <= month <= 12:  # Mês deve estar entre 1 e 12
+                if 1 <= day <= 31:  # Dia deve estar entre 1 e 31
+                    if month == 2:  # Fevereiro
+                        if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:  # Ano bissexto
+                            max_days = 29
                         else:
-                            msg.showwarning("Erro", "O ano deve ter 4 dígitos")
+                            max_days = 28
+                        if day <= max_days:
+                            return True
+                        else:
+                            msg.showwarning("Erro", "Dia inválido para fevereiro")
+                            return False
+                    elif month in [4, 6, 9, 11]:  # Abril, junho, setembro, novembro
+                        if day <= 30:
+                            return True
+                        else:
+                            msg.showwarning("Erro", "Dia inválido para o mês")
                             return False
                     else:
-                        msg.showwarning("Erro", "O mês deve ter 2 dígitos")
-                        return False
+                        return True
                 else:
-                    msg.showwarning("Erro", "O dia deve ter 2 dígitos")
+                    msg.showwarning("Erro", "Dia deve estar entre 1 e 31")
                     return False
             else:
-                msg.showwarning("Erro", "Data deve estar no formato DD/MM/AAAA")
+                msg.showwarning("Erro", "Mês deve estar entre 1 e 12")
                 return False
         else:
             msg.showwarning("Erro", "Data deve estar no formato DD/MM/AAAA")
@@ -176,7 +179,7 @@ def check_email(email):
                     if i in string.ascii_lowercase or i in string.ascii_uppercase or i in string.digits or i == ".":
                         pass
                     else:
-                        msg.showwarning("Erro", "O email digitado possui dígitos inválidos")
+                        msg.showwarning("Erro", f"O email digitado possui dígitos inválidos: {i}")
                         return False
                 # Verifica se o servidor do email é válido
                 valido = False  # Variável de controle
@@ -185,6 +188,7 @@ def check_email(email):
                         valido = True
                         break
                 if valido:
+                    valido = False
                     return True
                 else:
                     msg.showwarning("Erro", "O servidor do email é inválido")
@@ -219,6 +223,14 @@ def check_salary(salary):
 
 # Converte um número padrão brasileiro em float
 def convert_salary(salary):
+    """Converte um formato de string de salário padrão brasileiro para float.
+
+    Args:
+        salary (str): O salário no formato de string
+
+    Returns:
+        float: O salário convertido para float.
+    """
     try:
         salary = float(salary.replace(".", "").replace(",", "."))  # No caso de "1.200,50"
     except:
@@ -227,4 +239,3 @@ def convert_salary(salary):
         salary = float(salary)  # No caso de nenhuma das alternativas acima
     finally:
         return salary
-

@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from Icons.iconspath import EMPLOYEES_IMG, REFRESH_ICON
 import functions
+import messagebox as msg
 
 # Função principal
 def register_widgets(master, lista_funcionarios):
@@ -35,7 +36,22 @@ def register_widgets(master, lista_funcionarios):
             list = list.sort(reverse=True)
             refresh_list()
 
-    
+    # Função do botão de registro
+    def register_checker(name, bn_date, email, area, position, salary):
+        if functions.check_name(name):
+            if functions.check_date(bn_date):
+                if functions.check_email(email):
+                    if functions.check_field(area, 2):
+                        if functions.check_field(position, 2):
+                            if functions.check_salary(salary):
+                                print('Tudo OK')
+                        else:
+                            msg.showwarning("Erro", "O campo de cargo deve ter no mínimo 2 dígitos")
+                    else:
+                            msg.showwarning("Erro", "O campo de área deve ter no mínimo 2 dígitos")
+            
+            
+
     # Frame da imagem
     img_frame = ctk.CTkFrame(master,
                              fg_color="#FB9C8D",
@@ -228,7 +244,14 @@ def register_widgets(master, lista_funcionarios):
                             border_color="#FB9C8D",
                             hover_color="#155e75",
                             border_width=2,
-                            fg_color="#171717"
+                            fg_color="#171717",
+                            command=lambda: register_checker(name_entry.get(),
+                                                             bdt_entry.get(),
+                                                             email_entry.get(),
+                                                             area_entry.get(),
+                                                             pos_entry.get(),
+                                                             wag_entry.get()
+                                                             )
                             )
     reg_btn.place(x=387,y=610)
 
