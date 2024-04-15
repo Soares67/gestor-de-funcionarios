@@ -917,7 +917,6 @@ class Gestor(tk.Tk):
         self.bar_status = "reduced"
         self.admin_status = AdminStatus()
         self.resizable(False, False)
-        self.lista_funcionarios = config.get_funcionarios()
 
         #Home
         home_widgets(self)
@@ -979,7 +978,7 @@ class Gestor(tk.Tk):
                                          fg_color=self.tema_atual,
                                          )
         self.cadastrar_frame.place(x=52,y=0)
-        register_widgets(self.cadastrar_frame, self.lista_funcionarios)
+        register_widgets(self.cadastrar_frame)
 
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,

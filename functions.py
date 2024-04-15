@@ -121,27 +121,31 @@ def check_date(date):
                 return False
             
             if 1 <= month <= 12:  # Mês deve estar entre 1 e 12
-                if 1 <= day <= 31:  # Dia deve estar entre 1 e 31
-                    if month == 2:  # Fevereiro
-                        if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:  # Ano bissexto
-                            max_days = 29
+                if int(config.timenow()[6:10]) - year <= 70:
+                    if 1 <= day <= 31:  # Dia deve estar entre 1 e 31
+                        if month == 2:  # Fevereiro
+                            if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:  # Ano bissexto
+                                max_days = 29
+                            else:
+                                max_days = 28
+                            if day <= max_days:
+                                return True
+                            else:
+                                msg.showwarning("Erro", "Dia inválido para fevereiro")
+                                return False
+                        elif month in [4, 6, 9, 11]:  # Abril, junho, setembro, novembro
+                            if day <= 30:
+                                return True
+                            else:
+                                msg.showwarning("Erro", "Dia inválido para o mês")
+                                return False
                         else:
-                            max_days = 28
-                        if day <= max_days:
                             return True
-                        else:
-                            msg.showwarning("Erro", "Dia inválido para fevereiro")
-                            return False
-                    elif month in [4, 6, 9, 11]:  # Abril, junho, setembro, novembro
-                        if day <= 30:
-                            return True
-                        else:
-                            msg.showwarning("Erro", "Dia inválido para o mês")
-                            return False
                     else:
-                        return True
+                        msg.showwarning("Erro", "Dia deve estar entre 1 e 31")
+                        return False
                 else:
-                    msg.showwarning("Erro", "Dia deve estar entre 1 e 31")
+                    msg.showwarning("Erro", "A idade máxima é de 70 anos")
                     return False
             else:
                 msg.showwarning("Erro", "Mês deve estar entre 1 e 12")

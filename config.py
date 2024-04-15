@@ -3,6 +3,7 @@ import pyodbc
 from datetime import datetime
 import pytz
 import random
+import messagebox as msg
 import string
 import smtplib
 from email.mime.text import MIMEText
@@ -36,15 +37,23 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"""
-INSERT INTO funcionarios ('Nome', 'Data Nascimento', 'Genero', 'Email', 'Area', 'Cargo', 'Salario', 'Data Admissao', 'Status Emprego')
-VALUES
-("{nome}", "{data_nascimento}", "{genero}", "{email}", "{area}", "{cargo}", {salario}, "{data_admissao}", "{status_emprego}")
-""")
+    cursor.execute(f"SELECT COUNT(*) FROM funcionarios WHERE Email = ?", (email))
+    if cursor.fetchone()[0] > 0:
+        msg.showerror("Erro", "O e-mail inserido já está cadastrado")
+        return False
+    else:
+        
+        cursor.execute(f"""
+    INSERT INTO funcionarios ('Nome', 'Data Nascimento', 'Genero', 'Email', 'Area', 'Cargo', 'Salario', 'Data Admissao', 'Status Emprego')
+    VALUES
+    ("{nome}", "{data_nascimento}", "{genero}", "{email}", "{area}", "{cargo}", {salario}, "{data_admissao}", "{status_emprego}")
+    """)
+        
 
-    cursor.commit()
+        cursor.commit()
 
-    cursor.close()
+        cursor.close()
+        return True
 
 #Lê o banco de dados
 def read_user(nome=None):

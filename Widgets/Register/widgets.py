@@ -2,17 +2,19 @@ import customtkinter as ctk
 from Icons.iconspath import EMPLOYEES_IMG, REFRESH_ICON
 import functions
 import messagebox as msg
+import config
 
 # Função principal
-def register_widgets(master, lista_funcionarios):
+def register_widgets(master):
 
     # Control Vars
     actual_filter = None
     labels = []
-
+    lista_funcionarios = config.get_funcionarios()
+    
     # Exibe os nomes dos funcionários
-    def list_employees(frame):
-        for i in lista_funcionarios:
+    def list_employees(frame, lista):
+        for i in lista:
             name = ctk.CTkLabel(frame, font=("Arial", 18, "bold"), text_color="black", text=i)
             name.pack(pady=2)
             labels.append(name)
@@ -22,19 +24,23 @@ def register_widgets(master, lista_funcionarios):
         for label in labels:
             label.destroy()
 
-    # Limpa e adiciona novamente o nome dos funcionários
-    def refresh_list():
+    # Atualiza a lista de nomes
+    def refresh_func():
+        global lista_funcionarios
         clear_names()
-        list_employees(emp_list)
-    
+        lista_funcionarios = config.get_funcionarios()
+        list_employees(emp_list, lista_funcionarios)
+
     # Aplica o filtro de ordem e atualiza a lista
     def onclick(var, list):
         if var == "A-Z":
             list = list.sort()
-            refresh_list()
+            clear_names()
+            list_employees(emp_list, lista_funcionarios)
         elif var == "Z-A":
             list = list.sort(reverse=True)
-            refresh_list()
+            clear_names()
+            list_employees(emp_list, lista_funcionarios)
 
     # Função do botão de registro
     def register_checker(name, bn_date, email, area, position, salary, gender):
@@ -58,7 +64,26 @@ Salário: {salary}
 
 Deseja confirmar a ação?
 """):
-                                    print('Funcionário Cadastrado')
+                                    try:
+                                        if config.create_user(name.capitalize(),
+                                                           bn_date,
+                                                           gender,
+                                                           email,
+                                                           area,
+                                                           position,
+                                                           functions.convert_salary(salary),
+                                                           config.timenow()[:10],
+                                                           "Empregado"):
+                                            msg.showinfo("Atenção", "Funcionário cadastrado com sucesso")
+                                            name_entry.delete(0, "end")
+                                            bdt_entry.delete(0, "end")
+                                            gen_options.set("Gênero")
+                                            email_entry.delete(0, "end")
+                                            area_entry.delete(0, "end")
+                                            pos_entry.delete(0, "end")
+                                            wag_entry.delete(0, "end")
+                                    except:
+                                        msg.showerror("Erro", "Não foi possível realizar o cadastro. Tente novamente")
                           else:
                               msg.showwarning("Erro", "O campo de cargo deve ter no mínimo 2 dígitos")
                       else:
@@ -66,8 +91,6 @@ Deseja confirmar a ação?
                 else:
                     msg.showwarning("Erro", "Escolha uma opção para o gênero")
             
-            
-
     # Frame da imagem
     img_frame = ctk.CTkFrame(master,
                              fg_color="#FB9C8D",
@@ -123,6 +146,7 @@ Deseja confirmar a ação?
                                     command=lambda actual_filter: onclick(actual_filter, lista_funcionarios),
                                     border_color="#FB9C8D"
                                     )
+    search_filter.set("Filtro")
     search_filter.place(x=300,y=5)
 
     # Botão de atualizar a lista de funcionários
@@ -131,7 +155,7 @@ Deseja confirmar a ação?
                                    width=40,
                                    height=48,
                                    image=REFRESH_ICON,
-                                   command=lambda: refresh_list(),
+                                   command=lambda: refresh_func(),
                                    corner_radius=50,
                                    fg_color="transparent",
                                    hover_color="#155e75"
@@ -272,5 +296,5 @@ Deseja confirmar a ação?
                             )
     reg_btn.place(x=387,y=610)
 
-    list_employees(emp_list)
+    list_employees(emp_list, lista_funcionarios)
 
