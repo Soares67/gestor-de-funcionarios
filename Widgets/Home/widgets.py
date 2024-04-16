@@ -77,4 +77,4 @@ def home_widgets(master):
                             border_color="#FB9C8D",
                             fg_color="#171717"
                             )
-    ref_btn.place(x=1200,y=8)
+    ref_btn.place(x=1200,y=10)
