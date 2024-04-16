@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from Icons.iconspath import REFRESH_ICON
 
 def home_widgets(master):
 
@@ -67,14 +68,14 @@ def home_widgets(master):
 
     #Botão de atualizar as informações
     ref_btn = ctk.CTkButton(header_frame,
-                            text="Atualizar",
+                            text="",
+                            image=REFRESH_ICON,
                             command=lambda: print("Atualizar"),
-                            font=("Roboto", 16, "bold"),
-                            width=90,
-                            height=35,
                             corner_radius=20,
-                            border_width=2,
-                            border_color="#FB9C8D",
-                            fg_color="#171717"
-                            )
-    ref_btn.place(x=1200,y=10)
+                            width=20,
+                            height=20,
+                            fg_color="transparent",
+                            border_color="white",
+                            border_width=2
+    )
+    ref_btn.place(x=1200,y=7)
