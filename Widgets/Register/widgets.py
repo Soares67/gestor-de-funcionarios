@@ -32,14 +32,16 @@ def register_widgets(master):
         list_employees(emp_list, lista_funcionarios)
 
     # Aplica o filtro de ordem e atualiza a lista
-    def onclick(var, list):
+    def onclick(var):
         if var == "A-Z":
-            list = list.sort()
             clear_names()
+            lista_funcionarios = config.get_funcionarios()
+            lista_funcionarios.sort()
             list_employees(emp_list, lista_funcionarios)
         elif var == "Z-A":
-            list = list.sort(reverse=True)
             clear_names()
+            lista_funcionarios = config.get_funcionarios()
+            lista_funcionarios.sort(reverse=True)
             list_employees(emp_list, lista_funcionarios)
 
     # Função do botão de registro
@@ -143,7 +145,7 @@ Deseja confirmar a ação?
                                     fg_color="#171717",
                                     button_color="#FB9C8D",
                                     button_hover_color="#d47770",
-                                    command=lambda actual_filter: onclick(actual_filter, lista_funcionarios),
+                                    command=lambda actual_filter: onclick(actual_filter),
                                     border_color="#FB9C8D"
                                     )
     search_filter.set("Filtro")
