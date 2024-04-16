@@ -92,13 +92,13 @@ Deseja confirmar a ação?
                               msg.showwarning("Erro", "O campo de área deve ter no mínimo 2 dígitos")
                 else:
                     msg.showwarning("Erro", "Escolha uma opção para o gênero")
-            
+
     # Frame da imagem
     img_frame = ctk.CTkFrame(master,
                              fg_color="#FB9C8D",
-                             width=400,
+                             width=404,
                              height=300,
-                             
+                             corner_radius=0
                              )
     img_frame.place(x=0,y=0)
 
@@ -113,7 +113,8 @@ Deseja confirmar a ação?
     list_frame = ctk.CTkFrame(master,
                               fg_color="#fb9c8d",
                               width=400,
-                              height=418
+                              height=418,
+                              corner_radius=0
                               )
     list_frame.place(x=0,y=300)
 
@@ -121,7 +122,8 @@ Deseja confirmar a ação?
     list_header_frame = ctk.CTkFrame(list_frame,
                                      fg_color="#0891b2",
                                      width=410,
-                                     height=50
+                                     height=50,
+                                     corner_radius=0
                                     )
     list_header_frame.place(x=0,y=0)
 
@@ -176,7 +178,8 @@ Deseja confirmar a ação?
     main_frame = ctk.CTkFrame(master,
                               fg_color="#0891b2",
                               width=948,
-                              height=718
+                              height=718,
+                              corner_radius=0,
                               )
     main_frame.place(x=400,y=0)
 
@@ -297,6 +300,35 @@ Deseja confirmar a ação?
                                                              )
                             )
     reg_btn.place(x=387,y=610)
+
+    # Delimitadores (bordas)
+    img_right = ctk.CTkFrame(master,
+                             width=2,
+                             height=300,
+                             fg_color="#171717"
+                             )
+    img_right.place(x=398,y=0)
+
+    img_down = ctk.CTkFrame(master,
+                             width=400,
+                             height=2,
+                             fg_color="#171717"
+                             )
+    img_down.place(x=0,y=300)
+
+    list_top = ctk.CTkFrame(master,
+                             width=400,
+                             height=3,
+                             fg_color="#171717"
+                             )
+    list_top.place(x=0,y=347)
+
+    list_right = ctk.CTkFrame(master,
+                             width=2,
+                             height=420,
+                             fg_color="#171717"
+                             )
+    list_right.place(x=400,y=347)
 
     list_employees(emp_list, lista_funcionarios)
 
