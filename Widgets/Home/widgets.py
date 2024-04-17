@@ -30,6 +30,83 @@ def home_widgets(master):
                           )
     stat_frame.place(x=40,y=50)
 
+    # Título da quantidade de  funcionários
+    qtde_emp_title = ctk.CTkLabel(stat_frame,
+                                   text="Quantidade de Funcionários",
+                                   font=("Roboto", 26, "bold"),
+
+    )
+    qtde_emp_title.place(x=53,y=40)
+
+    # Label da quantidade de funcionários
+    qtde_emp = ctk.CTkLabel(stat_frame,
+                            text="200",
+                            font=("Roboto", 28, "bold"),
+                            width=309,
+                            height=66,
+                            text_color="white",
+                            fg_color="black",
+                            corner_radius=20
+                            )
+    qtde_emp.place(x=77,y=80)
+
+    # Título do salário médio bruto
+    sal_mean_title = ctk.CTkLabel(stat_frame,
+                                  text="Salário Médio Bruto",
+                                  font=("Roboto", 26, "bold"),
+
+                                  )
+    sal_mean_title.place(x=110,y=196)
+
+    # Label do salário médio bruto
+    val_sal_mean = ctk.CTkLabel(stat_frame,
+                            text="3.200,00",
+                            font=("Roboto", 28, "bold"),
+                            width=309,
+                            height=66,
+                            text_color="white",
+                            fg_color="black",
+                            corner_radius=20
+                            )
+    val_sal_mean.place(x=77,y=236)
+
+    # Título do maior salário
+    max_sal_title = ctk.CTkLabel(stat_frame,
+                                 text="Maior Salário",
+                                 font=("Roboto", 26, "bold"),
+                                 )
+    max_sal_title.place(x=150,y=352)
+
+    # Label do maior salário
+    max_sal_val = ctk.CTkLabel(stat_frame,
+                            text="6.500,00",
+                            font=("Roboto", 28, "bold"),
+                            width=309,
+                            height=66,
+                            text_color="white",
+                            fg_color="black",
+                            corner_radius=20
+                            )
+    max_sal_val.place(x=77,y=392)
+
+    # Título do menor salário
+    min_sal_title = ctk.CTkLabel(stat_frame,
+                    text="Menor Salário",
+                    font=("Roboto", 26, "bold")
+                    )
+    min_sal_title.place(x=150,y=508)
+
+    min_sal_val = ctk.CTkLabel(stat_frame,
+                            text="1.300,00",
+                            font=("Roboto", 28, "bold"),
+                            width=309,
+                            height=66,
+                            text_color="white",
+                            fg_color="black",
+                            corner_radius=20
+                            )
+    min_sal_val.place(x=77,y=548)
+
     #Frame do gráfico de gêneros
     gen_frame = ctk.CTkFrame(master,
                              width=456,
