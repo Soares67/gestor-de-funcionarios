@@ -25,7 +25,7 @@ def home_widgets(master):
     stat_frame = ctk.CTkFrame(master,
                           width=455,
                           height=668,
-                          fg_color="red",
+                          fg_color="#FB9C8D",
                           corner_radius=0
                           )
     stat_frame.place(x=40,y=50)
@@ -34,7 +34,7 @@ def home_widgets(master):
     qtde_emp_title = ctk.CTkLabel(stat_frame,
                                    text="Quantidade de Funcionários",
                                    font=("Roboto", 26, "bold"),
-
+                    text_color="black",
     )
     qtde_emp_title.place(x=53,y=40)
 
@@ -44,8 +44,8 @@ def home_widgets(master):
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
-                            text_color="white",
-                            fg_color="black",
+                            text_color="black",
+                            fg_color="#e4e4e7",
                             corner_radius=20
                             )
     qtde_emp.place(x=77,y=80)
@@ -54,6 +54,7 @@ def home_widgets(master):
     sal_mean_title = ctk.CTkLabel(stat_frame,
                                   text="Salário Médio Bruto",
                                   font=("Roboto", 26, "bold"),
+                    text_color="black"
 
                                   )
     sal_mean_title.place(x=110,y=196)
@@ -64,8 +65,8 @@ def home_widgets(master):
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
-                            text_color="white",
-                            fg_color="black",
+                            text_color="black",
+                            fg_color="#e4e4e7",
                             corner_radius=20
                             )
     val_sal_mean.place(x=77,y=236)
@@ -74,6 +75,7 @@ def home_widgets(master):
     max_sal_title = ctk.CTkLabel(stat_frame,
                                  text="Maior Salário",
                                  font=("Roboto", 26, "bold"),
+                    text_color="black"
                                  )
     max_sal_title.place(x=150,y=352)
 
@@ -83,8 +85,8 @@ def home_widgets(master):
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
-                            text_color="white",
-                            fg_color="black",
+                            text_color="black",
+                            fg_color="#e4e4e7",
                             corner_radius=20
                             )
     max_sal_val.place(x=77,y=392)
@@ -92,17 +94,19 @@ def home_widgets(master):
     # Título do menor salário
     min_sal_title = ctk.CTkLabel(stat_frame,
                     text="Menor Salário",
-                    font=("Roboto", 26, "bold")
+                    font=("Roboto", 26, "bold"),
+                    text_color="black"
                     )
     min_sal_title.place(x=150,y=508)
 
+    # Label do menor salário
     min_sal_val = ctk.CTkLabel(stat_frame,
                             text="1.300,00",
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
-                            text_color="white",
-                            fg_color="black",
+                            text_color="black",
+                            fg_color="#e4e4e7",
                             corner_radius=20
                             )
     min_sal_val.place(x=77,y=548)
@@ -118,7 +122,7 @@ def home_widgets(master):
 
     #Frame do gráfico de idades
     age_frame = ctk.CTkFrame(master,
-                             width=456,
+                             width=1404,
                              height=336,
                              fg_color="blue",
                              corner_radius=0
@@ -129,19 +133,10 @@ def home_widgets(master):
     area_frame = ctk.CTkFrame(master,
                              width=455,
                              height=334,
-                             fg_color="orange",
+                             fg_color="red",
                              corner_radius=0
                              )
     area_frame.place(x=949,y=50)
-
-    #Frame do gráfico de cargos
-    pos_frame = ctk.CTkFrame(master,
-                             width=456,
-                             height=336,
-                             fg_color="purple",
-                             corner_radius=0
-                             )
-    pos_frame.place(x=949,y=382)
 
     #Botão de atualizar as informações
     ref_btn = ctk.CTkButton(header_frame,
@@ -153,6 +148,30 @@ def home_widgets(master):
                             height=20,
                             fg_color="transparent",
                             border_color="white",
-                            border_width=2
+                            border_width=2,
+                            hover_color="#155e75"
     )
     ref_btn.place(x=1200,y=7)
+
+    # Delimitadores
+
+    stats_del = ctk.CTkFrame(master,
+                             width=2,
+                             height=668,
+                             fg_color="black"
+                             )
+    stats_del.place(x=494,y=50)
+
+    age_del = ctk.CTkFrame(master,
+                             width=1404,
+                             height=2,
+                             fg_color="black"
+                             )
+    age_del.place(x=494,y=382)
+
+    gen_del = ctk.CTkFrame(master,
+                             width=2,
+                             height=334,
+                             fg_color="black"
+                             )
+    gen_del.place(x=949,y=50)
