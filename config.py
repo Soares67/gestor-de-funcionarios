@@ -11,10 +11,10 @@ from email.mime.multipart import MIMEMultipart
 from private import APP_KEY, MAIL
 
 
-#Todos as funções dos CRUDs necessários para o sistema
+# Todos as funções dos CRUDs necessários para o sistema
 
 
-#Cria um usuário
+# Cria um usuário
 def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data_admissao, status_emprego):
     """Cadastra um funcionário no banco de dados
 
@@ -29,7 +29,7 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
         data_admissao (str): Data de admissão do funcionário no formato DD/MM/AAAA H:M:S
         status_emprego (str): Status de emprego do funcionário (empregado/afastado/aposentado)
     """
-    #Cria a conexão
+    # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -55,15 +55,15 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
         cursor.close()
         return True
 
-#Lê o banco de dados
+# Lê o banco de dados
 def read_user(nome=None):
-    #Define o tipo da busca
+    # Define o tipo da busca
     if nome is None:
         busca = f"SELECT * FROM funcionarios"
     elif nome is not None:
         busca = f"SELECT * FROM funcionarios Where [Nome] = '{nome}'"
 
-    #Cria a conexão
+    # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -77,7 +77,7 @@ def read_user(nome=None):
     cursor.close()
     return dados
 
-#Cria um admin
+# Cria um admin
 def create_admin(nome, user, senha, email, ultimo_acesso):
     """Cadastra um administrador no banco de dados
 
@@ -88,7 +88,7 @@ def create_admin(nome, user, senha, email, ultimo_acesso):
         email (str): E-mail do administrador
         ultimo_acesso (str): último acesso do administrador no formato DD/MM/AAAA H:M:S
     """
-    #Cria a conexão
+    # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -106,10 +106,10 @@ VALUES
 
     cursor.close()
 
-#Deleta um admin
+# Deleta um admin
 def delete_admin(user, email):
 
-    #Cria a conexão
+    # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -121,10 +121,10 @@ def delete_admin(user, email):
     cursor.commit()
     cursor.close()
 
-#Autentica um admin
+# Autentica um admin
 def auth_admin(login, password):
 
-    #Conexão com o banco de dados
+    # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -133,10 +133,10 @@ def auth_admin(login, password):
     cursor = conexao.cursor()
 
     cursor.execute(f"SELECT Senha FROM admins WHERE Usuario = ? OR Email = ?", (login, login))
-    resultado = cursor.fetchone()  #Resultado da busca
+    resultado = cursor.fetchone()  # Resultado da busca
     cursor.close()
 
-    #Checagem dos dados
+    # Checagem dos dados
     def autenticar():
         if resultado:
             senha = resultado.Senha
@@ -144,13 +144,13 @@ def auth_admin(login, password):
                 return True
         return False
     
-    #Autenticação
+    # Autenticação
     if autenticar():
         return True
     else:
         return False
 
-#Criptografa uma determinada senha
+# Criptografa uma determinada senha
 def hash_password(password):
     """Criptografa a senha determinada
 
@@ -164,7 +164,7 @@ def hash_password(password):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     return hashed_password.decode('utf-8')
 
-#Pega data e hora atuais
+# Pega data e hora atuais
 def timenow():
     """Pega a data e hora atuais
 
@@ -174,15 +174,15 @@ def timenow():
     fuso_br = pytz.timezone("America/Sao_Paulo")
     return datetime.now(fuso_br).strftime("%d/%m/%Y %H:%M:%S")
 
-#Cria um código de recuperação, atribui ao BD e envia por e-mail
+# Cria um código de recuperação, atribui ao BD e envia por e-mail
 def recover_pass(email, user):
-    code = "".join(random.choices(string.ascii_letters.upper() + string.digits, k=5))  # Cria o código de recuperação
+    code = "".join(random.choices(string.ascii_letters.upper() + string.digits, k=5))  #  Cria o código de recuperação
     def send_mail():
         # Configurações do servidor SMTP do Gmail
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587  # Porta para conexão TLS
         sender_email = MAIL  # Seu e-mail do Gmail
-        sender_password = APP_KEY   #senha do Gmail
+        sender_password = APP_KEY   # senha do Gmail
 
         # Destinatário e corpo do e-mail
         recipient_email = email
@@ -229,9 +229,9 @@ def recover_pass(email, user):
     if create_code():
         send_mail()
 
-#Verifica se um email está no BD
+# Verifica se um email está no BD
 def verify_email(email):
-    #Conexão com o banco de dados
+    # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -240,7 +240,7 @@ def verify_email(email):
     cursor = conexao.cursor()
 
     cursor.execute(f"SELECT Email FROM admins WHERE Email = ?", (email))
-    resultado = cursor.fetchone()  #Resultado da busca
+    resultado = cursor.fetchone()  # Resultado da busca
     cursor.close()
     conexao.close()
 
@@ -249,9 +249,9 @@ def verify_email(email):
     else:
         return False
 
-#Verifica se o usuário corresponde ao email inserido
+# Verifica se o usuário corresponde ao email inserido
 def verify_user(email, user):
-    #Conexão com o banco de dados
+    # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -260,7 +260,7 @@ def verify_user(email, user):
     cursor = conexao.cursor()
 
     cursor.execute(f"SELECT Usuario FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
-    resultado = cursor.fetchval()  #Resultado da busca
+    resultado = cursor.fetchval()  # Resultado da busca
     cursor.close()
     conexao.close()
 
@@ -269,9 +269,9 @@ def verify_user(email, user):
     else:
         return False
 
-#Verifica se o código inserido corresponde ao recebido por email
+# Verifica se o código inserido corresponde ao recebido por email
 def verify_code(email, user, entry_code):
-    #Conexão com o banco de dados
+    # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -280,7 +280,7 @@ def verify_code(email, user, entry_code):
     cursor = conexao.cursor()
 
     cursor.execute(f"SELECT [Codigo Temporario] FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
-    resultado = cursor.fetchval()  #Resultado da busca
+    resultado = cursor.fetchval()  # Resultado da busca
     cursor.close()
 
     if entry_code == resultado:
@@ -288,10 +288,10 @@ def verify_code(email, user, entry_code):
     else:
         return False
 
-#Redefine a senha de admin
+# Redefine a senha de admin
 def update_pass(email, user, nova_senha):
     try:
-        #Conexão com o banco de dados
+        # Conexão com o banco de dados
         dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                     "Server=localhost;"
                     r"Database=DB\gerenciador.db")
@@ -310,7 +310,7 @@ def update_pass(email, user, nova_senha):
         print(e)
         return False
 
-#Atualiza a data e hora do ultimo acesso do administrador
+# Atualiza a data e hora do ultimo acesso do administrador
 def update_last_access(login, senha):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                     "Server=localhost;"
@@ -323,9 +323,9 @@ def update_last_access(login, senha):
     cursor.close()
     conexao.close()
 
-#Pega as informações de um administrador
+#  Pega as informações de um administrador
 def get_admin_info(user, email):
-     #Conexão com o banco de dados
+     # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -334,7 +334,7 @@ def get_admin_info(user, email):
     cursor = conexao.cursor()
 
     cursor.execute(f"SELECT Nome, Email, [Ultimo Acesso] FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
-    resultado = cursor.fetchall()  #Resultado da busca
+    resultado = cursor.fetchall()  # Resultado da busca
     cursor.close()
     conexao.close()
     texto = f"""Nome: {resultado[0][0]}
@@ -344,7 +344,7 @@ E-mail: {resultado[0][1]}
 Último acesso: {resultado[0][2]}"""
     return texto
 
-#Exclui um administrador
+#  Exclui um administrador
 def delete_admin(user, email):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
@@ -365,7 +365,7 @@ def delete_admin(user, email):
         conexao.close()
         return False
 
-#Exclui o código temporário do BD
+#  Exclui o código temporário do BD
 def del_code(email, user):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
@@ -379,8 +379,9 @@ def del_code(email, user):
     cursor.close()
     conexao.close()
 
+#  Pega os nomes de todos os funcionários
 def get_funcionarios():
-    #Conexão com o banco de dados
+    # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
@@ -389,7 +390,41 @@ def get_funcionarios():
     cursor = conexao.cursor()
 
     cursor.execute(f"SELECT Nome FROM funcionarios")
-    resultado = cursor.fetchall()  #Resultado da busca
+    resultado = cursor.fetchall()  # Resultado da busca
     cursor.close()
     conexao.close()
     return [resultado[i][0] for i, row in enumerate(resultado)]
+
+#  Pega os números de funcionários por gênero
+def get_gender_stats():
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Genero FROM funcionarios")
+    resultado = cursor.fetchall()  #Resultado da busca
+    resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
+    cursor.close()
+    conexao.close()
+    return [resultado_tratado.count("Masculino"), resultado_tratado.count("Feminino"), resultado_tratado.count("Outros")]
+
+# Pega os números de funcionários por área
+def get_area_stats():
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Area FROM funcionarios")
+    resultado = cursor.fetchall()  # Resultado da busca
+    resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
+    cursor.close()
+    conexao.close()
+    return (list(set(resultado_tratado)), [resultado_tratado.count(i) for i in list(set(resultado_tratado))])

@@ -1,6 +1,8 @@
 import messagebox as msg
 import config
 import string
+import matplotlib.pyplot as plt
+import tempfile
 
 
 #Abre/Fecha um frame
