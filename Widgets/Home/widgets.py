@@ -1,9 +1,10 @@
 import customtkinter as ctk
 from Icons.iconspath import REFRESH_ICON
+from CTkToolTip import *
 
 def home_widgets(master):
 
-    #Frame do cabeçalho
+    # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
                                             width=1366,
                                             height=52,
@@ -13,15 +14,15 @@ def home_widgets(master):
                                             )
     header_frame.place(x=39, y=-2)
 
-    #Texto do cabeçalho
+    # Texto do cabeçalho
     lb1 = ctk.CTkLabel(header_frame,
-                                    text="Funcionários",
+                                    text="Página Inicial",
                                     font=("Roboto", 30, "bold"),
                                     text_color="white"
                                     )
     lb1.place(x=620,y=7)
 
-    #Frame das estatisticas
+    # Frame das estatisticas
     stat_frame = ctk.CTkFrame(master,
                           width=455,
                           height=668,
@@ -120,6 +121,15 @@ def home_widgets(master):
                              )
     gen_frame.place(x=494,y=50)
 
+    # Label do frame de gêneros
+    gen_label = ctk.CTkLabel(gen_frame,
+                             text="Funcionários por gênero",
+                             font=("Roboto", 26, "bold"),
+                             text_color="black"
+
+                             )
+    gen_label.place(x=75,y=20)
+
     #Frame do gráfico de idades
     age_frame = ctk.CTkFrame(master,
                              width=1404,
@@ -151,6 +161,7 @@ def home_widgets(master):
                             border_width=2,
                             hover_color="#155e75"
     )
+    ref_tooltip = CTkToolTip(ref_btn, "Atualizar página", 0.1)
     ref_btn.place(x=1200,y=7)
 
     # Delimitadores
