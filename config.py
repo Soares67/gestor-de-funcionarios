@@ -428,3 +428,44 @@ def get_area_stats():
     cursor.close()
     conexao.close()
     return (list(set(resultado_tratado)), [resultado_tratado.count(i) for i in list(set(resultado_tratado))])
+
+# Converte a data de nascimento em idade
+def get_age(born_date):
+    """Converte uma data de nascimento em idade
+
+    Args:
+        born_date (str): Data de nascimento no formato de string
+    
+    Returns:
+        age (int): Idade no formato inteiro
+    
+    """
+    y = datetime.strptime(born_date, "%d/%m/%Y").date()
+    today = datetime.now(pytz.timezone("America/Sao_Paulo")).date()
+    return int(str((today - y).days / 365)[:2])
+
+# Pega todas idades com base na data de nascimento de cada funcionário, e conta as ocorrências de cada idade
+def get_all_ages():
+    """Pega as idades de todos os funcionários do banco de dados e retorna uma tupla com:
+
+        - Lista de idades únicas (sem repetições)
+        - Lista de contagens de ocorrências para cada idade
+
+    Returns:
+        (list, list): Tupla contendo a lista de idades únicas e a lista de contagens de ocorrências.
+    """
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT [Data Nascimento] FROM funcionarios")
+    resultado = cursor.fetchall()  # Resultado da busca
+    ages_list = [get_age(resultado[i][0]) for i, row in enumerate(resultado)]
+    unique_ages = list(set(ages_list))
+    cursor.close()
+    conexao.close()
+    return (unique_ages, [ages_list.count(i) for i in unique_ages])
