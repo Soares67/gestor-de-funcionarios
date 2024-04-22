@@ -30,11 +30,8 @@ def home_widgets(master):
                                                                           f"R$ {functions.float_to_rs(max_salary)}", f"R$ {functions.float_to_rs(min_salary)}"
                                                                           ])
 
+    # Atualiza os gráficos
     def refresh_charts():
-        def unplot_charts(labels_list):
-            for label in labels_list:
-                label.configure(image="")
-
         functions.update_charts()
 
         gen_label.configure(image=ctk.CTkImage(Image.open(r'Charts\genders_chart.png'), size=(456, 334)))
@@ -47,12 +44,12 @@ def home_widgets(master):
     
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
-                                            width=1366,
-                                            height=52,
-                                            fg_color="#0891b2",
-                                            border_width=2,
-                                            border_color="black"
-                                            )
+                                width=1366,
+                                height=52,
+                                fg_color="#0891b2",
+                                border_width=3,
+                                border_color="black"
+                                )
     header_frame.place(x=39, y=-2)
 
     # Texto do cabeçalho
@@ -87,7 +84,7 @@ def home_widgets(master):
                             width=309,
                             height=66,
                             text_color="black",
-                            fg_color="#e4e4e7",
+                            fg_color="white",
                             corner_radius=20
                             )
     qtde_emp.place(x=77,y=80)
@@ -108,7 +105,7 @@ def home_widgets(master):
                             width=309,
                             height=66,
                             text_color="black",
-                            fg_color="#e4e4e7",
+                            fg_color="white",
                             corner_radius=20
                             )
     val_sal_mean.place(x=77,y=236)
@@ -128,7 +125,7 @@ def home_widgets(master):
                             width=309,
                             height=66,
                             text_color="black",
-                            fg_color="#e4e4e7",
+                            fg_color="white",
                             corner_radius=20
                             )
     max_sal_val.place(x=77,y=392)
@@ -148,7 +145,7 @@ def home_widgets(master):
                             width=309,
                             height=66,
                             text_color="black",
-                            fg_color="#e4e4e7",
+                            fg_color="white",
                             corner_radius=20
                             )
     min_sal_val.place(x=77,y=548)
@@ -220,7 +217,7 @@ def home_widgets(master):
     # Delimitadores
 
     stats_del = ctk.CTkFrame(master,
-                             width=2,
+                             width=3,
                              height=668,
                              fg_color="black"
                              )
@@ -228,13 +225,13 @@ def home_widgets(master):
 
     age_del = ctk.CTkFrame(master,
                              width=1404,
-                             height=2,
+                             height=3.2,
                              fg_color="black"
                              )
     age_del.place(x=494,y=382)
 
     gen_del = ctk.CTkFrame(master,
-                             width=2,
+                             width=3,
                              height=334,
                              fg_color="black"
                              )
