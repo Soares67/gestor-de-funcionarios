@@ -125,7 +125,7 @@ def home_widgets(master):
     # Gráfico dos gêneros
     gen_label = ctk.CTkLabel(gen_frame,
                              text="",
-
+                            image=ctk.CTkImage(Image.open(r'Charts\genders_chart.png'), size=(456, 334))
                              )
     gen_label.place(x=0,y=0)
 
@@ -141,6 +141,7 @@ def home_widgets(master):
     # Gráfico das idades
     ages_label = ctk.CTkLabel(age_frame,
                               text="",
+                              image=ctk.CTkImage(Image.open(r'Charts\ages_chart.png'), size=(910, 336))
                               )
     ages_label.place(x=0,y=0)
 
@@ -156,6 +157,7 @@ def home_widgets(master):
     # Gráfico das áreas
     area_label = ctk.CTkLabel(area_frame,
                               text="",
+                              image=ctk.CTkImage(Image.open(r'Charts\areas_chart.png'), size=(455, 334))
                               )
     area_label.place(x=0,y=0)
 

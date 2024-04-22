@@ -2,7 +2,7 @@ import messagebox as msg
 import config
 import string
 import matplotlib.pyplot as plt
-import tempfile
+import os
 
 
 #Abre/Fecha um frame
@@ -247,7 +247,7 @@ def convert_salary(salary):
         return salary
 
 # Cria e salva o gráfico dos gêneros
-def plotnsave_genders(qty):
+def plotnsave_genders():
     """Cria e salva um gráfico de pizza com as estatísticas de gênero dos funcionários
 
     Args:
@@ -258,13 +258,13 @@ def plotnsave_genders(qty):
     genders = ["Masculino", "Feminino", "Outros"]
 
     fig, ax = plt.subplots(figsize=(4,3))
-    ax.pie(qty, labels=genders, startangle=80, autopct="%1.1f%%", colors=colors)
+    ax.pie(config.get_gender_stats(), labels=genders, startangle=80, autopct="%1.1f%%", colors=colors)
     ax.set_title("Funcionários por gênero")
     
-    plt.savefig(r"Temp\genders_chart.png")
+    plt.savefig(r"Charts\genders_chart.png")
 
 # Cria e salva o gráfico das áreas
-def plotnsave_areas(areas, qty_areas):
+def plotnsave_areas():
     """Plota e salva um gráfico de donut com as estatísticas de áreas dos funcionários
 
     Args:
@@ -275,13 +275,15 @@ def plotnsave_areas(areas, qty_areas):
     area_colors = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15", "#fb923c", "#22d3ee", "#a3e635", "#63B3ED", "#f8a5c2"]
 
     fig, ax = plt.subplots(figsize=(4,3))
+    areas, qty_areas = config.get_area_stats()
+
     ax.pie(qty_areas, labels=areas, startangle=90, autopct="%1.1f%%", colors=area_colors, wedgeprops=dict(width=0.57))
     ax.set_title("Funcionários por área")
 
-    plt.savefig(r"Temp\areas_chart.png")
+    plt.savefig(r"Charts\areas_chart.png")
 
 # Cria e salva o gráfico das idades
-def plotnsave_ages(unique_ages, qty_ages):
+def plotnsave_ages():
     """Plota um gráfico de barras com as estatísticas das idades dos funcionários
 
     Args:
@@ -296,13 +298,27 @@ def plotnsave_ages(unique_ages, qty_ages):
               "#00f5d4", "#ff9f1c", "#7ed6df", "#8ac926", "#ff9b54",
               "#1982c4", "#d4a5a5", "#303960", "#d00000", "#8c5383"]
     
-    fig, ax = plt.subplots(figsize=(5,3))
+    fig, ax = plt.subplots(figsize=(10,3))
+
+    unique_ages, qty_ages = config.get_all_ages()
+
     ax.bar(unique_ages, qty_ages, label=colors[:len(unique_ages)], color=colors[:len(unique_ages)])
 
     ax.set_ylabel('Quantidade')
     ax.set_title('Funcionários por idade')
     ax.set_xticks(unique_ages)
 
-    plt.savefig(r"Temp\ages_chart")
+    plt.savefig(r"Charts\ages_chart")
 
-plotnsave_ages([18, 20, 21, 23, 53], [20, 14, 12, 19, 1])
+# Atualiza as informações dos gráficos
+def update_charts():
+    def delete_file(path_list):
+        for path in path_list:
+            if os.path.exists(path):
+                os.remove(path)
+    
+    delete_file([r'Charts\genders_chart.png', r'Charts\areas_chart.png', r'Charts\ages_chart.png'])
+
+    plotnsave_genders()
+    plotnsave_areas()
+    plotnsave_ages()
