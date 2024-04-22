@@ -14,6 +14,37 @@ def home_widgets(master):
     max_salary = max(config.get_salaries())
     min_salary = min(config.get_salaries())
 
+    # Atualiza as estatísticas
+    def refresh_stats():
+        global qty_employees, avg_salaries, max_salary, min_salary
+        qty_employees = len(config.get_funcionarios())
+        avg_salaries = np.mean(config.get_salaries()).round(2)
+        max_salary = max(config.get_salaries())
+        min_salary = min(config.get_salaries())
+
+        def update_values(values_list, texts_list):
+            for i, value in enumerate(values_list):
+                value.configure(text=texts_list[i])
+        
+        update_values([qtde_emp, val_sal_mean, max_sal_val, min_sal_val], [f"{qty_employees}", f"R$ {functions.float_to_rs(avg_salaries)}",
+                                                                          f"R$ {functions.float_to_rs(max_salary)}", f"R$ {functions.float_to_rs(min_salary)}"
+                                                                          ])
+
+    def refresh_charts():
+        def unplot_charts(labels_list):
+            for label in labels_list:
+                label.configure(image="")
+
+        functions.update_charts()
+
+        gen_label.configure(image=ctk.CTkImage(Image.open(r'Charts\genders_chart.png'), size=(456, 334)))
+        area_label.configure(image=ctk.CTkImage(Image.open(r'Charts\areas_chart.png'), size=(455, 334)))
+        ages_label.configure(image=ctk.CTkImage(Image.open(r'Charts\ages_chart.png'), size=(910, 336)))
+
+    def refresh_page():
+        refresh_stats()
+        refresh_charts()
+    
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
                                             width=1366,
@@ -174,7 +205,7 @@ def home_widgets(master):
     ref_btn = ctk.CTkButton(header_frame,
                             text="",
                             image=REFRESH_ICON,
-                            command=lambda: print("Atualizar"),
+                            command=lambda: refresh_page(),
                             corner_radius=20,
                             width=20,
                             height=20,
