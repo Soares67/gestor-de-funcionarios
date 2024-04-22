@@ -296,7 +296,7 @@ def plotnsave_ages(unique_ages, qty_ages):
               "#00f5d4", "#ff9f1c", "#7ed6df", "#8ac926", "#ff9b54",
               "#1982c4", "#d4a5a5", "#303960", "#d00000", "#8c5383"]
     
-    fig, ax = plt.subplots(figsize=(10,3))
+    fig, ax = plt.subplots(figsize=(5,3))
     ax.bar(unique_ages, qty_ages, label=colors[:len(unique_ages)], color=colors[:len(unique_ages)])
 
     ax.set_ylabel('Quantidade')
@@ -304,3 +304,5 @@ def plotnsave_ages(unique_ages, qty_ages):
     ax.set_xticks(unique_ages)
 
     plt.savefig(r"Temp\ages_chart")
+
+plotnsave_ages([18, 20, 21, 23, 53], [20, 14, 12, 19, 1])
