@@ -279,5 +279,3 @@ def plotnsave_areas(areas, qty_areas):
     ax.set_title("Funcionários por área")
 
     plt.savefig(r"Temp\areas_chart.png")
-
-plotnsave_areas(["TI", "Marketing", "Financeiro", "RH", "Suporte", "Comercial"], [8, 18, 7, 4, 6, 10])
