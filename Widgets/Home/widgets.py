@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from Icons.iconspath import REFRESH_ICON
 from CTkToolTip import *
+from PIL import Image
 
 def home_widgets(master):
 
@@ -117,18 +118,19 @@ def home_widgets(master):
                              width=456,
                              height=334,
                              fg_color="green",
-                             corner_radius=0
+                             corner_radius=0,
                              )
     gen_frame.place(x=494,y=50)
 
-    # Label do frame de gêneros
+    # Gráfico dos gêneros
     gen_label = ctk.CTkLabel(gen_frame,
-                             text="Funcionários por gênero",
+                             text="",
                              font=("Roboto", 26, "bold"),
-                             text_color="black"
+                             text_color="black",
+                             image=ctk.CTkImage(light_image=Image.open(r"Temp\genders_chart.png"), size=(456, 334))
 
                              )
-    gen_label.place(x=75,y=20)
+    gen_label.place(x=0,y=0)
 
     #Frame do gráfico de idades
     age_frame = ctk.CTkFrame(master,
@@ -147,6 +149,15 @@ def home_widgets(master):
                              corner_radius=0
                              )
     area_frame.place(x=949,y=50)
+
+    # Gráfico das áreas
+    area_label = ctk.CTkLabel(area_frame,
+                              text="",
+                             font=("Roboto", 26, "bold"),
+                             text_color="black",
+                             image=ctk.CTkImage(light_image=Image.open(r"Temp\areas_chart.png"), size=(456, 334))
+                              )
+    area_label.place(x=0,y=0)
 
     #Botão de atualizar as informações
     ref_btn = ctk.CTkButton(header_frame,

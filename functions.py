@@ -263,7 +263,7 @@ def plotnsave_genders(qty):
     
     plt.savefig(r"Temp\genders_chart.png")
 
-# Cria e salva o gráfico dos gêneros
+# Cria e salva o gráfico das áreas
 def plotnsave_areas(areas, qty_areas):
     """Plota e salva um gráfico de donut com as estatísticas de áreas dos funcionários
 
