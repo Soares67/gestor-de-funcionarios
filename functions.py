@@ -245,3 +245,14 @@ def convert_salary(salary):
         salary = float(salary)  # No caso de nenhuma das alternativas acima
     finally:
         return salary
+
+def plotnsave_genders(qty):
+    colors = ["#60a5fa", "#f472b6", "#9ca3af"]
+    genders = ["Masculino", "Feminino", "Outros"]
+
+    fig, ax = plt.subplots(figsize=(4,3))
+    ax.pie(qty, labels=genders, startangle=80, autopct="%1.1f%%", colors=colors)
+    ax.set_title("Funcionários por gênero")
+    
+    plt.savefig(r"Temp\genders_chart.png")
+
