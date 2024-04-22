@@ -322,3 +322,15 @@ def update_charts():
     plotnsave_genders()
     plotnsave_areas()
     plotnsave_ages()
+
+# Converte um float em padrão brasileiro
+def float_to_rs(salary):
+    """Converte um número float em padrão brasileiro
+
+    Args:
+        salary (float): Número que será convertido
+    
+    Returns:
+        Número formatado
+    """
+    return f"{salary:,.2f}".replace(".", ",").replace(",", ".", 1)

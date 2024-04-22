@@ -2,8 +2,17 @@ import customtkinter as ctk
 from Icons.iconspath import REFRESH_ICON
 from CTkToolTip import *
 from PIL import Image
+import config
+import functions
+import numpy as np
+
 
 def home_widgets(master):
+
+    qty_employees = len(config.get_funcionarios())
+    avg_salaries = np.mean(config.get_salaries()).round(2)
+    max_salary = max(config.get_salaries())
+    min_salary = min(config.get_salaries())
 
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
@@ -42,7 +51,7 @@ def home_widgets(master):
 
     # Label da quantidade de funcionários
     qtde_emp = ctk.CTkLabel(stat_frame,
-                            text="200",
+                            text=f"{qty_employees}",
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
@@ -63,7 +72,7 @@ def home_widgets(master):
 
     # Label do salário médio bruto
     val_sal_mean = ctk.CTkLabel(stat_frame,
-                            text="3.200,00",
+                            text=f"R$ {functions.float_to_rs(avg_salaries)}",
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
@@ -83,7 +92,7 @@ def home_widgets(master):
 
     # Label do maior salário
     max_sal_val = ctk.CTkLabel(stat_frame,
-                            text="6.500,00",
+                            text=f"R$ {functions.float_to_rs(max_salary)}",
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
@@ -103,7 +112,7 @@ def home_widgets(master):
 
     # Label do menor salário
     min_sal_val = ctk.CTkLabel(stat_frame,
-                            text="1.300,00",
+                            text=f"R$ {functions.float_to_rs(min_salary)}",
                             font=("Roboto", 28, "bold"),
                             width=309,
                             height=66,
