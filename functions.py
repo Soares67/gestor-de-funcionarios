@@ -246,7 +246,14 @@ def convert_salary(salary):
     finally:
         return salary
 
+# Cria e salva o gráfico dos gêneros
 def plotnsave_genders(qty):
+    """Cria e salva um gráfico de pizza com as estatísticas de gênero dos funcionários
+
+    Args:
+        qty (list): Quantidade de funcionários na seguinte ordem: [Masculino, Feminino, Outros]
+    
+    """
     colors = ["#60a5fa", "#f472b6", "#9ca3af"]
     genders = ["Masculino", "Feminino", "Outros"]
 
@@ -256,3 +263,21 @@ def plotnsave_genders(qty):
     
     plt.savefig(r"Temp\genders_chart.png")
 
+# Cria e salva o gráfico dos gêneros
+def plotnsave_areas(areas, qty_areas):
+    """Plota e salva um gráfico de donut com as estatísticas de áreas dos funcionários
+
+    Args:
+        areas (list): Lista com os nomes das áreas dos funcionários
+        qty_areas (list): Lista com a quantidade de funcionários nas respectivas áreas
+    
+    """
+    area_colors = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15", "#fb923c", "#22d3ee", "#a3e635", "#63B3ED", "#f8a5c2"]
+
+    fig, ax = plt.subplots(figsize=(4,3))
+    ax.pie(qty_areas, labels=areas, startangle=90, autopct="%1.1f%%", colors=area_colors, wedgeprops=dict(width=0.57))
+    ax.set_title("Funcionários por área")
+
+    plt.savefig(r"Temp\areas_chart.png")
+
+plotnsave_areas(["TI", "Marketing", "Financeiro", "RH", "Suporte", "Comercial"], [8, 18, 7, 4, 6, 10])
