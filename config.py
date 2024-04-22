@@ -469,3 +469,20 @@ def get_all_ages():
     cursor.close()
     conexao.close()
     return (unique_ages, [ages_list.count(i) for i in unique_ages])
+
+# Pega o valor de todos os salários dos funcionários
+def get_salaries():
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Salario FROM funcionarios")
+    resultado = cursor.fetchall()  #Resultado da busca
+    resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
+    cursor.close()
+    conexao.close()
+    return resultado_tratado
