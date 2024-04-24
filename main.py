@@ -7,6 +7,7 @@ from CTkToolTip import *
 import functions
 from Widgets.Home.widgets import home_widgets
 from Widgets.Register.widgets import register_widgets
+from Widgets.Promote.widgets import promote_widgets
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -922,54 +923,37 @@ class Gestor(tk.Tk):
         home_widgets(self)
         
         #Frame da opção de férias
-        self.ferias_frame = ctk.CTkScrollableFrame(self,
+        self.ferias_frame = ctk.CTkFrame(self,
                                          width=0,
                                          height=720,
                                          fg_color=self.tema_atual,
-                                         scrollbar_button_color="#0d9488",
-                                         scrollbar_button_hover_color="#115e59"
                                          )
-        self.ferias_frame.place(x=0,y=0)
+        self.ferias_frame.place(x=52,y=0)
 
         #Frame da opção de Promover
-        self.promover_frame = ctk.CTkScrollableFrame(self,
+        self.promover_frame = ctk.CTkFrame(self,
                                          width=0,
                                          height=720,
                                          fg_color=self.tema_atual,
-                                         scrollbar_button_color="#0d9488",
-                                         scrollbar_button_hover_color="#115e59"
                                          )
-        self.promover_frame.place(x=0,y=0)
+        self.promover_frame.place(x=52,y=0)
+        promote_widgets(self.promover_frame)
 
         #Frame da opção de Horas extras
-        self.hora_extra_frame = ctk.CTkScrollableFrame(self,
+        self.hora_extra_frame = ctk.CTkFrame(self,
                                          width=0,
                                          height=720,
                                          fg_color=self.tema_atual,
-                                         scrollbar_button_color="#0d9488",
-                                         scrollbar_button_hover_color="#115e59"
                                          )
-        self.hora_extra_frame.place(x=0,y=0)
-
-        #Frame da opção de Relatório
-        self.relatorio_frame = ctk.CTkScrollableFrame(self,
-                                         width=0,
-                                         height=720,
-                                         fg_color=self.tema_atual,
-                                         scrollbar_button_color="#0d9488",
-                                         scrollbar_button_hover_color="#115e59"
-                                         )
-        self.relatorio_frame.place(x=0,y=0)
+        self.hora_extra_frame.place(x=52,y=0)
 
         #Frame da opção de Folha de pagamento
-        self.folha_pagamento_frame = ctk.CTkScrollableFrame(self,
+        self.folha_pagamento_frame = ctk.CTkFrame(self,
                                          width=0,
                                          height=720,
                                          fg_color=self.tema_atual,
-                                         scrollbar_button_color="#0d9488",
-                                         scrollbar_button_hover_color="#115e59"
                                          )
-        self.folha_pagamento_frame.place(x=0,y=0)
+        self.folha_pagamento_frame.place(x=52,y=0)
 
         #Frame da opção de Cadastrar
         self.cadastrar_frame = ctk.CTkFrame(self,
@@ -1124,7 +1108,6 @@ class Gestor(tk.Tk):
             "ferias": [self.ferias_frame, "reduced"],
             "promover": [self.promover_frame, "reduced"],
             "hora extra": [self.hora_extra_frame, "reduced"],
-            "relatorio": [self.relatorio_frame, "reduced"],
             "folha pagamento": [self.folha_pagamento_frame, "reduced"],
             "cadastrar": [self.cadastrar_frame, "reduced"]
 
@@ -1143,7 +1126,6 @@ class Gestor(tk.Tk):
             self.ferias_frame.configure(fg_color=self.tema_atual)
             self.promover_frame.configure(fg_color=self.tema_atual)
             self.hora_extra_frame.configure(fg_color=self.tema_atual)
-            self.relatorio_frame.configure(fg_color=self.tema_atual)
             self.folha_pagamento_frame.configure(fg_color=self.tema_atual)
             self.cadastrar_frame.configure(fg_color=self.tema_atual)
         config.switch_var.trace("w", on_switch_change)  #Aplica o tema que foi definido
