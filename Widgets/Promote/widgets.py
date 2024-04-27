@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import private
-
+from Icons.iconspath import PROMOTED_ICON
 
 def promote_widgets(master):
 
@@ -114,6 +114,13 @@ def promote_widgets(master):
                                      fg_color="red"
                                      )
     img_promote_frame.place(x=0,y=10)
+
+    # Imagem
+    img_promoted = ctk.CTkLabel(tabs.tab("Promover"),
+                                text="",
+                                image=PROMOTED_ICON
+                                )
+    img_promoted.place(x=0,y=10)
 
     # Entry do novo cargo
     new_pos_entry = ctk.CTkEntry(tabs.tab("Promover"),
