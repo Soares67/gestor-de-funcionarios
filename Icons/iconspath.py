@@ -52,3 +52,6 @@ REFRESH_ICON = CTkImage(light_image=refresh_icon, size=(32, 31))
 
 promoted_icon = Image.open(r'Icons\imgs\promoted-employee.jpg')
 PROMOTED_ICON = CTkImage(light_image=promoted_icon, size=(342, 342))
+
+fired_icon = Image.open(r'Icons\imgs\fired-employee.jpg')
+FIRED_ICON = CTkImage(light_image=fired_icon, size=(342, 342))

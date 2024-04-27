@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import private
-from Icons.iconspath import PROMOTED_ICON
+from Icons.iconspath import PROMOTED_ICON, FIRED_ICON
 
 def promote_widgets(master):
 
@@ -180,6 +180,13 @@ def promote_widgets(master):
                                      fg_color="red"
                                      )
     img_fire_frame.place(x=0,y=10)
+
+    # Imagem
+    fired_img = ctk.CTkLabel(tabs.tab("Demitir"),
+                             text="",
+                             image=FIRED_ICON
+                             )
+    fired_img.place(x=0,y=10)
 
     # Opções de motivo
     opts2 = ctk.CTkComboBox(tabs.tab("Demitir"),
