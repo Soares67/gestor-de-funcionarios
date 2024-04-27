@@ -16,6 +16,16 @@ def promote_widgets(master):
             buttons[item].configure(border_width=1)  # Adiciona uma borda
             buttons[item].configure(border_color="white")  # Muda a cor da borda
 
+    # Remove o texto guia
+    def remove_placeholder(event):
+        if obs.get("0.0", "end") == "Observações / Comentários\n":
+            obs.delete("0.0", "end")
+
+    # Adiciona o texto guia
+    def place_placeholder(event):
+        if len(obs.get("0.0", "end")) < 2:
+            obs.insert("0.0", "Observações / Comentários")
+
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
                                 width=1356,
@@ -104,7 +114,6 @@ def promote_widgets(master):
     # Abas
     tabs.add("Promover")
     tabs.add("Demitir")
-    tabs.add("Editar")
     configure_seg_button(tabs._segmented_button._buttons_dict)
 
     # Frame da imagem da aba promover
@@ -203,7 +212,7 @@ def promote_widgets(master):
                                     "Aposentadoria",
                                     "Incompatibilidade com a cultura da empresa",
                                     "Razões pessoais",
-                                    "Outros (especifique abaixo)"
+                                    "Outros (especifique)"
                                     ],
                             font=("Roboto", 16, "bold"),
                             dropdown_font=("Roboto", 16, "bold"),
@@ -219,8 +228,10 @@ def promote_widgets(master):
                          font=("Roboto", 16, "bold"),
                          border_width=3
                          )
-    obs.insert("3.0", "Observações / Comentários")
+    obs.insert("0.0", "Observações / Comentários")
     obs.place(x=364,y=139)
+    obs.bind("<FocusIn>", remove_placeholder)
+    obs.bind("<FocusOut>", place_placeholder)
 
     # Botão de salvar
     save_btn2 = ctk.CTkButton(tabs.tab("Demitir"),
