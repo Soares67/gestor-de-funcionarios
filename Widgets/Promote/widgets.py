@@ -106,3 +106,61 @@ def promote_widgets(master):
     tabs.add("Demitir")
     tabs.add("Editar")
     configure_seg_button(tabs._segmented_button._buttons_dict)
+
+    # Frame da imagem da aba promover
+    img_promote_frame = ctk.CTkFrame(tabs.tab("Promover"),
+                                     width=342,
+                                     height=342,
+                                     fg_color="red"
+                                     )
+    img_promote_frame.place(x=0,y=10)
+
+    # Entry do novo cargo
+    new_pos_entry = ctk.CTkEntry(tabs.tab("Promover"),
+                                 width=280,
+                                 height=50,
+                                 placeholder_text="Novo cargo",
+                                 corner_radius=20,
+                                 font=("Roboto", 16, "bold")
+                                 )
+    new_pos_entry.place(x=364,y=39)
+
+    # Entry do novo salário
+    new_sal_entry = ctk.CTkEntry(tabs.tab("Promover"),
+                                 width=280,
+                                 height=50,
+                                 placeholder_text="Novo salário",
+                                 corner_radius=20,
+                                 font=("Roboto", 16, "bold")
+                                 )
+    new_sal_entry.place(x=364,y=163)
+
+    # Opções de motivo
+    opts = ctk.CTkComboBox(tabs.tab("Promover"),
+                            width=280,
+                            height=50,
+                            corner_radius=20,
+                            values=["Desempenho excepcional",
+                                    "Conclusão de treinamento ou certificação",
+                                    "Tempo de serviço",
+                                    "Aquisição de novas habilidades",
+                                    "Liderança e iniciativa",
+                                    "Excelência no atendimento ao cliente",
+                                    "Outros (especifique)"
+                                    ],
+                            font=("Roboto", 16, "bold"),
+                            dropdown_font=("Roboto", 16, "bold"),
+                           )
+    opts.set("Motivo")
+    opts.place(x=364,y=288)
+
+    # Botão de salvar
+    save_btn = ctk.CTkButton(tabs.tab("Promover"),
+                             width=150,
+                             height=50,
+                             corner_radius=20,
+                             font=("Roboto", 16, "bold"),
+                             text="Salvar",
+
+                             )
+    save_btn.place(x=288,y=465)
