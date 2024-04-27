@@ -15,6 +15,7 @@ def promote_widgets(master):
             buttons[item].configure(font=("Roboto", 15, "bold"))  # Muda a fonte e o tamanho do texto
             buttons[item].configure(border_width=1)  # Adiciona uma borda
             buttons[item].configure(border_color="white")  # Muda a cor da borda
+            buttons[item].configure(text_color="white")  # Muda a cor do texto
 
     # Remove o texto guia
     def remove_placeholder(event):
@@ -30,7 +31,7 @@ def promote_widgets(master):
     header_frame = ctk.CTkFrame(master,
                                 width=1356,
                                 height=52,
-                                fg_color="green",
+                                fg_color="#0891b2",
                                 border_width=3,
                                 border_color="black"
                                 )
@@ -48,7 +49,7 @@ def promote_widgets(master):
     searcher_frame = ctk.CTkFrame(master,
                                   width=674,
                                   height=668,
-                                  fg_color="blue",
+                                  fg_color="#0891b2",
                                   corner_radius=0
                                   )
     searcher_frame.place(x=0,y=50)
@@ -57,7 +58,7 @@ def promote_widgets(master):
     lb1 = ctk.CTkLabel(searcher_frame,
                        text="Buscar Funcionário",
                        font=("Roboto", 30, "bold"),
-                       text_color="black",
+                       text_color="white",
                        )
     lb1.place(x=195,y=35)
 
@@ -67,7 +68,9 @@ def promote_widgets(master):
                                   height=60,
                                   placeholder_text="Nome/Email",
                                   corner_radius=20,
-                                  font=("Arial", 16, "bold")
+                                  font=("Arial", 16, "bold"),
+                                  border_color="#FB9C8D",
+                                  fg_color="#171717"
                                   )
     searcher_entry.place(x=119,y=90)
 
@@ -79,8 +82,10 @@ def promote_widgets(master):
                                font=("Arial", 16, "bold"),
                                corner_radius=20,
                                border_width=2,
-                               border_color="white",
-                               command=lambda: insert_text()
+                               border_color="#FB9C8D",
+                               command=lambda: insert_text(),
+                               fg_color="#171717",
+                               text_color="white"
                                )
     search_btn.place(x=243,y=187)
 
@@ -91,7 +96,7 @@ def promote_widgets(master):
                              activate_scrollbars=False,
                              font=("Arial", 19, "bold"),
                              text_color="black",
-                             fg_color="gray",
+                             fg_color="#e4e4e7",
                              )
     res_txb.place(x=0,y=280)
 
@@ -99,7 +104,7 @@ def promote_widgets(master):
     tabs_frame = ctk.CTkFrame(master,
                                   width=674,
                                   height=669,
-                                  fg_color="red",
+                                  fg_color="#0891b2",
                                   corner_radius=0
                                   )
     tabs_frame.place(x=674,y=50)
@@ -108,6 +113,12 @@ def promote_widgets(master):
     tabs = ctk.CTkTabview(tabs_frame,
                           width=674,
                           height=673,
+                          fg_color="#0891b2",
+                        segmented_button_fg_color="#0891b2",
+                        segmented_button_selected_hover_color="#454545",
+                        segmented_button_unselected_color="#171717",
+                        segmented_button_selected_color="#5d5d5d",
+                        segmented_button_unselected_hover_color="#454545"
                           )
     tabs.place(x=0,y=0)
     
@@ -115,6 +126,7 @@ def promote_widgets(master):
     tabs.add("Promover")
     tabs.add("Demitir")
     configure_seg_button(tabs._segmented_button._buttons_dict)
+
 
     # Frame da imagem da aba promover
     img_promote_frame = ctk.CTkFrame(tabs.tab("Promover"),
@@ -137,7 +149,9 @@ def promote_widgets(master):
                                  height=50,
                                  placeholder_text="Novo cargo",
                                  corner_radius=20,
-                                 font=("Roboto", 16, "bold")
+                                 font=("Roboto", 16, "bold"),
+                                 fg_color="#171717",
+                                 border_color="#FB9C8D"
                                  )
     new_pos_entry.place(x=364,y=39)
 
@@ -147,7 +161,9 @@ def promote_widgets(master):
                                  height=50,
                                  placeholder_text="Novo salário",
                                  corner_radius=20,
-                                 font=("Roboto", 16, "bold")
+                                 font=("Roboto", 16, "bold"),
+                                 fg_color="#171717",
+                                 border_color="#FB9C8D"
                                  )
     new_sal_entry.place(x=364,y=163)
 
@@ -166,6 +182,12 @@ def promote_widgets(master):
                                     ],
                             font=("Roboto", 16, "bold"),
                             dropdown_font=("Roboto", 16, "bold"),
+                            border_color="#FB9C8D",
+                            dropdown_text_color="white",
+                            dropdown_fg_color="#171717",
+                            fg_color="#171717",
+                            button_color="#FB9C8D",
+                            button_hover_color="#d47770"
                            )
     opts.set("Motivo")
     opts.place(x=364,y=288)
@@ -177,7 +199,9 @@ def promote_widgets(master):
                              corner_radius=20,
                              font=("Roboto", 16, "bold"),
                              text="Salvar",
-
+                            fg_color="#171717",
+                            border_width=2,
+                            border_color="#FB9C8D"
                              )
     save_btn.place(x=288,y=465)
 
@@ -216,7 +240,13 @@ def promote_widgets(master):
                                     ],
                             font=("Roboto", 16, "bold"),
                             dropdown_font=("Roboto", 16, "bold"),
-                            border_width=3
+                            border_width=2,
+                            border_color="#FB9C8D",
+                            dropdown_text_color="white",
+                            dropdown_fg_color="#171717",
+                            fg_color="#171717",
+                            button_color="#FB9C8D",
+                            button_hover_color="#d47770"
                            )
     opts2.set("Motivo")
     opts2.place(x=364,y=43)
@@ -226,7 +256,8 @@ def promote_widgets(master):
                          width=280,
                          height=215,
                          font=("Roboto", 16, "bold"),
-                         border_width=3
+                         border_width=2,
+                         border_color="#FB9C8D"
                          )
     obs.insert("0.0", "Observações / Comentários")
     obs.place(x=364,y=139)
@@ -240,6 +271,46 @@ def promote_widgets(master):
                              corner_radius=20,
                              font=("Roboto", 16, "bold"),
                              text="Salvar",
+                            fg_color="#171717",
+                            border_width=2,
+                            border_color="#FB9C8D"
 
                              )
     save_btn2.place(x=288,y=465)
+
+
+    # Delimitadores (Bordas)
+    center = ctk.CTkFrame(master,
+                              width=6,
+                              height=668,
+                              fg_color="black"
+                              )
+    center.place(x=674,y=50)
+
+    res_up = ctk.CTkFrame(master,
+                              width=677,
+                              height=2,
+                              fg_color="black"
+                              )
+    res_up.place(x=0,y=330)
+
+    promoted_up = ctk.CTkFrame(master,
+                               width=344,
+                               height=2,
+                               fg_color="black"
+                               )
+    promoted_up.place(x=680,y=113)
+
+    promoted_left = ctk.CTkFrame(master,
+                               width=2,
+                               height=348,
+                               fg_color="black"
+                               )
+    promoted_left.place(x=1022,y=113)
+
+    promoted_down = ctk.CTkFrame(master,
+                               width=344,
+                               height=2,
+                               fg_color="black"
+                               )
+    promoted_down.place(x=680,y=459)
