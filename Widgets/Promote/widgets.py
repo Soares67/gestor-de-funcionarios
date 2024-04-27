@@ -171,3 +171,57 @@ def promote_widgets(master):
 
                              )
     save_btn.place(x=288,y=465)
+
+
+    # Frame da imagem da aba demitir
+    img_fire_frame = ctk.CTkFrame(tabs.tab("Demitir"),
+                                     width=342,
+                                     height=342,
+                                     fg_color="red"
+                                     )
+    img_fire_frame.place(x=0,y=10)
+
+    # Opções de motivo
+    opts2 = ctk.CTkComboBox(tabs.tab("Demitir"),
+                            width=280,
+                            height=50,
+                            corner_radius=20,
+                            values=["Pedido de demissão voluntária",
+                                    "Desempenho insatisfatório",
+                                    "Violação das políticas da empresa",
+                                    "Abandono de emprego",
+                                    "Conclusão de contrato ou projeto",
+                                    "Redução de quadro de funcionários",
+                                    "Má conduta",
+                                    "Aposentadoria",
+                                    "Incompatibilidade com a cultura da empresa",
+                                    "Razões pessoais",
+                                    "Outros (especifique abaixo)"
+                                    ],
+                            font=("Roboto", 16, "bold"),
+                            dropdown_font=("Roboto", 16, "bold"),
+                            border_width=3
+                           )
+    opts2.set("Motivo")
+    opts2.place(x=364,y=43)
+
+    # Campo de observações e comentários extras
+    obs = ctk.CTkTextbox(tabs.tab("Demitir"),
+                         width=280,
+                         height=215,
+                         font=("Roboto", 16, "bold"),
+                         border_width=3
+                         )
+    obs.insert("3.0", "Observações / Comentários")
+    obs.place(x=364,y=139)
+
+    # Botão de salvar
+    save_btn2 = ctk.CTkButton(tabs.tab("Demitir"),
+                             width=150,
+                             height=50,
+                             corner_radius=20,
+                             font=("Roboto", 16, "bold"),
+                             text="Salvar",
+
+                             )
+    save_btn2.place(x=288,y=465)
