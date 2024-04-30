@@ -501,4 +501,7 @@ def get_employee_info(key):
     resultado = cursor.fetchall()  #Resultado da busca
     cursor.close()
     conexao.close()
-    return resultado[0]
+    if len(resultado) == 1:
+        return resultado[0]
+    else:
+        raise IndexError  # Uso um Except para gerar uma mensagem personalizada com base nesse erro (Promote.widgets linha 36)

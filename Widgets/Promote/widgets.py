@@ -7,31 +7,37 @@ import messagebox as msg
 
 def promote_widgets(master):
 
+    # Insere o resultado da busca no campo de resultado
     def insert_text():
         if functions.check_field(searcher_entry.get(), 1):
             key = searcher_entry.get()
 
-            res = f"""
-    Nome: {config.get_employee_info(key)[1]}
+            try:
+                data = config.get_employee_info(key)
+                res = f"""
+        Nome: {data[1]}
 
-    ID: {config.get_employee_info(key)[0]}
-                        
-    Data de nascimento: {config.get_employee_info(key)[2]}
-                        
-    Email: {config.get_employee_info(key)[4]}
-                        
-    Área: {config.get_employee_info(key)[5]}
-                        
-    Cargo: {config.get_employee_info(key)[6]}
-                        
-    Salário: {functions.float_to_rs(config.get_employee_info(key)[7])}
-                        
-    Data de admissão: {config.get_employee_info(key)[8]}
-                        
-    Status de emprego: {config.get_employee_info(key)[9]}
-    """
-            res_txb.delete("0.0", "end")
-            res_txb.insert(0.0, res)
+        ID: {data[0]}
+                            
+        Data de nascimento: {data[2]}
+                            
+        Email: {data[4]}
+                            
+        Área: {data[5]}
+                            
+        Cargo: {data[6]}
+                            
+        Salário: {functions.float_to_rs(data[7])}
+                            
+        Data de admissão: {data[8]}
+                            
+        Status de emprego: {data[9]}
+        """
+                res_txb.delete("0.0", "end")
+                res_txb.insert(0.0, res)
+
+            except IndexError:
+                msg.showerror("Erro", "Funcionário não encontrado. Verifique a chave de busca e tente novamente.")
         else:
             msg.showwarning("Atenção", "Insira uma chave de busca (ID ou Email)")
 
