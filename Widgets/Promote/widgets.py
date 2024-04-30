@@ -1,11 +1,39 @@
 import customtkinter as ctk
 import private
 from Icons.iconspath import PROMOTED_ICON, FIRED_ICON
+import config
+import functions
+import messagebox as msg
 
 def promote_widgets(master):
 
     def insert_text():
-        res_txb.insert(0.0, private.data)
+        if functions.check_field(searcher_entry.get(), 1):
+            key = searcher_entry.get()
+
+            res = f"""
+    Nome: {config.get_employee_info(key)[1]}
+
+    ID: {config.get_employee_info(key)[0]}
+                        
+    Data de nascimento: {config.get_employee_info(key)[2]}
+                        
+    Email: {config.get_employee_info(key)[4]}
+                        
+    Área: {config.get_employee_info(key)[5]}
+                        
+    Cargo: {config.get_employee_info(key)[6]}
+                        
+    Salário: {functions.float_to_rs(config.get_employee_info(key)[7])}
+                        
+    Data de admissão: {config.get_employee_info(key)[8]}
+                        
+    Status de emprego: {config.get_employee_info(key)[9]}
+    """
+            res_txb.delete("0.0", "end")
+            res_txb.insert(0.0, res)
+        else:
+            msg.showwarning("Atenção", "Insira uma chave de busca (ID ou Email)")
 
     # Função que configura os botôes das abas
     def configure_seg_button(buttons: dict):
@@ -73,6 +101,7 @@ def promote_widgets(master):
                                   fg_color="#171717"
                                   )
     searcher_entry.place(x=119,y=90)
+    searcher_entry.bind("<Return>", lambda event: insert_text())
 
     # botão de buscar
     search_btn = ctk.CTkButton(searcher_frame,
@@ -94,11 +123,11 @@ def promote_widgets(master):
                              width=680,
                              height=400,
                              activate_scrollbars=False,
-                             font=("Arial", 19, "bold"),
+                             font=("Arial", 18, "bold"),
                              text_color="black",
                              fg_color="#e4e4e7",
                              )
-    res_txb.place(x=0,y=280)
+    res_txb.place(x=0,y=270)
 
     # Frame das abas de ações
     tabs_frame = ctk.CTkFrame(master,
@@ -292,7 +321,7 @@ def promote_widgets(master):
                               height=2,
                               fg_color="black"
                               )
-    res_up.place(x=0,y=330)
+    res_up.place(x=0,y=320)
 
     promoted_up = ctk.CTkFrame(master,
                                width=344,
