@@ -486,3 +486,19 @@ def get_salaries():
     cursor.close()
     conexao.close()
     return resultado_tratado
+
+# Pega as informações de um funcionário com base no ID ou Email
+def get_employee_info(key):
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT * FROM funcionarios WHERE ID = ? OR Email = ?", (key, key))
+    resultado = cursor.fetchall()  #Resultado da busca
+    cursor.close()
+    conexao.close()
+    return resultado[0]

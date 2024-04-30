@@ -66,7 +66,7 @@ def promote_widgets(master):
     searcher_entry = ctk.CTkEntry(searcher_frame,
                                   width=432,
                                   height=60,
-                                  placeholder_text="Nome/Email",
+                                  placeholder_text="ID / Email",
                                   corner_radius=20,
                                   font=("Arial", 16, "bold"),
                                   border_color="#FB9C8D",
