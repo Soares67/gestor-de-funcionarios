@@ -61,6 +61,42 @@ def promote_widgets(master):
         if len(obs.get("0.0", "end")) < 2:
             obs.insert("0.0", "Observações / Comentários")
 
+    def onclick_fire():
+        id = searcher_entry.get()
+        try:
+            id = int(id)
+            if opts2.get() != "Motivo":
+                if obs.get("0.0", "end") == "Observações / Comentários\n":
+                    obs_res = None
+                else:
+                    obs_res = obs.get("0.0", "end")
+                if msg.askyesnocancel("ATENÇÃO", f"""O funcionário {config.get_employee_info(id)[1]} será demitido.
+Motivo: {opts2.get()}
+Justificativa: {obs_res}
+
+Você confirma essa ação?"""):
+                    if config.fire_employee(id, opts2.get(), obs_res):
+                        msg.showinfo("Sucesso", "O funcionário foi demitido com sucesso")
+                        opts2.set("Motivo")
+                        obs.delete("0.0", "end")
+                        obs.insert("0.0", "Observações / Comentários")
+                    else:
+                        msg.showwarning("Erro", "Ocorreu um erro ao demitir o funcionário")
+                        opts2.set("Motivo")
+                        obs.delete("0.0", "end")
+                        obs.insert("0.0", "Observações / Comentários")
+                else:
+                    opts2.set("Motivo")
+                    obs.delete("0.0", "end")
+                    obs.insert("0.0", "Observações / Comentários")
+                    pass
+                    
+            else:
+                msg.showwarning("Atenção", "Escolha um motivo válido")
+
+        except ValueError:
+            msg.showwarning("Erro", "Insira um valor válido no campo de busca de ID")
+
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
                                 width=1356,
@@ -100,7 +136,7 @@ def promote_widgets(master):
     searcher_entry = ctk.CTkEntry(searcher_frame,
                                   width=432,
                                   height=60,
-                                  placeholder_text="ID / Email",
+                                  placeholder_text="ID",
                                   corner_radius=20,
                                   font=("Arial", 16, "bold"),
                                   border_color="#FB9C8D",
@@ -308,7 +344,8 @@ def promote_widgets(master):
                              text="Salvar",
                             fg_color="#171717",
                             border_width=2,
-                            border_color="#FB9C8D"
+                            border_color="#FB9C8D",
+                            command=lambda: onclick_fire()
 
                              )
     save_btn2.place(x=288,y=465)
