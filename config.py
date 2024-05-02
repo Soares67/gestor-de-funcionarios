@@ -505,4 +505,22 @@ def get_employee_info(key):
         return resultado[0]
     else:
         raise IndexError  # Uso um Except para gerar uma mensagem personalizada com base nesse erro (Promote.widgets linha 36)
+
+# Demite um funcionário (Muda o estado de emprego para "Demitido" e adiciona o ID à tabela de demissões)
+def fire_employee(key):
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
                 r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"""
+UPDATE funcionarios 
+SET [Status Emprego] = ? 
+WHERE ID = ? OR Email = ?
+""", ("Demitido", key, key))
+    cursor.commit()
+
+    cursor.close()
+    conexao.close()
