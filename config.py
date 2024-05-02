@@ -389,7 +389,7 @@ def get_funcionarios():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Nome FROM funcionarios")
+    cursor.execute(f"SELECT Nome FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
     resultado = cursor.fetchall()  # Resultado da busca
     cursor.close()
     conexao.close()
@@ -405,7 +405,7 @@ def get_gender_stats():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Genero FROM funcionarios")
+    cursor.execute(f"SELECT Genero FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -422,7 +422,7 @@ def get_area_stats():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Area FROM funcionarios")
+    cursor.execute(f"SELECT Area FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
     resultado = cursor.fetchall()  # Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -462,7 +462,7 @@ def get_all_ages():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT [Data Nascimento] FROM funcionarios")
+    cursor.execute(f"SELECT [Data Nascimento] FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
     resultado = cursor.fetchall()  # Resultado da busca
     ages_list = [get_age(resultado[i][0]) for i, row in enumerate(resultado)]
     unique_ages = list(set(ages_list))
@@ -480,7 +480,7 @@ def get_salaries():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Salario FROM funcionarios")
+    cursor.execute(f"SELECT Salario FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -505,3 +505,4 @@ def get_employee_info(key):
         return resultado[0]
     else:
         raise IndexError  # Uso um Except para gerar uma mensagem personalizada com base nesse erro (Promote.widgets linha 36)
+                r"Database=DB\gerenciador.db")
