@@ -497,7 +497,7 @@ def get_employee_info(key):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT * FROM funcionarios WHERE ID = ? OR Email = ?", (key, key))
+    cursor.execute(f"SELECT * FROM funcionarios WHERE ID = ?", (key))
     resultado = cursor.fetchall()  #Resultado da busca
     cursor.close()
     conexao.close()
@@ -507,20 +507,36 @@ def get_employee_info(key):
         raise IndexError  # Uso um Except para gerar uma mensagem personalizada com base nesse erro (Promote.widgets linha 36)
 
 # Demite um funcionário (Muda o estado de emprego para "Demitido" e adiciona o ID à tabela de demissões)
-def fire_employee(key):
+def fire_employee(key, motivo, obs):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
                 r"Database=DB\gerenciador.db")
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
+    cursor.execute(f"SELECT [Status Emprego] FROM funcionarios WHERE ID = ?", (key))
+    status = cursor.fetchval()
 
-    cursor.execute(f"""
-UPDATE funcionarios 
-SET [Status Emprego] = ? 
-WHERE ID = ? OR Email = ?
-""", ("Demitido", key, key))
-    cursor.commit()
+    # Se o status atual for diferente de Demitido irá executar a ação
+    if status != "Demitido":
 
-    cursor.close()
-    conexao.close()
+        # Atualiza o status do funcionário
+        cursor.execute(f"""
+    UPDATE funcionarios 
+    SET [Status Emprego] = ? 
+    WHERE ID = ?
+    """, ("Demitido", key))
+        
+        # Atualiza a tabela de demissões
+        cursor.execute(f"""
+    INSERT INTO demissoes_funcionarios ([ID Funcionario], [Data Demissao], Motivo, Obs)
+    VALUES ({key}, '{timenow()[:10]}', '{motivo}', '{obs}')
+    """)
+        cursor.commit()
+        cursor.close()
+        conexao.close()
+        return True
+    else:
+        cursor.close()
+        conexao.close()
+        return False
