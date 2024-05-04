@@ -541,6 +541,7 @@ def fire_employee(key, motivo, obs):
         conexao.close()
         return False
 
+# Promove um funcionário, alterando seu cargo e salário, e adicionado o resgistro à tabela de promoções
 def promote_employee(key, cargo_atual, novo_cargo, motivo, salario_atual, novo_salario):
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"

@@ -27,7 +27,7 @@ def promote_widgets(master):
                             
         Cargo: {data[6]}
                             
-        Salário: {functions.float_to_rs(data[7])}
+        Salário: R$ {functions.float_to_rs(data[7])}
                             
         Data de admissão: {data[8]}
                             
@@ -61,6 +61,7 @@ def promote_widgets(master):
         if len(obs.get("0.0", "end")) < 2:
             obs.insert("0.0", "Observações / Comentários")
 
+    # Demite um funcionário
     def onclick_fire():
         id = searcher_entry.get()
         try:
@@ -97,6 +98,44 @@ Você confirma essa ação?"""):
         except ValueError:
             msg.showwarning("Erro", "Insira um valor válido no campo de busca de ID")
 
+    # Promove um funcionário
+    def onclick_promote():
+        id = searcher_entry.get()
+        try:
+            id = int(id)
+            motivo = opts.get()
+            novo_salario = float(new_sal_entry.get())
+            if len(new_pos_entry.get()) > 1:
+                if len(new_sal_entry.get()) >= 4:
+                    if motivo != "Motivo":
+                        if msg.askyesnocancel("Atenção", f"""O funcionário {config.get_employee_info(id)[1]} será promovido com as seguintes informações:
+                                                
+Novo cargo: {new_pos_entry.get()}
+Novo salário: R$ {functions.float_to_rs(novo_salario)}
+Justificativa: {motivo}
+
+Você confirma as informações?"""):
+                            if config.promote_employee(id,
+                                                   config.get_employee_info(id)[6],
+                                                   new_pos_entry.get(),
+                                                   motivo,
+                                                   config.get_employee_info(id)[7],
+                                                   novo_salario
+                                                   ):
+                                msg.showinfo("Sucesso", "O funcionário foi promovido com sucesso.")
+                            else:
+                                msg.showerror("Erro", "Ocorreu um erro ao promover o funcionário. Verifique as informações e tente novamente.")
+                        else:
+                            pass
+                    else:
+                        msg.showwarning("Atenção", "Insira um motivo válido.")
+                else:
+                    msg.showwarning("Atenção", "Preencha corretamente o campo do novo salário.")
+            else:
+                msg.showwarning("Atenção", "Preencha corretamente o campo do novo cargo.")
+        except:
+            msg.showerror("Erro", "Verifique as informações e tente novamente.")
+                                
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
                                 width=1356,
@@ -271,7 +310,8 @@ Você confirma essa ação?"""):
                              text="Salvar",
                             fg_color="#171717",
                             border_width=2,
-                            border_color="#FB9C8D"
+                            border_color="#FB9C8D",
+                            command=lambda: onclick_promote()
                              )
     save_btn.place(x=288,y=465)
 
