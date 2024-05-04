@@ -249,7 +249,6 @@ Você confirma essa ação?"""):
                                     "Aquisição de novas habilidades",
                                     "Liderança e iniciativa",
                                     "Excelência no atendimento ao cliente",
-                                    "Outros (especifique)"
                                     ],
                             font=("Roboto", 16, "bold"),
                             dropdown_font=("Roboto", 16, "bold"),
