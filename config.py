@@ -540,3 +540,36 @@ def fire_employee(key, motivo, obs):
         cursor.close()
         conexao.close()
         return False
+
+def promote_employee(key, cargo_atual, novo_cargo, motivo, salario_atual, novo_salario):
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+    cursor = conexao.cursor()
+
+    try:
+        # Alterar o cargo e o salario na tabela de funcionários
+        cursor.execute("""
+    UPDATE funcionarios
+    SET Cargo = ?, Salario = ?
+    WHERE ID = ?
+    """, (novo_cargo, novo_salario, key))
+        
+        # Adicionar a promoção à tabela de promoções
+        cursor.execute(f"""
+    INSERT INTO promocoes_funcionarios ([ID Funcionario], [Data Promocao], [Cargo Anterior], [Novo Cargo], [Motivo Promocao], [Salario Anterior], [Novo Salario])
+    VALUES ('{key}', '{timenow()[:10]}', '{cargo_atual}', '{novo_cargo}', '{motivo}', {float(salario_atual)}, {float(novo_salario)})
+    """)
+
+        # Commitar as alterações
+        cursor.commit()
+        cursor.close()
+        conexao.close()
+        return True
+    
+    except Exception as e:
+        cursor.close()
+        conexao.close()
+        print(e)
+        return False
