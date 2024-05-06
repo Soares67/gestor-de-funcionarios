@@ -1,4 +1,6 @@
 import customtkinter as ctk
+from PIL import Image
+from Icons.iconspath import SEARCH_ICON
 
 def overtime_widgets(master):
 
@@ -17,7 +19,7 @@ def overtime_widgets(master):
                             font=("Roboto", 26, "bold"),
                             text_color="black"
                             )
-    title_total_lb.place(x=96,y=37)
+    title_total_lb.place(x=96,y=32)
 
     # Label do total
     total_lb = ctk.CTkLabel(stats_frame,
@@ -37,7 +39,7 @@ def overtime_widgets(master):
                             font=("Roboto", 26, "bold"),
                             text_color="black"
                             )
-    title_avg_lb.place(x=95,y=200)
+    title_avg_lb.place(x=95,y=190)
 
     # Label da média
     avg_lb = ctk.CTkLabel(stats_frame,
@@ -49,7 +51,7 @@ def overtime_widgets(master):
                             fg_color="white",
                             corner_radius=20
                             )
-    avg_lb.place(x=130,y=237)
+    avg_lb.place(x=130,y=232)
 
     # Label do título do grafico
     title_chart_lb = ctk.CTkLabel(stats_frame,
@@ -57,27 +59,138 @@ def overtime_widgets(master):
                             font=("Roboto", 26, "bold"),
                             text_color="black"
                             )
-    title_chart_lb.place(x=95,y=363)
+    title_chart_lb.place(x=95,y=348)
+
+    # Frame do gráfico
+    chart_frame = ctk.CTkFrame(stats_frame,
+                               width=473,
+                               height=323,
+                               fg_color="white",
+                               border_color="white",
+                               border_width=3,
+                               corner_radius=10
+                               )
+    chart_frame.place(x=5,y=390)
 
     # Gráfico
+    chart = ctk.CTkLabel(chart_frame,
+                         text="",
+                         image=ctk.CTkImage(Image.open(r'Charts\overtime_chart.png'), size=(460, 310))
+                         )
+    chart.place(x=7,y=7)
+
 
     # Frame do formulário
     form_frame = ctk.CTkFrame(master,
                               width=870,
                               height=718,
-                              fg_color="white",
+                              fg_color="#0891b2",
                               corner_radius=0
     )
     form_frame.place(x=482,y=0)
 
     # Label do cabeçalho
+    header_lb = ctk.CTkLabel(form_frame,
+                             text="Registrar hora extra",
+                             font=("Roboto", 32, "bold"),
+                             text_color="white"
+                             )
+    header_lb.place(x=290,y=22)
 
     # Entry do ID
+    id_entry = ctk.CTkEntry(form_frame,
+                            width=400,
+                            height=55,
+                            placeholder_text="ID do funcionário",
+                            corner_radius=20,
+                            font=("Roboto", 16, "bold"),
+                            fg_color="#171717",
+                            border_color="#FB9C8D"
+                            )
+    id_entry.place(x=245,y=104)
+
+    # Botão de pesquisar
+    search_btn = ctk.CTkButton(form_frame,
+                               width=10,
+                               height=10,
+                               text="",
+                               image=SEARCH_ICON,
+                               corner_radius=20,
+                               fg_color="#171717",
+                               bg_color="#171717",
+                               command=lambda: print("Buscar"),
+                               hover_color="#404040"
+                               )
+    search_btn.place(x=583,y=112)
 
     # Entry da data
+    date_entry = ctk.CTkEntry(form_frame,
+                            width=400,
+                            height=55,
+                            placeholder_text="Data de registro",
+                            corner_radius=20,
+                            font=("Roboto", 16, "bold"),
+                            fg_color="#171717",
+                            border_color="#FB9C8D"
+                            )
+    date_entry.place(x=245,y=224)
 
     # Entry da quantidade
+    qty_entry = ctk.CTkEntry(form_frame,
+                            width=400,
+                            height=55,
+                            placeholder_text="Quantidade de horas",
+                            corner_radius=20,
+                            font=("Roboto", 16, "bold"),
+                            fg_color="#171717",
+                            border_color="#FB9C8D"
+                            )
+    qty_entry.place(x=245,y=344)
 
     # Dropdown do motivo
+    opts = ctk.CTkComboBox(form_frame,
+                            width=400,
+                            height=55,
+                            corner_radius=20,
+                            values=["Trabalho adicional",
+                                    "Projeto urgente",
+                                    "Compensação",
+                                    "Treinamento",
+                                    "Eventos especiais",
+                                    "Outros",
+                                    ],
+                            font=("Roboto", 16, "bold"),
+                            dropdown_font=("Roboto", 16, "bold"),
+                            border_color="#FB9C8D",
+                            dropdown_text_color="white",
+                            dropdown_fg_color="#171717",
+                            fg_color="#171717",
+                            button_color="#FB9C8D",
+                            button_hover_color="#d47770"
+                           )
+    opts.set("Motivo")
+    opts.place(x=245,y=464)
 
     # Botão de salvar
+    save_btn = ctk.CTkButton(form_frame,
+                             width=150,
+                             height=55,
+                             corner_radius=20,
+                             font=("Roboto", 16, "bold"),
+                             text="Salvar",
+                            fg_color="#171717",
+                            border_width=2,
+                            border_color="#FB9C8D",
+                            command=lambda: print("Salvar")
+
+                             )
+    save_btn.place(x=384,y=584)
+
+    # Delimitadores
+
+    del1 = ctk.CTkFrame(master,
+                        width=3,
+                        height=718,
+                        fg_color="black"
+                        )
+    del1.place(x=482,y=0)

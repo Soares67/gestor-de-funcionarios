@@ -55,3 +55,6 @@ PROMOTED_ICON = CTkImage(light_image=promoted_icon, size=(342, 342))
 
 fired_icon = Image.open(r'Icons\imgs\fired-employee.jpg')
 FIRED_ICON = CTkImage(light_image=fired_icon, size=(342, 342))
+
+search_icon = Image.open(r'Icons\imgs\icons8-search-100.png')
+SEARCH_ICON = CTkImage(light_image=search_icon, size=(32, 31))
