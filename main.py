@@ -8,6 +8,7 @@ import functions
 from Widgets.Home.widgets import home_widgets
 from Widgets.Register.widgets import register_widgets
 from Widgets.Promote.widgets import promote_widgets
+from Widgets.Overtime.widgets import overtime_widgets
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -946,6 +947,7 @@ class Gestor(tk.Tk):
                                          fg_color=self.tema_atual,
                                          )
         self.hora_extra_frame.place(x=52,y=0)
+        overtime_widgets(self.hora_extra_frame)
 
         #Frame da opção de Folha de pagamento
         self.folha_pagamento_frame = ctk.CTkFrame(self,
