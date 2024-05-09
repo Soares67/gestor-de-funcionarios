@@ -574,3 +574,20 @@ def promote_employee(key, cargo_atual, novo_cargo, motivo, salario_atual, novo_s
         conexao.close()
         print(e)
         return False
+
+# Pega o nome de um funcionário através do ID
+def get_employee_name(id):
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Nome FROM funcionarios WHERE ID = ?", (id))
+    resultado = cursor.fetchval()  #Resultado da busca
+    cursor.close()
+    conexao.close()
+    return resultado
+
