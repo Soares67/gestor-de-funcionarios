@@ -594,3 +594,21 @@ def get_employee_name(id):
     else:
         return ""
 
+# Adiciona um registro de hora extra no banco de dados
+def register_overtime(id, data_registro, horas, motivo):
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"""
+INSERT INTO horas_extras ([ID Funcionario], [Data Registro], Horas, Motivo)
+VALUES ({id}, '{data_registro}', {horas}, '{motivo}')
+                   """)
+    cursor.commit()
+
+    cursor.close()
+    conexao.close()
