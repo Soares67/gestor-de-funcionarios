@@ -5,6 +5,7 @@ import pytz
 import random
 import messagebox as msg
 import string
+import numpy as np
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -632,3 +633,7 @@ def get_total_overtime():
         return sum(list)
     else:
         return 0
+
+# Pega a média de horas extras por funcionário
+def get_avg_overtime():
+    return round(np.average(get_total_overtime()), 1)
