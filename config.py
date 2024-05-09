@@ -612,3 +612,23 @@ VALUES ({id}, '{data_registro}', {horas}, '{motivo}')
 
     cursor.close()
     conexao.close()
+
+# Pega a soma das horas extras registradas no banco de dados
+def get_total_overtime():
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Horas FROM horas_extras")
+    resultado = cursor.fetchall()  #Resultado da busca
+    list = [resultado[i][0] for i, row in enumerate(resultado)]
+    cursor.close()
+    conexao.close()
+    if sum(list) > 0:
+        return sum(list)
+    else:
+        return 0
