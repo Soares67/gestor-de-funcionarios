@@ -1,8 +1,24 @@
 import customtkinter as ctk
 from PIL import Image
 from Icons.iconspath import SEARCH_ICON
+import messagebox as msg
+import config
 
 def overtime_widgets(master):
+    
+    # Procura o nome do funcionálio pelo ID
+    def search_employee():
+        try:
+            id = int(id_entry.get())
+        
+        except ValueError:
+            id = None
+            msg.showwarning("Atenção", "Insira um valor válido para o ID.")
+        if id is not None:
+                id_entry.delete(0, "end")
+                id_entry.insert(0, config.get_employee_name(id))
+        else:
+             pass
 
     # Frame das estatísticas
     stats_frame = ctk.CTkFrame(master,
@@ -118,7 +134,7 @@ def overtime_widgets(master):
                                corner_radius=20,
                                fg_color="#171717",
                                bg_color="#171717",
-                               command=lambda: print("Buscar"),
+                               command=lambda: search_employee(),
                                hover_color="#404040"
                                )
     search_btn.place(x=583,y=112)

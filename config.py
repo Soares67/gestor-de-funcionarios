@@ -589,5 +589,8 @@ def get_employee_name(id):
     resultado = cursor.fetchval()  #Resultado da busca
     cursor.close()
     conexao.close()
-    return resultado
+    if resultado is not None:
+        return resultado
+    else:
+        return ""
 
