@@ -8,6 +8,7 @@ def overtime_widgets(master):
 
     total_hours = sum(config.get_total_overtime())  # Total de horas extras
     hours_avg = config.get_avg_overtime()  # Média de horas extras
+    focus_id = None  # ID do funcionário em foco
     
     # Procura o nome do funcionálio pelo ID
     def search_employee():
@@ -18,6 +19,8 @@ def overtime_widgets(master):
             id = None
             msg.showwarning("Atenção", "Insira um valor válido para o ID.")
         if id is not None:
+                global focus_id
+                focus_id = id
                 id_entry.delete(0, "end")
                 id_entry.insert(0, config.get_employee_name(id))
         else:
@@ -28,6 +31,11 @@ def overtime_widgets(master):
         global total_hours, hours_avg
         total_hours = config.get_total_overtime()
         hours_avg = config.get_avg_overtime()
+
+    # Faz o registro de uma hora extra
+    def register_overtime():
+        pass
+
 
     # Frame das estatísticas
     stats_frame = ctk.CTkFrame(master,
