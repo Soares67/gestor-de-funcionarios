@@ -630,10 +630,13 @@ def get_total_overtime():
     cursor.close()
     conexao.close()
     if sum(list) > 0:
-        return sum(list)
+        return list
     else:
         return 0
 
 # Pega a média de horas extras por funcionário
 def get_avg_overtime():
     return round(np.average(get_total_overtime()), 1)
+
+print(get_total_overtime())
+print(get_avg_overtime())

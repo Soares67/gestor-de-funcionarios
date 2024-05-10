@@ -5,6 +5,9 @@ import messagebox as msg
 import config
 
 def overtime_widgets(master):
+
+    total_hours = sum(config.get_total_overtime())  # Total de horas extras
+    hours_avg = config.get_avg_overtime()  # Média de horas extras
     
     # Procura o nome do funcionálio pelo ID
     def search_employee():
@@ -19,6 +22,12 @@ def overtime_widgets(master):
                 id_entry.insert(0, config.get_employee_name(id))
         else:
              pass
+    
+    # Atualiza as estatísticas da pagina
+    def refresh_stats():
+        global total_hours, hours_avg
+        total_hours = config.get_total_overtime()
+        hours_avg = config.get_avg_overtime()
 
     # Frame das estatísticas
     stats_frame = ctk.CTkFrame(master,
@@ -41,7 +50,7 @@ def overtime_widgets(master):
     total_lb = ctk.CTkLabel(stats_frame,
                             width=200,
                             height=57,
-                            text="112",
+                            text=f"{total_hours}",
                             font=("Roboto", 28, "bold"),
                             text_color="black",
                             fg_color="white",
@@ -61,7 +70,7 @@ def overtime_widgets(master):
     avg_lb = ctk.CTkLabel(stats_frame,
                             width=200,
                             height=57,
-                            text="7",
+                            text=f"{hours_avg}",
                             font=("Roboto", 28, "bold"),
                             text_color="black",
                             fg_color="white",
