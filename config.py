@@ -638,5 +638,75 @@ def get_total_overtime():
 def get_avg_overtime():
     return round(np.average(get_total_overtime()), 1)
 
-print(get_total_overtime())
-print(get_avg_overtime())
+# Pega as informações de horas extras por área
+def get_overtime_stats():
+
+    # Pegar todas as áreas
+
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Area FROM funcionarios")
+    resultado = cursor.fetchall()  #Resultado da busca
+    resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
+    areas = list(set(resultado_tratado))
+    cursor.close()
+    conexao.close()
+    
+    # Pegar a quantidade de horas extras por funcionários
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT [ID Funcionario], Horas FROM horas_extras")
+    infos = cursor.fetchall()  #Resultado da busca
+    cursor.close()
+    conexao.close()
+
+    ids = [i[0] for i in infos]  # Lista com os ids
+    hours = [i[1] for i in infos]  # Lista com a quantidade de horas extras
+    id_areas = []
+
+    for id in ids:
+        dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+        conexao = pyodbc.connect(dados_conexao)
+
+        cursor = conexao.cursor()
+
+        cursor.execute(f"SELECT Area FROM funcionarios WHERE ID = ?", (id))
+        area = cursor.fetchval()  #Resultado da busca
+        cursor.close()
+        conexao.close()
+        id_areas.append(area)
+
+    dict_hours = {}
+
+    # Agrupar as áreas e horas extras em uma só
+    for area, horas in zip(id_areas, hours):
+        if area not in dict_hours:
+            dict_hours[area] = horas
+        else:
+            dict_hours[area] += horas
+        
+    return (list(dict_hours.keys()), list(dict_hours.values()))
+    
+
+    
+
+        
+
+    # Substituir o ID pela área do funcionário
+
+# Cria e salva o gráfico das horas extras por área
+def plotnsave_overtime():
+    pass
