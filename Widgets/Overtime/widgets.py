@@ -1,12 +1,14 @@
 import customtkinter as ctk
 from PIL import Image
-from Icons.iconspath import SEARCH_ICON
+from Icons.iconspath import SEARCH_ICON, REFRESH_ICON
 import messagebox as msg
 import config
+import functions
+from CTkToolTip import *
 
 def overtime_widgets(master):
 
-    total_hours = sum(config.get_total_overtime())  # Total de horas extras
+    total_hours = round(sum(config.get_total_overtime()), 1)  # Total de horas extras
     hours_avg = config.get_avg_overtime()  # Média de horas extras
     focus_id = None  # ID do funcionário em foco
     
@@ -29,12 +31,87 @@ def overtime_widgets(master):
     # Atualiza as estatísticas da pagina
     def refresh_stats():
         global total_hours, hours_avg
-        total_hours = config.get_total_overtime()
+        total_hours = round(sum(config.get_total_overtime()), 1)
         hours_avg = config.get_avg_overtime()
+
+        total_lb.configure(text=f"{total_hours}")
+        avg_lb.configure(text=f"{hours_avg}")
+        
+
+    # Atualiza o gráfico
+    def refresh_chart():
+        """Atualiza o gráfico
+        """
+        functions.plotnsave_overtime()
+
+        chart.configure(image=ctk.CTkImage(Image.open(r'Charts\overtime_chart.png'), size=(460, 310)))
+
+    # Atualiza as informações da página
+    def refresh_page():
+        refresh_stats()
+        refresh_chart()
 
     # Faz o registro de uma hora extra
     def register_overtime():
-        pass
+        """Valida e trata os campos de registro, inserindo os dados na tabela do banco de dados.
+        """
+        try:
+            employee_id = int(id_entry.get())
+
+        except ValueError:
+            global focus_id
+
+            if focus_id is not None:
+                employee_id = focus_id
+            else:
+                msg.showerror("Erro", "Insira um ID válido.")
+                return
+        
+        
+        data_registro = date_entry.get()
+        if data_registro.count("/") == 2:
+            if len(data_registro.split("/")[0]) == 2:
+                if len(data_registro.split("/")[1]) == 2:
+                    if len(data_registro.split("/")[2]) == 4:
+                        data = data_registro
+
+                        # Validar e tratar a quantidade de horas
+                        horas = qty_entry.get()
+                        try:
+                            if "," in horas:
+                                horas = horas.replace(",", ".")
+                            horas = float(horas)
+                        except ValueError:
+                            msg.showerror("Erro", "Insira um valor válido na quantidade de horas.")
+                            return
+                        
+                        # Validar e tratar o motivo
+                        motivo = opts.get()
+                        if motivo != "Motivo":
+                            motivo = motivo
+                        else:
+                            msg.showerror("Erro", "Insira uma opção vlaida para o motivo")
+                            return
+                        
+                        # Registrar as horas extras
+                        try:
+                            config.register_overtime(employee_id, data, horas, motivo)
+                            msg.showinfo("Sucesso", "As informações foram salvas com sucesso!")
+                        except:
+                            msg.showerror("Erro", "Ocorreu um erro ao salvar as informações. Tente novamente.")
+
+                    else:
+                        msg.showerror("Erro", "Insira uma data válida, no formato DD/MM/YYYY")
+                        return
+                else:
+                    msg.showerror("Erro", "Insira uma data válida, no formato DD/MM/YYYY")
+                    return
+            else:
+                msg.showerror("Erro", "Insira uma data válida, no formato DD/MM/YYYY")
+                return
+        else:
+            msg.showerror("Erro", "Insira uma data válida, no formato DD/MM/YYYY")
+            return
 
 
     # Frame das estatísticas
@@ -121,6 +198,23 @@ def overtime_widgets(master):
                               corner_radius=0
     )
     form_frame.place(x=482,y=0)
+
+    #Botão de atualizar as informações
+    ref_btn = ctk.CTkButton(master,
+                            text="",
+                            image=REFRESH_ICON,
+                            command=lambda: refresh_page(),
+                            corner_radius=20,
+                            width=20,
+                            height=20,
+                            fg_color="#0891b2",
+                            bg_color="#0891b2",
+                            border_color="white",
+                            border_width=2,
+                            hover_color="#155e75"
+    )
+    ref_tooltip = CTkToolTip(ref_btn, "Atualizar página", 0.1)
+    ref_btn.place(x=1200,y=17)
 
     # Label do cabeçalho
     header_lb = ctk.CTkLabel(form_frame,
@@ -214,7 +308,7 @@ def overtime_widgets(master):
                             fg_color="#171717",
                             border_width=2,
                             border_color="#FB9C8D",
-                            command=lambda: print("Salvar")
+                            command=lambda: register_overtime()
 
                              )
     save_btn.place(x=384,y=584)

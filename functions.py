@@ -365,8 +365,8 @@ def plotnsave_overtime():
     "#00f5d4", "#ff9f1c", "#7ed6df", "#8ac926", "#ff9b54",
 ]
     
-    bar_labels = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15"]
-    bar_colors = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15"]
+    bar_labels = colors[:len(areas)]
+    bar_colors = colors[:len(areas)]
 
     fig, ax = plt.subplots(figsize=(6, 4))
     ax.bar(areas, horas, label=bar_labels, color=bar_colors)
