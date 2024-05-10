@@ -97,6 +97,14 @@ def overtime_widgets(master):
                         try:
                             config.register_overtime(employee_id, data, horas, motivo)
                             msg.showinfo("Sucesso", "As informações foram salvas com sucesso!")
+
+                            # Limpar todos os campos
+                            id_entry.delete(0, "end")
+                            date_entry.delete(0, "end")
+                            qty_entry.delete(0, "end")
+                            opts.set("Motivo")
+
+
                         except:
                             msg.showerror("Erro", "Ocorreu um erro ao salvar as informações. Tente novamente.")
 
@@ -200,21 +208,20 @@ def overtime_widgets(master):
     form_frame.place(x=482,y=0)
 
     #Botão de atualizar as informações
-    ref_btn = ctk.CTkButton(master,
+    ref_btn = ctk.CTkButton(stats_frame,
                             text="",
                             image=REFRESH_ICON,
                             command=lambda: refresh_page(),
                             corner_radius=20,
                             width=20,
                             height=20,
-                            fg_color="#0891b2",
-                            bg_color="#0891b2",
+                            fg_color="transparent",
                             border_color="white",
                             border_width=2,
-                            hover_color="#155e75"
+                            hover_color="#e28c7f"
     )
     ref_tooltip = CTkToolTip(ref_btn, "Atualizar página", 0.1)
-    ref_btn.place(x=1200,y=17)
+    ref_btn.place(x=420,y=5)
 
     # Label do cabeçalho
     header_lb = ctk.CTkLabel(form_frame,
