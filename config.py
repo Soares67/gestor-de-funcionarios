@@ -698,15 +698,4 @@ def get_overtime_stats():
         else:
             dict_hours[area] += horas
         
-    return (list(dict_hours.keys()), list(dict_hours.values()))
-    
-
-    
-
-        
-
-    # Substituir o ID pela área do funcionário
-
-# Cria e salva o gráfico das horas extras por área
-def plotnsave_overtime():
-    pass
+    return (list(dict_hours.keys()), list(dict_hours.values()))  # ([areas], [horas])

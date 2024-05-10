@@ -353,3 +353,22 @@ def float_to_rs(salary):
         Número formatado
     """
     return f"{salary:,.2f}".replace(".", ",").replace(",", ".", 1)
+
+# Cria e salva o gráfico das horas extras por área
+def plotnsave_overtime():
+    areas, horas = config.get_overtime_stats()
+
+    colors = [
+    "#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15",
+    "#ff6b6b", "#7f9cf5", "#f3a683", "#63b3ed", "#f8a5c2",
+    "#00adb5", "#ffc75f", "#8338ec", "#f6416c", "#ffafcc",
+    "#00f5d4", "#ff9f1c", "#7ed6df", "#8ac926", "#ff9b54",
+]
+    
+    bar_labels = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15"]
+    bar_colors = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15"]
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+    ax.bar(areas, horas, label=bar_labels, color=bar_colors)
+    ax.set_ylabel("Quantidade")
+    plt.savefig(r"Charts\overtime_chart")
