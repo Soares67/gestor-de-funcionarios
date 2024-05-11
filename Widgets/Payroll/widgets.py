@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from PIL import Image
 
 def payroll_widgets(master):
 
@@ -7,7 +8,7 @@ def payroll_widgets(master):
     header_frame = ctk.CTkFrame(master,
                                 width=1360,
                                 height=53,
-                                fg_color="blue",
+                                fg_color="#0891b2",
                                 corner_radius=0,
                                 border_width=3,
                                 border_color="black"
@@ -18,7 +19,7 @@ def payroll_widgets(master):
     lb1 = ctk.CTkLabel(header_frame,
                        text="Folha de Pagamento",
                        font=("Roboto", 30, "bold"),
-                       text_color="black"
+                       text_color="white"
                        )
     lb1.place(x=540, y=9)
 
@@ -27,7 +28,7 @@ def payroll_widgets(master):
     total_frame = ctk.CTkFrame(master,
                                width=336,
                                height=255,
-                               fg_color="#FB9C8D",
+                               fg_color="white",
                                corner_radius=0
                                )
     total_frame.place(x=0,y=50)
@@ -47,19 +48,17 @@ def payroll_widgets(master):
                        text_color="black",
                        width=180,
                        height=70,
-                       fg_color="white",
+                       fg_color="#bfbfbf",
                        corner_radius=20
                        )
     total_payroll_field.place(x=53, y=80)
-
-
     
 
     # Frame do total férias
     total1_frame = ctk.CTkFrame(master,
                                width=336,
                                height=255,
-                               fg_color="green",
+                               fg_color="white",
                                corner_radius=0
                                )
     total1_frame.place(x=335,y=50)
@@ -79,10 +78,10 @@ def payroll_widgets(master):
                        text_color="black",
                        width=180,
                        height=70,
-                       fg_color="white",
+                       fg_color="#bfbfbf",
                        corner_radius=20
                        )
-    total_vac_field.place(x=53, y=80)
+    total_vac_field.place(x=63, y=80)
 
 
     # Frame do total por área
@@ -94,28 +93,50 @@ def payroll_widgets(master):
                                )
     total2_frame.place(x=672,y=50)
 
-    # Texto do total de salários por área
-    lb4 = ctk.CTkLabel(total2_frame,
-                       text="Total de Salários por Área",
-                       font=("Roboto", 26, "bold"),
-                       text_color="black"
-                       )
-    lb4.place(x=170, y=9)
+    chart1 = ctk.CTkLabel(total2_frame,
+                         text="",
+                         image=ctk.CTkImage(Image.open(r'Charts\area_salary_chart.png'), size=(690, 255))
+                         )
+    chart1.place(x=0,y=0)
 
 
     # Frame do salário bruto por funcionário
     total3_frame = ctk.CTkFrame(master,
                                width=1360,
                                height=413,
-                               fg_color="yellow",
-                               corner_radius=0
+                               fg_color="white",
+                               corner_radius=0,
                                )
     total3_frame.place(x=0,y=305)
 
-    # Texto do total de salários por área
-    lb5 = ctk.CTkLabel(total3_frame,
-                       text="Salário Bruto por Funcionário",
-                       font=("Roboto", 26, "bold"),
-                       text_color="black"
-                       )
-    lb5.place(x=487, y=9)
+    # Gráfico
+    chart2 = ctk.CTkLabel(total3_frame,
+                         text="",
+                         image=ctk.CTkImage(Image.open(r'Charts\salary_chart.png'), size=(1346, 413))
+                         )
+    chart2.place(x=0,y=0)
+
+    
+    # Delimitadores
+
+    del1 = ctk.CTkFrame(master,
+                        width=3,
+                        height=255,
+                        fg_color="black"
+                        )
+    del1.place(x=335,y=50)
+
+    del2 = ctk.CTkFrame(master,
+                        width=3,
+                        height=255,
+                        fg_color="black"
+                        )
+    del2.place(x=670,y=50)
+
+    del3 = ctk.CTkFrame(master,
+                        width=1360,
+                        height=3,
+                        fg_color="black"
+                        )
+    del3.place(x=0,y=305)
+
