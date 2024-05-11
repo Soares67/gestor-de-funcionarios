@@ -699,3 +699,50 @@ def get_overtime_stats():
             dict_hours[area] += horas
         
     return (list(dict_hours.keys()), list(dict_hours.values()))  # ([areas], [horas])
+
+# Pega o total de salários por área
+def get_area_salaries():
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT Area, Salario FROM funcionarios")
+    resultado = cursor.fetchall()  #Resultado da busca
+    areas = [resultado[i][0] for i, row in enumerate(resultado)]
+    salarios = [resultado[i][1] for i, row in enumerate(resultado)]
+    # areas = list(set(resultado_tratado))
+    cursor.close()
+    conexao.close()
+    
+    dict = {}
+
+    for area, sal in zip(areas, salarios):
+        if area not in dict:
+            dict[area] = sal
+        else:
+            dict[area] += sal
+    
+    return (list(dict.keys()), list(dict.values()))
+
+# Pega o salário por ID de funcionário
+def get_salaries_id():
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT ID, Salario FROM funcionarios")
+    resultado = cursor.fetchall()  #Resultado da busca
+    ids = [resultado[i][0] for i, row in enumerate(resultado)]
+    salarios = [resultado[i][1] for i, row in enumerate(resultado)]
+    # areas = list(set(resultado_tratado))
+    cursor.close()
+    conexao.close()
+    return (ids, salarios)

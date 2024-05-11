@@ -2,8 +2,10 @@ import customtkinter as ctk
 from PIL import Image
 from CTkToolTip import * 
 from Icons.iconspath import REFRESH_ICON
+import config, functions
 
 def payroll_widgets(master):
+    total_payroll = sum(config.get_salaries())
 
 
     # Frame do cabeçalho
