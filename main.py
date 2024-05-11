@@ -9,7 +9,7 @@ from Widgets.Home.widgets import home_widgets
 from Widgets.Register.widgets import register_widgets
 from Widgets.Promote.widgets import promote_widgets
 from Widgets.Overtime.widgets import overtime_widgets
-from Widgets.Overtime.widgets import payroll_widgets
+from Widgets.Payroll.widgets import payroll_widgets
 
 #Classe que controla o status do admin
 class AdminStatus:
