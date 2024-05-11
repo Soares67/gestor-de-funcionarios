@@ -372,3 +372,56 @@ def plotnsave_overtime():
     ax.bar(areas, horas, label=bar_labels, color=bar_colors)
     ax.set_ylabel("Quantidade")
     plt.savefig(r"Charts\overtime_chart")
+
+# Cria e salva o gráfico de salários por área
+def plotnsave_salaries():
+    areas, salaries = config.get_area_salaries()
+    colors = ["#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15", "#fb923c", "#22d3ee", "#a3e635", "#63B3ED", "#f8a5c2"]
+    bar_labels = colors[:len(areas)]
+    bar_colors = colors[:len(areas)]
+
+    fig, ax = plt.subplots(figsize=(6, 3))
+    ax.bar(areas, salaries, label=bar_labels, color=bar_colors)
+    ax.set_ylabel("Quantidade")
+    ax.set_title('Total de Salários por Área')
+    plt.savefig(r"Charts\area_salary_chart")
+
+# Cria e salva o gráfico de salários por ID
+def plotnsave_salaries_id():
+
+    ids, salaries = config.get_salaries_id()
+    colors = [
+    "#34d399", "#a78bfa", "#fb7185", "#818cf8", "#facc15",
+    "#ff6b6b", "#7f9cf5", "#f3a683", "#63b3ed", "#f8a5c2",
+    "#00adb5", "#ffc75f", "#8338ec", "#f6416c", "#ffafcc",
+    "#00f5d4", "#ff9f1c", "#7ed6df", "#8ac926", "#ff9b54",
+    "#1982c4", "#d4a5a5", "#303960", "#d00000", "#8c5383",
+    "#34c8ff", "#eb4d4b", "#3ae374", "#d35400", "#9b59b6",
+    "#45aaf2", "#ff9f43", "#8e44ad", "#2ecc71", "#f368e0",
+    "#10ac84", "#ff793f", "#2f3640", "#ff5252", "#22a6b3",
+    "#f39c12", "#2d3436", "#e74c3c", "#1289a7", "#ffda79",
+    "#ff6b81", "#00a8ff", "#6ab04c", "#f7d794", "#70a1ff",
+    "#ff9ff3", "#70a1ff", "#70a1ff", "#2c2c54", "#f7f1e3",
+    "#58b19f", "#ffa502", "#ff7f50", "#7efff5", "#474787",
+    "#ced6e0", "#ffcccc", "#ff7979", "#badc58", "#f8a5c2",
+    "#f3a683", "#ff9ff3", "#7ed6df", "#b33771", "#6d214f",
+    "#8c7ae6", "#d63031", "#fbc531", "#4cd137", "#c56cf0",
+    "#54a0ff", "#00d8d6", "#ff3f34", "#ffcccc", "#9c88ff",
+    "#00cec9", "#fbc531", "#6ab04c", "#eb4d4b", "#ff3f34",
+    "#c8d6e5", "#44bd32", "#2d3436", "#a29bfe", "#ff3f34",
+    "#c8d6e5", "#6c5ce7", "#e15f41", "#34ace0", "#00a8ff",
+    "#ff3f34", "#34ace0", "#ff6b6b", "#22a6b3", "#1dd1a1",
+    "#54a0ff", "#6ab04c", "#ff5252", "#ff793f", "#f368e0",
+    "#00a8ff", "#f39c12", "#273c75", "#130f40", "#95afc0"
+]
+
+    bar_labels = colors[:len(ids)]
+    bar_colors = colors[:len(ids)]
+
+    fig, ax = plt.subplots(figsize=(15, 4))
+    ax.bar(ids, salaries, label=bar_labels, color=bar_colors)
+    ax.set_ylabel("Salário")
+    plt.xticks(rotation=75)
+    ax.set_xticks(ids)
+    ax.set_title('Salário Bruto por Funcionário')
+    plt.savefig(r"Charts\salary_chart")
