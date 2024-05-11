@@ -1,5 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
+from CTkToolTip import * 
+from Icons.iconspath import REFRESH_ICON
 
 def payroll_widgets(master):
 
@@ -22,6 +24,22 @@ def payroll_widgets(master):
                        text_color="white"
                        )
     lb1.place(x=540, y=9)
+
+    #Botão de atualizar as informações
+    ref_btn = ctk.CTkButton(header_frame,
+                            text="",
+                            image=REFRESH_ICON,
+                            command=lambda: print("Atualizar"),
+                            corner_radius=20,
+                            width=20,
+                            height=20,
+                            fg_color="transparent",
+                            border_color="white",
+                            border_width=2,
+                            hover_color="#155e75"
+    )
+    ref_tooltip = CTkToolTip(ref_btn, "Atualizar página", 0.1)
+    ref_btn.place(x=1200,y=7)
 
 
     # Frame do total
