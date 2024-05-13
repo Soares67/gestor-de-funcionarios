@@ -6,7 +6,26 @@ import config, functions
 
 def payroll_widgets(master):
     total_payroll = sum(config.get_salaries())
+    total_vac = 19720.00  # TO FIX
 
+    # Atualiza as estatísticas
+    def refresh_stats():
+        global total_payroll
+        total_payroll = sum(config.get_salaries())  # Atualizar o total
+        total_payroll_field.configure(text=f"R$ {functions.float_to_rs(total_payroll)}")  # Atualizar a informação na tela
+
+    # Atualiza os gráficos
+    def refresh_charts():
+        functions.plotnsave_salaries()  # Atualizar o gráfico
+        functions.plotnsave_salaries_id()  # Atualizar o gráfico
+
+        chart1.configure(image=ctk.CTkImage(Image.open(r'Charts\area_salary_chart.png'), size=(690, 255)))  # Mostrar o gráfico atualizado
+        chart2.configure(image=ctk.CTkImage(Image.open(r'Charts\salary_chart.png'), size=(1346, 413)))  # Mostrar o gráfico atualizado
+
+    # Atualiza as informações da página
+    def refresh():
+        refresh_stats()
+        refresh_charts()
 
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
@@ -31,7 +50,7 @@ def payroll_widgets(master):
     ref_btn = ctk.CTkButton(header_frame,
                             text="",
                             image=REFRESH_ICON,
-                            command=lambda: print("Atualizar"),
+                            command=lambda: refresh(),
                             corner_radius=20,
                             width=20,
                             height=20,
@@ -63,7 +82,7 @@ def payroll_widgets(master):
 
     # Campo do total
     total_payroll_field = ctk.CTkLabel(total_frame,
-                       text="R$ 152.675,00",
+                       text=f"R$ {functions.float_to_rs(total_payroll)}",
                        font=("Roboto", 26, "bold"),
                        text_color="black",
                        width=180,
@@ -93,7 +112,7 @@ def payroll_widgets(master):
 
     # Campo do total férias
     total_vac_field = ctk.CTkLabel(total1_frame,
-                       text="R$ 19.246,00",
+                       text=f"R$ {functions.float_to_rs(total_vac)}",
                        font=("Roboto", 26, "bold"),
                        text_color="black",
                        width=180,
