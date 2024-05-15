@@ -10,6 +10,7 @@ from Widgets.Register.widgets import register_widgets
 from Widgets.Promote.widgets import promote_widgets
 from Widgets.Overtime.widgets import overtime_widgets
 from Widgets.Payroll.widgets import payroll_widgets
+from Widgets.Vacation.widgets import vacation_widgets
 
 #Classe que controla o status do admin
 class AdminStatus:
@@ -931,6 +932,7 @@ class Gestor(tk.Tk):
                                          fg_color=self.tema_atual,
                                          )
         self.ferias_frame.place(x=52,y=0)
+        vacation_widgets(self.ferias_frame)
 
         #Frame da opção de Promover
         self.promover_frame = ctk.CTkFrame(self,
