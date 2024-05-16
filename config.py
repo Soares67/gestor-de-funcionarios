@@ -766,7 +766,7 @@ VALUES ({id}, '{data_inicio}', '{data_fim}', '{motivo}')
     cursor.close()
     conexao.close()
 
-# Pega o histórico de férias de um funcionário
+# Pega o histórico de férias de um funcionário   ---TO FIX---
 def get_vacations(id):
     # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
@@ -778,9 +778,7 @@ def get_vacations(id):
 
     cursor.execute(f"SELECT [Data Inicio], [Data Fim] FROM ferias WHERE [ID Funcionario] = ?", (id))
     resultado = cursor.fetchall()  #Resultado da busca
-    # ids = [resultado[i][0] for i, row in enumerate(resultado)]
-    # salarios = [resultado[i][1] for i, row in enumerate(resultado)]
-    # # areas = list(set(resultado_tratado))
+    resultado_tratado = [i for i in resultado[0]]
     cursor.close()
     conexao.close()
-    return resultado
+    return resultado_tratado
