@@ -425,3 +425,65 @@ def plotnsave_salaries_id():
     ax.set_xticks(ids)
     ax.set_title('Salário Bruto por Funcionário')
     plt.savefig(r"Charts\salary_chart")
+
+# Converte um intervalo em uma sequência
+def interval_to_sequence(start_date: str, end_date: str):
+    def is_leap_year(year):
+        """Verifica se um ano é bissexto.
+
+        Args:
+            year (int): O ano a ser verificado.
+
+        Returns:
+            bool: True se o ano for bissexto, False caso contrário.
+        """
+        return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
+    def days_in_month(month, year):
+        """Obtém o número de dias em um determinado mês de um ano.
+
+        Args:
+            month (int): O mês (1 a 12).
+            year (int): O ano.
+
+        Returns:
+            int: O número de dias no mês especificado.
+        """
+        if month in {1, 3, 5, 7, 8, 10, 12}:
+            return 31
+        elif month in {4, 6, 9, 11}:
+            return 30
+        elif month == 2:
+            return 29 if is_leap_year(year) else 28
+
+    def convert(start_date, end_date):
+        """Converte um intervalo de datas em um dicionário com a sequencia de datas entre os intervalos
+
+        Args:
+            start_date (str): Data inicial do intervalo no formato DD/MM/YYYY
+            end_date (str): Data final do intervalo no formato DD/MM/YYYY
+
+        Returns:
+            result_dict (dict): Dicionário com a sequência de datas
+        """
+        start_day, start_month, start_year = map(int, start_date.split('/'))
+        end_day, end_month, end_year = map(int, end_date.split('/'))
+
+        result_dict = {}
+        current_day = start_day
+        current_month = start_month
+        current_year = start_year
+
+        while current_year < end_year or (current_year == end_year and current_month <= end_month):
+            days_in_current_month = days_in_month(current_month, current_year)
+            while current_day <= days_in_current_month and ((current_year < end_year) or (current_year == end_year and current_month < end_month) or (current_year == end_year and current_month == end_month and current_day <= end_day)):
+                result_dict[(current_day, current_month, current_year)] = 10
+                current_day += 1
+            current_day = 1
+            current_month += 1
+            if current_month == 13:
+                current_month = 1
+                current_year += 1
+
+        return result_dict
+    return convert(start_date, end_date)
