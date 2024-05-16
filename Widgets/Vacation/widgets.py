@@ -6,25 +6,23 @@ import functions, config
 
 
 def vacation_widgets(master):
-    data = {(16, 5, 2024): 10,
-            (17, 5, 2024): 10,
-            (18, 5, 2024): 10,
-            (19, 5, 2024): 10,
-            (20, 5, 2024): 10,
-            (5, 6, 2024): 10,
-            (6, 6, 2024): 10,
-            (7, 6, 2024): 10,
-            (8, 6, 2024): 10}
+    data = {(1, 1, 1901): 10}
     
+    def get_vagacations(id):
+        global data
+        start, end = config.get_vacations(id)
+        data = functions.interval_to_sequence(start, end)
+        print(data)
+
+
     def change_calendar():
         # Remover o calendário normal
         calendar.place_forget()
 
-        # Colocar o calendário de marcação
-        mark_calendar.place(x=0,y=0)
+        # Atualiza as informações do calendário
+        get_vagacations(1)
 
-    def get_vagacations(id):
-        pass
+    
 
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
@@ -189,7 +187,7 @@ def vacation_widgets(master):
                                     title_bar_button_hover_color="#d47770"
                                     )
     
-    calendar.place(x=0,y=0)
+    mark_calendar.place(x=0,y=0)
 
     # Delimitador
 
