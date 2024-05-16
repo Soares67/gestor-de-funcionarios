@@ -10,17 +10,17 @@ def vacation_widgets(master):
     
     def get_vagacations(id):
         global data
-        start, end = config.get_vacations(id)
-        data = functions.interval_to_sequence(start, end)
+        data = {(16,5,2024): 10,
+     (18,5,2024): 10,
+     (19,5,2024): 10,
+     (20,5,2024): 10}
         print(data)
 
 
     def change_calendar():
-        # Remover o calendário normal
-        calendar.place_forget()
-
         # Atualiza as informações do calendário
         get_vagacations(1)
+        
 
     
 
@@ -166,15 +166,6 @@ def vacation_widgets(master):
                               )
     cal_frame.place(x=673,y=49)
 
-    # Calendário
-    calendar = CTkCalendar(cal_frame,
-                               width=677,
-                               height=670,
-                               today_fg_color="#6e6b6b",
-                               corner_radius=0,
-                               title_bar_button_fg_color="#FB9C8D",
-                               title_bar_button_hover_color="#d47770"
-                               )
 
     # Calendário Marcador
     mark_calendar = CTkCalendarStat(cal_frame,
