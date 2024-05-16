@@ -9,18 +9,32 @@ import numpy as np
 
 def home_widgets(master):
 
-    qty_employees = len(config.get_funcionarios())
-    avg_salaries = np.mean(config.get_salaries()).round(2)
-    max_salary = max(config.get_salaries())
-    min_salary = min(config.get_salaries())
-
-    # Atualiza as estatísticas
-    def refresh_stats():
-        global qty_employees, avg_salaries, max_salary, min_salary
+    
+    if len(config.get_salaries()) == 0:
+        max_salary = 0
+        min_salary = 0
+        qty_employees = 0
+        avg_salaries = 0
+    else:
         qty_employees = len(config.get_funcionarios())
         avg_salaries = np.mean(config.get_salaries()).round(2)
         max_salary = max(config.get_salaries())
         min_salary = min(config.get_salaries())
+    
+
+    # Atualiza as estatísticas
+    def refresh_stats():
+        global qty_employees, avg_salaries, max_salary, min_salary
+        if len(config.get_salaries()) == 0:
+            max_salary = 0
+            min_salary = 0
+            qty_employees = 0
+            avg_salaries = 0
+        else:
+            qty_employees = len(config.get_funcionarios())
+            avg_salaries = np.mean(config.get_salaries()).round(2)
+            max_salary = max(config.get_salaries())
+            min_salary = min(config.get_salaries())
 
         def update_values(values_list, texts_list):
             for i, value in enumerate(values_list):
@@ -32,11 +46,18 @@ def home_widgets(master):
 
     # Atualiza os gráficos
     def refresh_charts():
-        functions.update_charts()
+        if len(config.get_salaries()) == 0:
 
-        gen_label.configure(image=ctk.CTkImage(Image.open(r'Charts\genders_chart.png'), size=(456, 334)))
-        area_label.configure(image=ctk.CTkImage(Image.open(r'Charts\areas_chart.png'), size=(455, 334)))
-        ages_label.configure(image=ctk.CTkImage(Image.open(r'Charts\ages_chart.png'), size=(910, 336)))
+            gen_label.configure(image=ctk.CTkImage(Image.open(r'Charts\nfound.png'), size=(456, 334)))
+            area_label.configure(image=ctk.CTkImage(Image.open(r'Charts\nfound.png'), size=(455, 334)))
+            ages_label.configure(image=ctk.CTkImage(Image.open(r'Charts\nfound1.png'), size=(910, 336)))
+        else:
+            
+            functions.update_charts()
+
+            gen_label.configure(image=ctk.CTkImage(Image.open(r'Charts\genders_chart.png'), size=(456, 334)))
+            area_label.configure(image=ctk.CTkImage(Image.open(r'Charts\areas_chart.png'), size=(455, 334)))
+            ages_label.configure(image=ctk.CTkImage(Image.open(r'Charts\ages_chart.png'), size=(910, 336)))
 
     def refresh_page():
         refresh_stats()
@@ -162,7 +183,7 @@ def home_widgets(master):
     # Gráfico dos gêneros
     gen_label = ctk.CTkLabel(gen_frame,
                              text="",
-                            image=ctk.CTkImage(Image.open(r'Charts\genders_chart.png'), size=(456, 334))
+                            image=ctk.CTkImage(Image.open(r'Charts\nfound.png'), size=(456, 334))
                              )
     gen_label.place(x=0,y=0)
 
@@ -178,7 +199,7 @@ def home_widgets(master):
     # Gráfico das idades
     ages_label = ctk.CTkLabel(age_frame,
                               text="",
-                              image=ctk.CTkImage(Image.open(r'Charts\ages_chart.png'), size=(910, 336))
+                              image=ctk.CTkImage(Image.open(r'Charts\nfound1.png'), size=(910, 336))
                               )
     ages_label.place(x=0,y=0)
 
@@ -194,7 +215,7 @@ def home_widgets(master):
     # Gráfico das áreas
     area_label = ctk.CTkLabel(area_frame,
                               text="",
-                              image=ctk.CTkImage(Image.open(r'Charts\areas_chart.png'), size=(455, 334))
+                              image=ctk.CTkImage(Image.open(r'Charts\nfound.png'), size=(455, 334))
                               )
     area_label.place(x=0,y=0)
 

@@ -258,6 +258,7 @@ def plotnsave_genders():
     genders = ["Masculino", "Feminino", "Outros"]
 
     fig, ax = plt.subplots(figsize=(4,3))
+
     ax.pie(config.get_gender_stats(), labels=genders, startangle=80, autopct="%1.1f%%", colors=colors)
     ax.set_title("Funcionários por gênero")
     

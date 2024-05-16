@@ -16,11 +16,17 @@ def payroll_widgets(master):
 
     # Atualiza os gráficos
     def refresh_charts():
-        functions.plotnsave_salaries()  # Atualizar o gráfico
-        functions.plotnsave_salaries_id()  # Atualizar o gráfico
+        if len(config.get_salaries())  == 0:
+            chart1.configure(image=ctk.CTkImage(Image.open(r'Charts\nfound2.png'), size=(690, 255)))
+            chart2.configure(image=ctk.CTkImage(Image.open(r'Charts\nfound3.png'), size=(1346, 413)))
+        
+        else:
 
-        chart1.configure(image=ctk.CTkImage(Image.open(r'Charts\area_salary_chart.png'), size=(690, 255)))  # Mostrar o gráfico atualizado
-        chart2.configure(image=ctk.CTkImage(Image.open(r'Charts\salary_chart.png'), size=(1346, 413)))  # Mostrar o gráfico atualizado
+            functions.plotnsave_salaries()  # Atualizar o gráfico
+            functions.plotnsave_salaries_id()  # Atualizar o gráfico
+
+            chart1.configure(image=ctk.CTkImage(Image.open(r'Charts\area_salary_chart.png'), size=(690, 255)))  # Mostrar o gráfico atualizado
+            chart2.configure(image=ctk.CTkImage(Image.open(r'Charts\salary_chart.png'), size=(1346, 413)))  # Mostrar o gráfico atualizado
 
     # Atualiza as informações da página
     def refresh():
@@ -134,7 +140,7 @@ def payroll_widgets(master):
 
     chart1 = ctk.CTkLabel(total2_frame,
                          text="",
-                         image=ctk.CTkImage(Image.open(r'Charts\area_salary_chart.png'), size=(690, 255))
+                         image=ctk.CTkImage(Image.open(r'Charts\nfound2.png'), size=(690, 255))
                          )
     chart1.place(x=0,y=0)
 
@@ -151,7 +157,7 @@ def payroll_widgets(master):
     # Gráfico
     chart2 = ctk.CTkLabel(total3_frame,
                          text="",
-                         image=ctk.CTkImage(Image.open(r'Charts\salary_chart.png'), size=(1346, 413))
+                         image=ctk.CTkImage(Image.open(r'Charts\nfound3.png'), size=(1346, 413))
                          )
     chart2.place(x=0,y=0)
 

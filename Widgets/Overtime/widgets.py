@@ -8,8 +8,12 @@ from CTkToolTip import *
 
 def overtime_widgets(master):
 
-    total_hours = round(sum(config.get_total_overtime()), 1)  # Total de horas extras
-    hours_avg = config.get_avg_overtime()  # Média de horas extras
+    if config.get_total_overtime() == 0:
+        total_hours = 0
+        hours_avg = 0
+    else:
+        total_hours = round(sum(config.get_total_overtime()), 1)  # Total de horas extras
+        hours_avg = config.get_avg_overtime()  # Média de horas extras
     focus_id = None  # ID do funcionário em foco
     
     # Procura o nome do funcionálio pelo ID
@@ -31,20 +35,28 @@ def overtime_widgets(master):
     # Atualiza as estatísticas da pagina
     def refresh_stats():
         global total_hours, hours_avg
-        total_hours = round(sum(config.get_total_overtime()), 1)
-        hours_avg = config.get_avg_overtime()
+        if config.get_total_overtime() == 0:
+            total_hours = 0
+            hours_avg = 0
+        else:
+            total_hours = round(sum(config.get_total_overtime()), 1)  # Total de horas extras
+            hours_avg = config.get_avg_overtime()  # Média de horas extras
 
-        total_lb.configure(text=f"{total_hours}")
-        avg_lb.configure(text=f"{hours_avg}")
+            total_lb.configure(text=f"{total_hours}")
+            avg_lb.configure(text=f"{hours_avg}")
         
 
     # Atualiza o gráfico
     def refresh_chart():
         """Atualiza o gráfico
         """
-        functions.plotnsave_overtime()
+        if config.get_total_overtime() == 0:
+            chart.configure(image=ctk.CTkImage(Image.open(r'Charts\nfound4.png'), size=(460, 310)))
+        else:
 
-        chart.configure(image=ctk.CTkImage(Image.open(r'Charts\overtime_chart.png'), size=(460, 310)))
+            functions.plotnsave_overtime()
+
+            chart.configure(image=ctk.CTkImage(Image.open(r'Charts\overtime_chart.png'), size=(460, 310)))
 
     # Atualiza as informações da página
     def refresh_page():
@@ -193,7 +205,7 @@ def overtime_widgets(master):
     # Gráfico
     chart = ctk.CTkLabel(chart_frame,
                          text="",
-                         image=ctk.CTkImage(Image.open(r'Charts\overtime_chart.png'), size=(460, 310))
+                         image=ctk.CTkImage(Image.open(r'Charts\nfound4.png'), size=(460, 310))
                          )
     chart.place(x=7,y=7)
 

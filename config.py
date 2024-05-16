@@ -782,3 +782,4 @@ def get_vacations(id):
     cursor.close()
     conexao.close()
     return resultado_tratado
+print(get_total_overtime())
