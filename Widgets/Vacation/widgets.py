@@ -2,9 +2,19 @@ import customtkinter as ctk
 from Calendar.ctk_calendar_stat import CTkCalendarStat
 from Calendar.ctk_calender import CTkCalendar
 from Icons.iconspath import SEARCH_ICON
+import functions, config
+
 
 def vacation_widgets(master):
-    data = {(1, 1, 1901): 10}
+    data = {(16, 5, 2024): 10,
+            (17, 5, 2024): 10,
+            (18, 5, 2024): 10,
+            (19, 5, 2024): 10,
+            (20, 5, 2024): 10,
+            (5, 6, 2024): 10,
+            (6, 6, 2024): 10,
+            (7, 6, 2024): 10,
+            (8, 6, 2024): 10}
     
     def change_calendar():
         # Remover o calendário normal
@@ -13,6 +23,8 @@ def vacation_widgets(master):
         # Colocar o calendário de marcação
         mark_calendar.place(x=0,y=0)
 
+    def get_vagacations(id):
+        pass
 
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,

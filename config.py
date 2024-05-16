@@ -765,3 +765,22 @@ VALUES ({id}, '{data_inicio}', '{data_fim}', '{motivo}')
 
     cursor.close()
     conexao.close()
+
+# Pega o histórico de férias de um funcionário
+def get_vacations(id):
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"SELECT [Data Inicio], [Data Fim] FROM ferias WHERE [ID Funcionario] = ?", (id))
+    resultado = cursor.fetchall()  #Resultado da busca
+    # ids = [resultado[i][0] for i, row in enumerate(resultado)]
+    # salarios = [resultado[i][1] for i, row in enumerate(resultado)]
+    # # areas = list(set(resultado_tratado))
+    cursor.close()
+    conexao.close()
+    return resultado
