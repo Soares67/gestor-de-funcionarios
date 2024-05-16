@@ -4,8 +4,15 @@ from Calendar.ctk_calender import CTkCalendar
 from Icons.iconspath import SEARCH_ICON
 
 def vacation_widgets(master):
-    data = None
+    data = {(1, 1, 1901): 10}
     
+    def change_calendar():
+        # Remover o calendário normal
+        calendar.place_forget()
+
+        # Colocar o calendário de marcação
+        mark_calendar.place(x=0,y=0)
+
 
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,
@@ -67,7 +74,7 @@ def vacation_widgets(master):
                                corner_radius=20,
                                fg_color="#171717",
                                bg_color="#171717",
-                               command=lambda: print("Pesquisar"),
+                               command=lambda: change_calendar(),
                                hover_color="#404040"
                                )
     search_btn.place(x=468,y=100)
@@ -158,15 +165,19 @@ def vacation_widgets(master):
                                title_bar_button_fg_color="#FB9C8D",
                                title_bar_button_hover_color="#d47770"
                                )
-    calendar.place(x=0,y=0)
 
     # Calendário Marcador
-#     mark_calendar = CTkCalendarStat(cal_frame,
-#                                     width=450,
-#                                     height=450,
-#                                     data=data
-#                                     )
-
+    mark_calendar = CTkCalendarStat(cal_frame,
+                                    width=677,
+                                    height=670,
+                                    corner_radius=0,
+                                    data=data,
+                                    data_colors=("green", "red", "blue"),
+                                    title_bar_button_fg_color="#FB9C8D",
+                                    title_bar_button_hover_color="#d47770"
+                                    )
+    
+    calendar.place(x=0,y=0)
 
     # Delimitador
 
