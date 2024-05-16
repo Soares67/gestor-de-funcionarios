@@ -2,6 +2,7 @@ import customtkinter as ctk
 import calendar
 from datetime import datetime
 import tkinter as tk
+import locale
 
 
 class CTkCalendarStat(ctk.CTkFrame):
@@ -57,7 +58,7 @@ class CTkCalendarStat(ctk.CTkFrame):
         self.today = self.current_date()
         self.day, self.month, self.year = self.today[:]
         self.labels_by_date = dict()
-        self.month_label = ctk.StringVar(value=calendar.month_name[self.month])
+        self.month_label = ctk.StringVar(value=calendar.month_name[self.month].replace("Ã§", "ç").capitalize())
         self.year_label = ctk.IntVar(value=self.year)
 
         # data for title bar
@@ -93,17 +94,17 @@ class CTkCalendarStat(ctk.CTkFrame):
                                     corner_radius=self.title_bar_corner_radius,
                                     border_color=self.title_bar_border_color, border_width=self.title_bar_border_width)
 
-        ctk.CTkButton(header_frame, text="<", width=25, fg_color=self.title_bar_button_fg_color,
+        ctk.CTkButton(header_frame, text="<", text_color="black", width=45, height=45, fg_color=self.title_bar_button_fg_color,
                       hover_color=self.title_bar_button_hover_color, border_color=self.title_bar_button_border_color,
-                      border_width=self.title_bar_button_border_width, font=ctk.CTkFont("Arial", 11, "bold"),
+                      border_width=self.title_bar_button_border_width, font=ctk.CTkFont("Arial", 16, "bold"),
                       command=lambda: self.change_month(-1)).pack(side="left", padx=10)
-        ctk.CTkLabel(header_frame, textvariable=self.month_label, font=ctk.CTkFont("Arial", 16, "bold"),
+        ctk.CTkLabel(header_frame, textvariable=self.month_label, font=ctk.CTkFont("Arial", 19, "bold"),
                      fg_color="transparent").pack(side="left", fill="x", expand=True)
-        ctk.CTkLabel(header_frame, textvariable=self.year_label, font=ctk.CTkFont("Arial", 16, "bold"),
+        ctk.CTkLabel(header_frame, textvariable=self.year_label, font=ctk.CTkFont("Arial", 19, "bold"),
                      fg_color="transparent").pack(side="left", fill="x")
-        ctk.CTkButton(header_frame, text=">", width=25, fg_color=self.title_bar_button_fg_color,
+        ctk.CTkButton(header_frame, text=">", text_color="black", width=45, height=45, fg_color=self.title_bar_button_fg_color,
                       hover_color=self.title_bar_button_hover_color, border_color=self.title_bar_button_border_color,
-                      border_width=self.title_bar_button_border_width, font=ctk.CTkFont("Arial", 11, "bold"),
+                      border_width=self.title_bar_button_border_width, font=ctk.CTkFont("Arial", 16, "bold"),
                       command=lambda: self.change_month(1)).pack(side="right", padx=10)
 
         header_frame.place(relx=0.5, rely=0.02, anchor="n", relheight=0.18, relwidth=0.95)
@@ -139,7 +140,7 @@ class CTkCalendarStat(ctk.CTkFrame):
             self.month = 1
             self.day = 1
 
-        self.month_label.set(calendar.month_name[self.month])
+        self.month_label.set(calendar.month_name[self.month].replace("Ã§", "ç").capitalize())
         self.year_label.set(self.year)
 
         self.create_calendar_frame()
@@ -166,7 +167,7 @@ class CTkCalendarStat(ctk.CTkFrame):
                 fg_color = self.data_colors[1]
 
         label = ctk.CTkLabel(frame, text=str(day), corner_radius=5,
-                             fg_color=fg_color, font=ctk.CTkFont("Arial", 11, "bold"),
+                             fg_color=fg_color, font=ctk.CTkFont("Arial", 13, "bold"),
                              text_color=self.calendar_text_color)
 
         label.grid(row=row, column=column, sticky="nsew", padx=self.calendar_label_pad,
