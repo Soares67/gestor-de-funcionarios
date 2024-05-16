@@ -746,3 +746,22 @@ def get_salaries_id():
     cursor.close()
     conexao.close()
     return (ids, salarios)
+
+# Registra férias no id de um funcionário
+def register_vacation(id, data_inicio, data_fim, motivo):
+    # Conexão com o banco de dados
+    dados_conexao = ("Driver={SQLite3 ODBC Driver};"
+                "Server=localhost;"
+                r"Database=DB\gerenciador.db")
+    conexao = pyodbc.connect(dados_conexao)
+
+    cursor = conexao.cursor()
+
+    cursor.execute(f"""
+INSERT INTO ferias ([ID Funcionario], [Data Inicio], [Data Fim], Motivo)
+VALUES ({id}, '{data_inicio}', '{data_fim}', '{motivo}')
+                   """)
+    cursor.commit()
+
+    cursor.close()
+    conexao.close()
