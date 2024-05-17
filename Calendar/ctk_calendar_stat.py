@@ -191,10 +191,12 @@ class CTkCalendarStat(ctk.CTkFrame):
                              hover=False)
         
         data_days = [i[0] for i in self.data.keys()]  # Dias no dicionário de datas
+        data_months = [i[1] for i in self.data.keys()]  # Meses no dicionario de datas
+        data_years = [i[2] for i in self.data.keys()]  # Anos no dicionario de datas
         
         if (day, self.month, self.year) == (self.day, self.month, self.year):
             label.configure(fg_color='#595656')
-        if (day, self.month, self.year) == (self.day, self.month, self.year) and day in data_days:
+        if (day, self.month, self.year) == (self.day, self.month, self.year) and day in data_days and self.month in data_months and self.year in data_years:
             label.configure(fg_color='#595656', border_width=2, border_color="red")
 
 
