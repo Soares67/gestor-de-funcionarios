@@ -152,6 +152,15 @@ class CTkCalendarStat(ctk.CTkFrame):
 
         self.create_calendar_frame()
 
+    # Atualiza a exibição do calendário
+    def replot_current_month(self):
+        # Remove o frame atual do calendário, se existir
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+        # Cria novamente o frame do calendário
+        self.setup_header_frame()
+        self.create_calendar_frame()
+
     def current_date(self) -> tuple[int, int, int]:
         date = str(datetime.now()).split()
         year, month, day = date[0].split("-")
@@ -164,18 +173,30 @@ class CTkCalendarStat(ctk.CTkFrame):
 
     # setting up date labels if certain data exists
     def setup_label_with_data(self, frame, day, row, column):
-        fg_color = None
+        fg_color = '#2b2b2b'
+
         if self.data.get((day, self.month, self.year)) is not None:
             if self.data[(day, self.month, self.year)] < self.avg * 0.8:
-                fg_color = self.data_colors[0]
+                fg_color = 'red'
             elif self.data[(day, self.month, self.year)] > self.avg * 1.2:
-                fg_color = self.data_colors[2]
+                fg_color = 'red'
             else:
-                fg_color = self.data_colors[1]
+                fg_color = 'red'
+        
+        
 
-        label = ctk.CTkLabel(frame, text=str(day), corner_radius=5,
+        label = ctk.CTkButton(frame, text=str(day), corner_radius=5,
                              fg_color=fg_color, font=ctk.CTkFont("Arial", 13, "bold"),
-                             text_color=self.calendar_text_color)
+                             text_color=self.calendar_text_color,
+                             hover=False)
+        
+        data_days = [i[0] for i in self.data.keys()]  # Dias no dicionário de datas
+        
+        if (day, self.month, self.year) == (self.day, self.month, self.year):
+            label.configure(fg_color='#595656')
+        if (day, self.month, self.year) == (self.day, self.month, self.year) and day in data_days:
+            label.configure(fg_color='#595656', border_width=2, border_color="red")
+
 
         label.grid(row=row, column=column, sticky="nsew", padx=self.calendar_label_pad,
                    pady=self.calendar_label_pad)

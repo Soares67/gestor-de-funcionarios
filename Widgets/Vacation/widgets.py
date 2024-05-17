@@ -11,15 +11,19 @@ def vacation_widgets(master):
     def get_vagacations(id):
         global data
         data = {(16,5,2024): 10,
+                (17,5,2024): 10,
      (18,5,2024): 10,
      (19,5,2024): 10,
      (20,5,2024): 10}
-        print(data)
+
 
 
     def change_calendar():
         # Atualiza as informações do calendário
         get_vagacations(1)
+        global data
+        mark_calendar.data = data
+        mark_calendar.replot_current_month()
         
 
     
@@ -175,7 +179,7 @@ def vacation_widgets(master):
                                     data=data,
                                     data_colors=("green", "red", "blue"),
                                     title_bar_button_fg_color="#FB9C8D",
-                                    title_bar_button_hover_color="#d47770"
+                                    title_bar_button_hover_color="#d47770",
                                     )
     
     mark_calendar.place(x=0,y=0)
