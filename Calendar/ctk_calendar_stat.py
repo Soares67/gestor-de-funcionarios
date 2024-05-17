@@ -58,6 +58,7 @@ class CTkCalendarStat(ctk.CTkFrame):
         self.today = self.current_date()
         self.day, self.month, self.year = self.today[:]
         self.labels_by_date = dict()
+        locale.setlocale(locale.LC_TIME, "pt_BR.UTF-8")
         self.month_label = ctk.StringVar(value=calendar.month_name[self.month].replace("Ã§", "ç").capitalize())
         self.year_label = ctk.IntVar(value=self.year)
 
@@ -118,14 +119,20 @@ class CTkCalendarStat(ctk.CTkFrame):
 
         # grid
         calendar_frame.columnconfigure((0, 1, 2, 3, 4, 5, 6), weight=1, uniform="b")
-        rows = tuple([i for i in range(len(current_month))])
+        rows = tuple([i for i in range(len(current_month) + 1)])  # Add one row for days of the week
         calendar_frame.rowconfigure(rows, weight=1, uniform="b")
 
+        # labels for days of the week
+        days_of_week = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']
+        for i, day in enumerate(days_of_week):
+            ctk.CTkLabel(calendar_frame, text=day, font=ctk.CTkFont("Arial", 13, "bold"),
+                         fg_color="transparent", text_color=self.calendar_text_color).grid(row=0, column=i, sticky="nsew")
+
         # labels for days
-        for row in range(len(current_month)):
+        for row in range(1, len(current_month) + 1):
             for column in range(7):
-                if current_month[row][column] != 0:
-                    self.setup_label_with_data(calendar_frame, current_month[row][column], row, column)
+                if current_month[row - 1][column] != 0:
+                    self.setup_label_with_data(calendar_frame, current_month[row - 1][column], row, column)
 
         calendar_frame.place(relx=0.5, rely=0.97, anchor="s", relheight=0.75, relwidth=0.95)
 
@@ -159,9 +166,9 @@ class CTkCalendarStat(ctk.CTkFrame):
     def setup_label_with_data(self, frame, day, row, column):
         fg_color = None
         if self.data.get((day, self.month, self.year)) is not None:
-            if self.data[(day, self.month, self.year)] < self.avg*0.8:
+            if self.data[(day, self.month, self.year)] < self.avg * 0.8:
                 fg_color = self.data_colors[0]
-            elif self.data[(day, self.month, self.year)] > self.avg*1.2:
+            elif self.data[(day, self.month, self.year)] > self.avg * 1.2:
                 fg_color = self.data_colors[2]
             else:
                 fg_color = self.data_colors[1]
@@ -179,4 +186,4 @@ class CTkCalendarStat(ctk.CTkFrame):
         for value in self.data.values():
             s += value
             counter += 1
-        return s/counter
+        return s / counter
