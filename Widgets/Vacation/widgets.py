@@ -46,7 +46,21 @@ def vacation_widgets(master):
                     msg.showwarning("Erro", "Insira um motivo válido.")
                     return
                 
-                print(id, start_date, end_date, motivo)
+                try:
+                    # Cadastrar
+                    config.register_vacation(id, start_date, end_date, motivo)
+                    msg.showinfo("Sucesso", "Férias registradas com sucesso.")
+
+                    # Limpar os campos
+                    id_entry.delete(0, "end")
+                    start_date_entry.delete(0, "end")
+                    end_date_entry.delete(0, "end")
+                    opts.set("Motivo")
+                except Exception as e:
+                    msg.showerror("Erro", "Ocorreu um erro ao cadastrar as férias. Tente novamente.")
+                    raise e
+                
+
 
             else:
                 msg.showwarning("Erro", "Insira uma data de término válida.")
