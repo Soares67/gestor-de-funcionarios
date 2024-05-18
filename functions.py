@@ -101,7 +101,7 @@ def check_name(name):
         return False
             
 # Checa um campo de datas com regras específicas
-def check_date(date):
+def check_date(date, alert = True):
     """Verifica se a data fornecida está no formato válido (DD/MM/AAAA) e se está dentro dos limites permitidos.
 
     Args:
@@ -119,7 +119,8 @@ def check_date(date):
                 month = int(month)
                 year = int(year)
             except ValueError:
-                msg.showwarning("Erro", "A data deve conter apenas números")
+                if alert:
+                    msg.showwarning("Erro", "A data deve conter apenas números")
                 return False
             
             if 1 <= month <= 12:  # Mês deve estar entre 1 e 12
@@ -133,30 +134,37 @@ def check_date(date):
                             if day <= max_days:
                                 return True
                             else:
-                                msg.showwarning("Erro", "Dia inválido para fevereiro")
+                                if alert:
+                                    msg.showwarning("Erro", "Dia inválido para fevereiro")
                                 return False
                         elif month in [4, 6, 9, 11]:  # Abril, junho, setembro, novembro
                             if day <= 30:
                                 return True
                             else:
-                                msg.showwarning("Erro", "Dia inválido para o mês")
+                                if alert:
+                                    msg.showwarning("Erro", "Dia inválido para o mês")
                                 return False
                         else:
                             return True
                     else:
-                        msg.showwarning("Erro", "Dia deve estar entre 1 e 31")
+                        if alert:
+                            msg.showwarning("Erro", "Dia deve estar entre 1 e 31")
                         return False
                 else:
-                    msg.showwarning("Erro", "A idade máxima é de 70 anos")
+                    if alert:
+                        msg.showwarning("Erro", "A idade máxima é de 70 anos")
                     return False
             else:
-                msg.showwarning("Erro", "Mês deve estar entre 1 e 12")
+                if alert:
+                    msg.showwarning("Erro", "Mês deve estar entre 1 e 12")
                 return False
         else:
-            msg.showwarning("Erro", "Data deve estar no formato DD/MM/AAAA")
+            if alert:
+                msg.showwarning("Erro", "Data deve estar no formato DD/MM/AAAA")
             return False
     else:
-        msg.showwarning("Erro", "O campo deve estar preenchido")
+        if alert:
+            msg.showwarning("Erro", "O campo deve estar preenchido")
         return False
 
 # Checa se um email é válido

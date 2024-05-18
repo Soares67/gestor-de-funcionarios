@@ -3,6 +3,7 @@ from Calendar.ctk_calendar_stat import CTkCalendarStat
 from Calendar.ctk_calender import CTkCalendar
 from Icons.iconspath import SEARCH_ICON
 import functions, config
+import messagebox as msg
 
 
 def vacation_widgets(master):
@@ -24,6 +25,37 @@ def vacation_widgets(master):
         global data
         mark_calendar.data = data
         mark_calendar.replot_current_month()
+    
+
+    # Registra férias no id de um funcionário
+    def register():
+        try:
+            id = int(id_entry.get())
+        except:
+            msg.showwarning("Erro", "Insira um ID válido.")
+            return
+        
+        if functions.check_date(start_date_entry.get(), alert=False):
+            if functions.check_date(end_date_entry.get(), alert=False):
+                start_date = start_date_entry.get()
+                end_date = end_date_entry.get()
+
+                if opts.get() != "Motivo":
+                    motivo = opts.get()
+                else:
+                    msg.showwarning("Erro", "Insira um motivo válido.")
+                    return
+                
+                print(id, start_date, end_date, motivo)
+
+            else:
+                msg.showwarning("Erro", "Insira uma data de término válida.")
+                return
+        else:
+            msg.showwarning("Erro", "Insira uma data de início válida.")
+            return
+        
+        
         
 
     
@@ -153,7 +185,7 @@ def vacation_widgets(master):
                             fg_color="#171717",
                             border_width=2,
                             border_color="#FB9C8D",
-                            command=lambda: print("Salvar"),
+                            command=lambda: register(),
                             hover_color="#404040"
 
                              )
