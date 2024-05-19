@@ -38,14 +38,14 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT COUNT(*) FROM funcionarios WHERE Email = ?", (email))
+    cursor.execute(f"SELECT COUNT(*) FROM Funcionarios WHERE email = ?", (email))
     if cursor.fetchone()[0] > 0:
         msg.showerror("Erro", "O e-mail inserido já está cadastrado")
         return False
     else:
         
         cursor.execute(f"""
-    INSERT INTO funcionarios ('Nome', 'Data Nascimento', 'Genero', 'Email', 'Area', 'Cargo', 'Salario', 'Data Admissao', 'Status Emprego')
+    INSERT INTO Funcionarios ('nome', 'dataNascimento', 'genero', 'email', 'area', 'cargo', 'salario', 'dataAdmissao', 'statusEmprego')
     VALUES
     ("{nome}", "{data_nascimento}", "{genero}", "{email}", "{area}", "{cargo}", {salario}, "{data_admissao}", "{status_emprego}")
     """)
@@ -60,9 +60,9 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
 def read_user(nome=None):
     # Define o tipo da busca
     if nome is None:
-        busca = f"SELECT * FROM funcionarios"
+        busca = f"SELECT * FROM Funcionarios"
     elif nome is not None:
-        busca = f"SELECT * FROM funcionarios Where [Nome] = '{nome}'"
+        busca = f"SELECT * FROM Funcionarios Where [nome] = '{nome}'"
 
     # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
@@ -98,7 +98,7 @@ def create_admin(nome, user, senha, email, ultimo_acesso):
     cursor = conexao.cursor()
 
     cursor.execute(f"""
-INSERT INTO admins ('Nome', 'Usuario', 'Senha', 'Email', 'Ultimo Acesso')
+INSERT INTO Admins ('nome', 'usuario', 'senha', 'email', 'ultimoAcesso')
 VALUES
 ("{nome}", "{user}", "{hash_password(senha)}", "{email}", "{ultimo_acesso}")
 """)
@@ -117,7 +117,7 @@ def delete_admin(user, email):
     conexao = pyodbc.connect(dados_conexao)
     cursor = conexao.cursor()
 
-    cursor.execute("DELETE FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
+    cursor.execute("DELETE FROM Admins WHERE usuario = ? AND email = ?", (user, email))
 
     cursor.commit()
     cursor.close()
@@ -133,7 +133,7 @@ def auth_admin(login, password):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Senha FROM admins WHERE Usuario = ? OR Email = ?", (login, login))
+    cursor.execute(f"SELECT senha FROM Admins WHERE usuario = ? OR email = ?", (login, login))
     resultado = cursor.fetchone()  # Resultado da busca
     cursor.close()
 
@@ -218,7 +218,7 @@ def recover_pass(email, user):
             conexao = pyodbc.connect(dados_conexao)
 
             cursor = conexao.cursor()
-            cursor.execute("UPDATE admins SET [Codigo Temporario] = ? WHERE Email = ? AND Usuario = ?", (code, email, user))
+            cursor.execute("UPDATE Admins SET [codigoTemporario] = ? WHERE email = ? AND usuario = ?", (code, email, user))
             cursor.commit()
             cursor.close()
             conexao.close()
@@ -240,7 +240,7 @@ def verify_email(email):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Email FROM admins WHERE Email = ?", (email))
+    cursor.execute(f"SELECT email FROM Admins WHERE email = ?", (email))
     resultado = cursor.fetchone()  # Resultado da busca
     cursor.close()
     conexao.close()
@@ -260,7 +260,7 @@ def verify_user(email, user):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Usuario FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
+    cursor.execute(f"SELECT usuario FROM Admins WHERE email = ? AND usuario = ?", (email, user))
     resultado = cursor.fetchval()  # Resultado da busca
     cursor.close()
     conexao.close()
@@ -280,7 +280,7 @@ def verify_code(email, user, entry_code):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT [Codigo Temporario] FROM admins WHERE Email = ? AND Usuario = ?", (email, user))
+    cursor.execute(f"SELECT [codigoTemporario] FROM Admins WHERE email = ? AND usuario = ?", (email, user))
     resultado = cursor.fetchval()  # Resultado da busca
     cursor.close()
 
@@ -300,7 +300,7 @@ def update_pass(email, user, nova_senha):
 
         cursor = conexao.cursor()
 
-        cursor.execute("UPDATE admins SET Senha = ? WHERE Email = ? AND Usuario = ?", (hash_password(nova_senha), email, user))
+        cursor.execute("UPDATE Admins SET senha = ? WHERE email = ? AND usuario = ?", (hash_password(nova_senha), email, user))
 
         cursor.commit()
 
@@ -319,7 +319,7 @@ def update_last_access(login, senha):
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
-    cursor.execute("UPDATE admins SET [Ultimo Acesso] = ? WHERE Usuario = ? or Email = ? AND Senha = ?", (timenow(), login, login, hash_password(senha)))
+    cursor.execute("UPDATE Admins SET [ultimoAcesso] = ? WHERE usuario = ? or email = ? AND senha = ?", (timenow(), login, login, hash_password(senha)))
     cursor.commit()
     cursor.close()
     conexao.close()
@@ -334,7 +334,7 @@ def get_admin_info(user, email):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Nome, Email, [Ultimo Acesso] FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
+    cursor.execute(f"SELECT nome, email, [ultimoAcesso] FROM Admins WHERE usuario = ? AND email = ?", (user, email))
     resultado = cursor.fetchall()  # Resultado da busca
     cursor.close()
     conexao.close()
@@ -353,7 +353,7 @@ def delete_admin(user, email):
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
-    cursor.execute("DELETE FROM admins WHERE Usuario = ? AND Email = ?", (user, email))
+    cursor.execute("DELETE FROM Admins WHERE usuario = ? AND email = ?", (user, email))
 
     cursor.commit()
 
@@ -374,14 +374,14 @@ def del_code(email, user):
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
-    cursor.execute("UPDATE admins SET [Codigo Temporario] = NULL WHERE Email = ? AND Usuario = ?", (email, user))
+    cursor.execute("UPDATE Admins SET [codigoTemporario] = NULL WHERE email = ? AND usuario = ?", (email, user))
 
     cursor.commit()
     cursor.close()
     conexao.close()
 
 #  Pega os nomes de todos os funcionários
-def get_funcionarios():
+def get_Funcionarios():
     # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
@@ -390,7 +390,7 @@ def get_funcionarios():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Nome FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
+    cursor.execute(f"SELECT nome FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
     resultado = cursor.fetchall()  # Resultado da busca
     cursor.close()
     conexao.close()
@@ -406,7 +406,7 @@ def get_gender_stats():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Genero FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
+    cursor.execute(f"SELECT genero FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -423,7 +423,7 @@ def get_area_stats():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Area FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
+    cursor.execute(f"SELECT area FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
     resultado = cursor.fetchall()  # Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -463,7 +463,7 @@ def get_all_ages():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT [Data Nascimento] FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
+    cursor.execute(f"SELECT [dataNascimento] FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
     resultado = cursor.fetchall()  # Resultado da busca
     ages_list = [get_age(resultado[i][0]) for i, row in enumerate(resultado)]
     unique_ages = list(set(ages_list))
@@ -481,7 +481,7 @@ def get_salaries():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Salario FROM funcionarios WHERE [Status Emprego] != 'Demitido'")
+    cursor.execute(f"SELECT salario FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -498,7 +498,7 @@ def get_employee_info(key):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT * FROM funcionarios WHERE ID = ?", (key))
+    cursor.execute(f"SELECT * FROM Funcionarios WHERE id = ?", (key))
     resultado = cursor.fetchall()  #Resultado da busca
     cursor.close()
     conexao.close()
@@ -515,7 +515,7 @@ def fire_employee(key, motivo, obs):
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
-    cursor.execute(f"SELECT [Status Emprego] FROM funcionarios WHERE ID = ?", (key))
+    cursor.execute(f"SELECT [statusEmprego] FROM Funcionarios WHERE id = ?", (key))
     status = cursor.fetchval()
 
     # Se o status atual for diferente de Demitido irá executar a ação
@@ -523,14 +523,14 @@ def fire_employee(key, motivo, obs):
 
         # Atualiza o status do funcionário
         cursor.execute(f"""
-    UPDATE funcionarios 
-    SET [Status Emprego] = ? 
-    WHERE ID = ?
+    UPDATE Funcionarios 
+    SET [statusEmprego] = ? 
+    WHERE id = ?
     """, ("Demitido", key))
         
         # Atualiza a tabela de demissões
         cursor.execute(f"""
-    INSERT INTO demissoes_funcionarios ([ID Funcionario], [Data Demissao], Motivo, Obs)
+    INSERT INTO DemissoesFuncionarios ([Id_funcionario], [dataDemissao], motivo, obs)
     VALUES ({key}, '{timenow()[:10]}', '{motivo}', '{obs}')
     """)
         cursor.commit()
@@ -554,13 +554,13 @@ def promote_employee(key, cargo_atual, novo_cargo, motivo, salario_atual, novo_s
         # Alterar o cargo e o salario na tabela de funcionários
         cursor.execute("""
     UPDATE funcionarios
-    SET Cargo = ?, Salario = ?
-    WHERE ID = ?
+    SET cargo = ?, salario = ?
+    WHERE id = ?
     """, (novo_cargo, novo_salario, key))
         
         # Adicionar a promoção à tabela de promoções
         cursor.execute(f"""
-    INSERT INTO promocoes_funcionarios ([ID Funcionario], [Data Promocao], [Cargo Anterior], [Novo Cargo], [Motivo Promocao], [Salario Anterior], [Novo Salario])
+    INSERT INTO PromocoesFuncionarios ([Id_funcionario], [dataPromocao], [cargoAnterior], [novoCargo], [motivoPromocao], [salarioAnterior], [novoSalario])
     VALUES ('{key}', '{timenow()[:10]}', '{cargo_atual}', '{novo_cargo}', '{motivo}', {float(salario_atual)}, {float(novo_salario)})
     """)
 
@@ -586,7 +586,7 @@ def get_employee_name(id):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Nome FROM funcionarios WHERE ID = ?", (id))
+    cursor.execute(f"SELECT nome FROM funcionarios WHERE id = ?", (id))
     resultado = cursor.fetchval()  #Resultado da busca
     cursor.close()
     conexao.close()
@@ -606,7 +606,7 @@ def register_overtime(id, data_registro, horas, motivo):
     cursor = conexao.cursor()
 
     cursor.execute(f"""
-INSERT INTO horas_extras ([ID Funcionario], [Data Registro], Horas, Motivo)
+INSERT INTO HorasExtras ([Id_funcionario], [dataRegistro], horas, motivo)
 VALUES ({id}, '{data_registro}', {horas}, '{motivo}')
                    """)
     cursor.commit()
@@ -624,7 +624,7 @@ def get_total_overtime():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Horas FROM horas_extras")
+    cursor.execute(f"SELECT horas FROM HorasExtras")
     resultado = cursor.fetchall()  #Resultado da busca
     list = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -651,7 +651,7 @@ def get_overtime_stats():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Area FROM funcionarios")
+    cursor.execute(f"SELECT area FROM funcionarios")
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     areas = list(set(resultado_tratado))
@@ -666,7 +666,7 @@ def get_overtime_stats():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT [ID Funcionario], Horas FROM horas_extras")
+    cursor.execute(f"SELECT [Id_funcionario], horas FROM HorasExtras")
     infos = cursor.fetchall()  #Resultado da busca
     cursor.close()
     conexao.close()
@@ -683,7 +683,7 @@ def get_overtime_stats():
 
         cursor = conexao.cursor()
 
-        cursor.execute(f"SELECT Area FROM funcionarios WHERE ID = ?", (id))
+        cursor.execute(f"SELECT area FROM funcionarios WHERE id = ?", (id))
         area = cursor.fetchval()  #Resultado da busca
         cursor.close()
         conexao.close()
@@ -710,7 +710,7 @@ def get_area_salaries():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT Area, Salario FROM funcionarios")
+    cursor.execute(f"SELECT area, salario FROM funcionarios")
     resultado = cursor.fetchall()  #Resultado da busca
     areas = [resultado[i][0] for i, row in enumerate(resultado)]
     salarios = [resultado[i][1] for i, row in enumerate(resultado)]
@@ -738,7 +738,7 @@ def get_salaries_id():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT ID, Salario FROM funcionarios")
+    cursor.execute(f"SELECT id, salario FROM funcionarios")
     resultado = cursor.fetchall()  #Resultado da busca
     ids = [resultado[i][0] for i, row in enumerate(resultado)]
     salarios = [resultado[i][1] for i, row in enumerate(resultado)]
@@ -758,7 +758,7 @@ def register_vacation(id, data_inicio, data_fim, motivo):
     cursor = conexao.cursor()
 
     cursor.execute(f"""
-INSERT INTO ferias ([ID Funcionario], [Data Inicio], [Data Fim], Motivo)
+INSERT INTO Ferias ([Id_funcionario], [dataInicio], [dataFim], motivo)
 VALUES ({id}, '{data_inicio}', '{data_fim}', '{motivo}')
                    """)
     cursor.commit()
@@ -776,7 +776,7 @@ def get_vacations(id):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT [Data Inicio], [Data Fim] FROM ferias WHERE [ID Funcionario] = ?", (id))
+    cursor.execute(f"SELECT [dataInicio], [dataFim] FROM Ferias WHERE [Id_funcionario] = ?", (id))
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [i for i in resultado[0]]
     cursor.close()
