@@ -47,8 +47,8 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
         cursor.execute(f"""
     INSERT INTO Funcionarios ('nome', 'dataNascimento', 'genero', 'email', 'area', 'cargo', 'salario', 'dataAdmissao', 'statusEmprego')
     VALUES
-    ("{nome}", "{data_nascimento}", "{genero}", "{email}", "{area}", "{cargo}", {salario}, "{data_admissao}", "{status_emprego}")
-    """)
+    (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """, (str(nome), str(data_nascimento), str(genero), str(email), str(area), str(cargo), salario, str(data_admissao), str(status_emprego)))
         
 
         cursor.commit()
@@ -62,7 +62,7 @@ def read_user(nome=None):
     if nome is None:
         busca = f"SELECT * FROM Funcionarios"
     elif nome is not None:
-        busca = f"SELECT * FROM Funcionarios Where [nome] = '{nome}'"
+        busca = f"SELECT * FROM Funcionarios Where [nome] = ?"
 
     # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
@@ -72,7 +72,7 @@ def read_user(nome=None):
 
     cursor = conexao.cursor()
 
-    cursor.execute(busca)
+    cursor.execute(busca, str(nome))
 
     dados = cursor.fetchall()
     cursor.close()
@@ -97,11 +97,10 @@ def create_admin(nome, user, senha, email, ultimo_acesso):
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"""
-INSERT INTO Admins ('nome', 'usuario', 'senha', 'email', 'ultimoAcesso')
-VALUES
-("{nome}", "{user}", "{hash_password(senha)}", "{email}", "{ultimo_acesso}")
-""")
+    cursor.execute("""
+    INSERT INTO Admins (nome, usuario, senha, email, ultimoAcesso)
+    VALUES (?, ?, ?, ?, ?)""",
+    (nome, user, hash_password(senha), email, ultimo_acesso))
 
     cursor.commit()
 
@@ -121,6 +120,7 @@ def delete_admin(user, email):
 
     cursor.commit()
     cursor.close()
+    conexao.close()
 
 # Autentica um admin
 def auth_admin(login, password):
@@ -136,6 +136,7 @@ def auth_admin(login, password):
     cursor.execute(f"SELECT senha FROM Admins WHERE usuario = ? OR email = ?", (login, login))
     resultado = cursor.fetchone()  # Resultado da busca
     cursor.close()
+    conexao.close()
 
     # Checagem dos dados
     def autenticar():
@@ -283,6 +284,7 @@ def verify_code(email, user, entry_code):
     cursor.execute(f"SELECT [codigoTemporario] FROM Admins WHERE email = ? AND usuario = ?", (email, user))
     resultado = cursor.fetchval()  # Resultado da busca
     cursor.close()
+    conexao.close()
 
     if entry_code == resultado:
         return True
