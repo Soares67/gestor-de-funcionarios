@@ -383,7 +383,7 @@ def del_code(email, user):
     conexao.close()
 
 #  Pega os nomes de todos os funcionários
-def get_Funcionarios():
+def get_funcionarios():
     # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
                 "Server=localhost;"
