@@ -1,6 +1,5 @@
 import customtkinter as ctk
 from Calendar.ctk_calendar_stat import CTkCalendarStat
-from Calendar.ctk_calender import CTkCalendar
 from Icons.iconspath import SEARCH_ICON
 import functions, config
 import messagebox as msg
@@ -11,21 +10,25 @@ def vacation_widgets(master):
     
     def get_vagacations(id):
         global data
-        data = {(16,5,2024): 10,
-                (17,5,2024): 10,
-     (18,5,2024): 10,
-     (19,5,2024): 10,
-     (20,5,2024): 10}
-
+        data = functions.interval_to_sequence(config.get_vacations(id))
 
 
     def change_calendar():
         # Atualiza as informações do calendário
-        get_vagacations(1)
-        global data
-        mark_calendar.data = data
-        mark_calendar.replot_current_month()
-    
+        try:
+            id = int(id_entry.get())
+        except:
+            msg.showerror("Erro", "Insira um ID válido")
+            return
+        if not config.get_vacations(id):
+            msg.showerror("Erro", "ID não encontrado.")
+            return
+        else:
+            get_vagacations(id)
+            global data
+            mark_calendar.data = data
+            mark_calendar.replot_current_month()
+
 
     # Registra férias no id de um funcionário
     def register():
@@ -68,11 +71,7 @@ def vacation_widgets(master):
         else:
             msg.showwarning("Erro", "Insira uma data de início válida.")
             return
-        
-        
-        
 
-    
 
     # Frame do cabeçalho
     header_frame = ctk.CTkFrame(master,

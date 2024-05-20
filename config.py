@@ -387,7 +387,7 @@ def get_funcionarios():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT nome FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
+    cursor.execute(f"SELECT nome FROM Funcionarios")
     resultado = cursor.fetchall()  # Resultado da busca
     cursor.close()
     conexao.close()
@@ -478,7 +478,7 @@ def get_salaries():
 
     cursor = conexao.cursor()
 
-    cursor.execute(f"SELECT salario FROM Funcionarios WHERE [statusEmprego] != 'Demitido'")
+    cursor.execute(f"SELECT salario FROM Funcionarios")
     resultado = cursor.fetchall()  #Resultado da busca
     resultado_tratado = [resultado[i][0] for i, row in enumerate(resultado)]
     cursor.close()
@@ -776,7 +776,7 @@ VALUES ({id}, '{data_inicio}', '{data_fim}', '{motivo}')
     cursor.close()
     conexao.close()
 
-# Pega o histórico de férias de um funcionário   ---TO FIX---
+# Pega o histórico de férias de um funcionário
 def get_vacations(id):
     # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
@@ -791,4 +791,8 @@ def get_vacations(id):
     resultado_tratado = [i for i in resultado]
     cursor.close()
     conexao.close()
-    return resultado_tratado
+
+    if len(resultado_tratado) > 0:
+        return resultado_tratado
+    else:
+        return False
