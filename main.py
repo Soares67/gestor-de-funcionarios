@@ -26,59 +26,6 @@ class AdminStatus:
     def is_logged(self):
         return self.logged
 
-#Janela de configurações
-class ConfigEdge(tk.Toplevel):
-
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.geometry("300x300")
-        self.title("Configurações")
-        self.resizable(False, False)
-        self.tema_atual = "#171717"
-        self.configure(bg=self.tema_atual)
-        self.iconbitmap(r"Icons\imgs\icons8-settings-256.ico")
-        self.switch_var = ctk.StringVar(value="#171717")
-        self.idioma_atual = "ptbr"
-        
-    
-        self.mudar_tema()
-
-        #Switch que muda o tema
-        self.tema = ctk.CTkSwitch(self,
-                             text="",
-                             command=self.mudar_tema,
-                             variable=self.switch_var,
-                             onvalue="#171717",
-                             offvalue="#d4d4d4",
-                             button_color="#0d9488",
-                             button_hover_color="#115e59",
-                             progress_color="#d4d4d4",
-                             fg_color="#171717"
-                             )
-        self.tema.place(x=130, y=15)
-
-        #Ícone modo escuro
-        self.moon_icon = ctk.CTkLabel(self,
-                                      text="",
-                                      image=iconspath.MOON_ICON
-                                      )
-        self.moon_icon.place(x=173,y=8)
-
-        #Ícone modo claro
-        self.sun_icon = ctk.CTkLabel(self,
-                                     text="",
-                                     image=iconspath.SUN_ICON
-                                     )
-        self.sun_icon.place(x=93,y=9)
-
-    #Muda o tema atual da janela
-    def mudar_tema(self):
-        self.tema_atual = self.switch_var.get()
-        self.configure(bg=self.tema_atual)
-    
-    #Pega o tema atual da janela
-    def get_tema_atual(self):
-        return self.switch_var.get()
 
 #Janela de Login ADM
 class AuthAdmin(tk.Toplevel):
@@ -970,15 +917,21 @@ class Gestor(tk.Tk):
         self.cadastrar_frame.place(x=52,y=0)
         register_widgets(self.cadastrar_frame)
 
+
         # Fundo da barra lateral inicial
         self.sidebar_bg = ctk.CTkFrame(self,
                               fg_color='#0891b2',
                               width=55,
                               height=1000,
-                              border_width=2,
-                              border_color='#ffa500'
                             )
-        self.sidebar_bg.place(x=-2, y=-3)
+        self.sidebar_bg.place(x=2, y=-3)
+
+        # Delimitador da barra lateral
+        self.sidebar_del = ctk.CTkFrame(self,
+                                        width=3,
+                                        height=1000
+                                        )
+        self.sidebar_del.place(x=50,y=0)
         
         # Botão da barra lateral
         self.sidebar_btn = ctk.CTkButton(master=self.sidebar_bg,
@@ -990,20 +943,7 @@ class Gestor(tk.Tk):
                                          hover_color="#155e75",
                                          command=self.onclick,
                                          )
-        self.sidebar_btn.place(x=2, y=6)
-
-        # Botão de configurações
-        self.config_btn = ctk.CTkButton(master=self.sidebar_bg,
-                                   width=45,
-                                   height=45,
-                                   text="",
-                                   image=iconspath.SETTINGS_ICON,
-                                   fg_color="transparent",
-                                   hover_color="#155e75",
-                                   command=self.open_config,
-                                   )
-        self.config_btn.place(x=2, y=675)
-        self.tooltip8 = CTkToolTip(self.config_btn, "Configurações", delay=0.1)
+        self.sidebar_btn.pack(pady=5)
 
         #Botão de Fechar a barra lateral
         self.close_sidebar = ctk.CTkButton(self.sidebar_bg,
@@ -1015,85 +955,7 @@ class Gestor(tk.Tk):
                                            image=iconspath.CLOSE_ICON,
                                            command=self.onclick,
                                            )
-        self.close_sidebar.place(x=250,y=4)
-
-        #Botão admin (Autenticar/Ações)
-        self.admin_btn = ctk.CTkButton(self.sidebar_bg,
-                                       width=45,
-                                       height=45,
-                                       fg_color="transparent",
-                                       hover_color="#155e75",
-                                       text="",
-                                       image=iconspath.ADMIN_ICON,
-                                       command=self.admin_cmd
-                                       )
-        self.admin_btn.place(x=2, y=600)
-        self.tooltip7 = CTkToolTip(self.admin_btn, "Administrador", delay=0.1)
-
-        #Linha que separa as opções de admin/configurações das demais opções
-        self.limitador = ctk.CTkFrame(self.sidebar_bg,
-                                      width=30,
-                                      height=3,
-                                      fg_color="#ffa500",
-                                      corner_radius=20,
-                                      )
-        self.limitador.place(x=12,y=561)
-
-        #Botão de ferias
-        self.ferias_btn = ctk.CTkButton(self.sidebar_bg,
-                                       width=45,
-                                       height=45,
-                                       fg_color="transparent",
-                                       hover_color="#155e75",
-                                       text="",
-                                       image=iconspath.FERIAS_ICON,
-                                       command=lambda: functions.open_close_frame(self.ferias_btn, self.states)
-                                       )
-        self.ferias_btn.place(x=2, y=475)
-        self.ferias_btn.name = "ferias"
-        self.tooltip6 = CTkToolTip(self.ferias_btn, "Férias", delay=0.1)
-
-        #Botão de Promover
-        self.promover_btn = ctk.CTkButton(self.sidebar_bg,
-                                       width=45,
-                                       height=45,
-                                       fg_color="transparent",
-                                       hover_color="#155e75",
-                                       text="",
-                                       image=iconspath.PROMOVER_ICON,
-                                       command=lambda: functions.open_close_frame(self.promover_btn, self.states)
-                                       )
-        self.promover_btn.place(x=2, y=385)
-        self.promover_btn.name = "promover"
-        self.tooltip5 = CTkToolTip(self.promover_btn, "Promover/Demitir", delay=0.1)
-
-        #Botão de Horas extras
-        self.hora_extra_btn = ctk.CTkButton(self.sidebar_bg,
-                                       width=45,
-                                       height=45,
-                                       fg_color="transparent",
-                                       hover_color="#155e75",
-                                       text="",
-                                       image=iconspath.HORA_EXTRA_ICON,
-                                       command=lambda: functions.open_close_frame(self.hora_extra_btn, self.states)
-                                       )
-        self.hora_extra_btn.place(x=2, y=286)
-        self.hora_extra_btn.name = "hora extra"
-        self.tooltip4 = CTkToolTip(self.hora_extra_btn, "Horas Extras", delay=0.1)
-
-        #Botão de Folha de pagamento
-        self.folha_pagamento_btn = ctk.CTkButton(self.sidebar_bg,
-                                       width=45,
-                                       height=45,
-                                       fg_color="transparent",
-                                       hover_color="#155e75",
-                                       text="",
-                                       image=iconspath.FOLHA_PAGAMENTO_ICON,
-                                       command=lambda: functions.open_close_frame(self.folha_pagamento_btn, self.states)
-                                       )
-        self.folha_pagamento_btn.place(x=2, y=187)
-        self.folha_pagamento_btn.name = "folha pagamento"
-        self.tooltip2 = CTkToolTip(self.folha_pagamento_btn, "Folha de Pagamento", delay=0.1)
+        # self.close_sidebar.pack()
 
         #Botão de cadastro
         self.cadastro_btn = ctk.CTkButton(self.sidebar_bg,
@@ -1105,9 +967,87 @@ class Gestor(tk.Tk):
                                        image=iconspath.CADASTRO_ICON,
                                        command=lambda: functions.open_close_frame(self.cadastro_btn, self.states)
                                        )
-        self.cadastro_btn.place(x=2, y=93)
+        self.cadastro_btn.pack(pady=30)
         self.cadastro_btn.name = "cadastrar"
         self.tooltip1 = CTkToolTip(self.cadastro_btn, "Cadastrar", delay=0.1)
+
+        #Botão de Promover
+        self.promover_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#155e75",
+                                       text="",
+                                       image=iconspath.PROMOVER_ICON,
+                                       command=lambda: functions.open_close_frame(self.promover_btn, self.states)
+                                       )
+        self.promover_btn.pack(pady=30)
+        self.promover_btn.name = "promover"
+        self.tooltip5 = CTkToolTip(self.promover_btn, "Promover/Demitir", delay=0.1)
+
+        #Botão de Folha de pagamento
+        self.folha_pagamento_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#155e75",
+                                       text="",
+                                       image=iconspath.FOLHA_PAGAMENTO_ICON,
+                                       command=lambda: functions.open_close_frame(self.folha_pagamento_btn, self.states)
+                                       )
+        self.folha_pagamento_btn.pack(pady=30)
+        self.folha_pagamento_btn.name = "folha pagamento"
+        self.tooltip2 = CTkToolTip(self.folha_pagamento_btn, "Folha de Pagamento", delay=0.1)
+
+        #Botão de Horas extras
+        self.hora_extra_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#155e75",
+                                       text="",
+                                       image=iconspath.HORA_EXTRA_ICON,
+                                       command=lambda: functions.open_close_frame(self.hora_extra_btn, self.states)
+                                       )
+        self.hora_extra_btn.pack(pady=30)
+        self.hora_extra_btn.name = "hora extra"
+        self.tooltip4 = CTkToolTip(self.hora_extra_btn, "Horas Extras", delay=0.1)
+
+        #Botão de ferias
+        self.ferias_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#155e75",
+                                       text="",
+                                       image=iconspath.FERIAS_ICON,
+                                       command=lambda: functions.open_close_frame(self.ferias_btn, self.states)
+                                       )
+        self.ferias_btn.pack(pady=30)
+        self.ferias_btn.name = "ferias"
+        self.tooltip6 = CTkToolTip(self.ferias_btn, "Férias", delay=0.1)
+
+        #Linha que separa as opções de admin das demais opções
+        self.limitador = ctk.CTkFrame(self.sidebar_bg,
+                                      width=30,
+                                      height=3,
+                                      fg_color="#ffa500",
+                                      corner_radius=20,
+                                      )
+        self.limitador.pack(pady=30)
+
+        #Botão admin (Autenticar/Ações)
+        self.admin_btn = ctk.CTkButton(self.sidebar_bg,
+                                       width=45,
+                                       height=45,
+                                       fg_color="transparent",
+                                       hover_color="#155e75",
+                                       text="",
+                                       image=iconspath.ADMIN_ICON,
+                                       command=self.admin_cmd
+                                       )
+        self.admin_btn.pack(pady=30)
+        self.tooltip7 = CTkToolTip(self.admin_btn, "Administrador", delay=0.1)
 
         #Controlador dos frames
         self.states = {
@@ -1118,24 +1058,7 @@ class Gestor(tk.Tk):
             "cadastrar": [self.cadastrar_frame, "reduced"]
 
         }
-            
-    #Abre a janela de configurações
-    def open_config(self):
-        config = ConfigEdge(self)
-        config.grab_set()
-
-        #Define o tema que será aplicado nas demais janelas
-        def on_switch_change(*args):
-            tema_atual_edge = config.get_tema_atual()
-            self.tema_atual = tema_atual_edge
-            self.configure(bg=self.tema_atual)
-            self.ferias_frame.configure(fg_color=self.tema_atual)
-            self.promover_frame.configure(fg_color=self.tema_atual)
-            self.hora_extra_frame.configure(fg_color=self.tema_atual)
-            self.folha_pagamento_frame.configure(fg_color=self.tema_atual)
-            self.cadastrar_frame.configure(fg_color=self.tema_atual)
-        config.switch_var.trace("w", on_switch_change)  #Aplica o tema que foi definido
-        
+               
     #Recua/Expande a barra lateral
     def onclick(self):
         if self.bar_status == "reduced":
