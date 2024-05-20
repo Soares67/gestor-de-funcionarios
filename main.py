@@ -35,14 +35,14 @@ class AuthAdmin(tk.Toplevel):
         self.geometry("300x300")
         self.title("Admin Login")
         self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
-        self.configure(bg='#0d9488')
+        self.configure(bg='#0891b2')
         self.resizable(False, False)
         self.senha_oculta = True
 
         self.lb = ctk.CTkLabel(self,
                                text="Login",
                                text_color="black",
-                               font=("Arial", 29)
+                               font=("Roboto", 29, "bold")
                                )
         self.lb.place(x=112, y=10)
 
@@ -51,10 +51,10 @@ class AuthAdmin(tk.Toplevel):
                                    width=200,
                                    height=40,
                                    placeholder_text="E-mail ou Usuário",
-                                   placeholder_text_color='#0d9488',
-                                   font=("Arial", 14),
+                                   
+                                   font=("Roboto", 14, "bold"),
                                     border_width=2,
-                                    border_color='white',
+                                    border_color='#FB9C8D',
                                     corner_radius=20,
                                     fg_color="#171717",
                                     )
@@ -64,11 +64,11 @@ class AuthAdmin(tk.Toplevel):
         self.senha_entry = ctk.CTkEntry(self,
                                 width=200,
                                 height=40,
-                                font=("Arial", 14),
-                                placeholder_text_color='#0d9488',
+                                font=("Roboto", 14, "bold"),
+                                
                                 placeholder_text="Senha",
                                 border_width=2,
-                                border_color='white',
+                                border_color='#FB9C8D',
                                 corner_radius=20,
                                 fg_color="#171717",
                                 show="*"
@@ -78,11 +78,11 @@ class AuthAdmin(tk.Toplevel):
         #Botão de recuperar senha
         self.link_recover = ctk.CTkButton(self,
                                     text="Esqueceu sua senha?",
-                                    font=("Arial", 13),
+                                    font=("Roboto", 13, "bold"),
                                     fg_color="transparent",
                                     width=8,
                                     height=8,
-                                    hover_color="#115e59",
+                                    hover_color="#155e75",
                                     text_color="white",
                                     corner_radius=20,
                                     command=lambda: self.open_recover()
@@ -94,14 +94,13 @@ class AuthAdmin(tk.Toplevel):
                                 width=70,
                                 height=40,
                                 text="Login",
-                                font=("Arial", 15),
+                                font=("Roboto", 15, "bold"),
                                 command=lambda: self.autenticacao(),
                                 border_width=2,
                                 corner_radius=20,
                                 fg_color="#171717",
-                                border_color="white",
-                                text_color="#0d9488",
-                                hover_color='#115e59',
+                                border_color='#FB9C8D',
+                                hover_color='#454545',
                                    )
         self.login_btn.place(x=110, y=240)
 
@@ -114,7 +113,7 @@ class AuthAdmin(tk.Toplevel):
                                            corner_radius=50,
                                            fg_color="#171717",
                                            bg_color="#171717",
-                                           hover_color="#115e59",
+                                           hover_color="#454545",
                                            command=self.show_hide
                                            )
         self.show_pass_btn.place(x=210, y=139)
@@ -128,7 +127,7 @@ class AuthAdmin(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=self.show_hide
                                            )
         self.hide_pass_btn.place(x=210, y=139)
@@ -174,14 +173,14 @@ class DeleteAdmin(tk.Toplevel):
         self.geometry("384x410")
         self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.title("Deletar Admin")
-        self.configure(bg='#0d9488')
+        self.configure(bg='#0891b2')
         self.resizable(False, False)
     
         self.lb = ctk.CTkLabel(self,
                     text="Deletar Administrador",
                     text_color="black",
                     fg_color="transparent",
-                    font=("Arial", 23),
+                    font=("Roboto", 23, "bold"),
                     
                     )
         self.lb.place(x=90,y=10)
@@ -191,11 +190,11 @@ class DeleteAdmin(tk.Toplevel):
                             height=40,
                             corner_radius=20,
                             border_width=2,
-                            font=("Arial", 15),
-                            border_color="white",
+                            font=("Roboto", 15, "bold"),
+                            border_color='#FB9C8D',
                             fg_color="#171717",
                             text_color="white",
-                            placeholder_text_color="#0d9488",
+                            
                             placeholder_text="Usuário",
                             )
         self.user_entry.place(x=8,y=70)
@@ -205,11 +204,11 @@ class DeleteAdmin(tk.Toplevel):
                             height=40,
                             corner_radius=20,
                             border_width=2,
-                            font=("Arial", 15),
-                            border_color="white",
+                            font=("Roboto", 15, "bold"),
+                            border_color='#FB9C8D',
                             fg_color="#171717",
                             text_color="white",
-                            placeholder_text_color="#0d9488",
+                            
                             placeholder_text="E-mail",
                             )
         self.email_entry.place(x=200,y=70)
@@ -223,12 +222,11 @@ class DeleteAdmin(tk.Toplevel):
                                                              self.info_txb
                                                              ),
                             border_width=2,
-                            border_color="white",
+                            border_color='#FB9C8D',
                             corner_radius=20,
-                            font=("Arial", 16),
+                            font=("Roboto", 16, "bold"),
                             fg_color='#171717',
-                            text_color='#0d9488',
-                            hover_color='#115e59',
+                            hover_color='#454545',
                             anchor="center",
                             )
         self.search_btn.place(x=145,y=140)
@@ -238,10 +236,10 @@ class DeleteAdmin(tk.Toplevel):
                                 height=130,
                                 corner_radius=15,
                                 border_width=1,
-                                border_color='white',
+                                border_color='#FB9C8D',
                                 text_color="white",
                                 fg_color="#171717",
-                                font=("Arial", 17),
+                                font=("Roboto", 17, "bold"),
                                 activate_scrollbars=False,
                                 wrap="none",
                                 )
@@ -257,10 +255,10 @@ class DeleteAdmin(tk.Toplevel):
                             border_width=2,
                             border_color="#dc2626",
                             corner_radius=20,
-                            font=("Arial", 16),
+                            font=("Roboto", 16, "bold"),
                             fg_color='#171717',
                             text_color='#dc2626',
-                            hover_color='#115e59',
+                            hover_color='#454545',
                             anchor="center",
                             )
         self.delete_btn.place(x=147,y=352)
@@ -295,7 +293,7 @@ class RecoverEdge(tk.Toplevel):
         self.geometry("300x280")
         self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.title("Recuperar senha")
-        self.configure(bg='#0d9488')
+        self.configure(bg='#0891b2')
         self.resizable(False, False)
         self.senha_oculta = True
         self.c_senha_oculta = True
@@ -305,7 +303,7 @@ class RecoverEdge(tk.Toplevel):
         self.frame1 = ctk.CTkFrame(self,
                                    width=300,
                                    height=280,
-                                   fg_color="#0d9488",
+                                   fg_color="#0891b2",
 
                                    )
         self.frame1.place(x=0,y=0)
@@ -313,7 +311,7 @@ class RecoverEdge(tk.Toplevel):
         self.lb = ctk.CTkLabel(self.frame1,
                                text="Recuperar senha",
                                text_color="black",
-                               font=("Arial", 25)
+                               font=("Roboto", 25, "bold")
                                )
         self.lb.place(x=52, y=10)
 
@@ -322,10 +320,10 @@ class RecoverEdge(tk.Toplevel):
                                    width=200,
                                    height=40,
                                    placeholder_text="E-mail",
-                                   placeholder_text_color='#0d9488',
-                                   font=("Arial", 14),
+                                   
+                                   font=("Roboto", 14, "bold"),
                                     border_width=2,
-                                    border_color='white',
+                                    border_color='#FB9C8D',
                                     corner_radius=20,
                                     fg_color="#171717",
                                     )
@@ -335,11 +333,11 @@ class RecoverEdge(tk.Toplevel):
         self.user_entry = ctk.CTkEntry(self.frame1,
                                 width=200,
                                 height=40,
-                                font=("Arial", 14),
-                                placeholder_text_color='#0d9488',
+                                font=("Roboto", 14, "bold"),
+                                
                                 placeholder_text="Usuário",
                                 border_width=2,
-                                border_color='white',
+                                border_color='#FB9C8D',
                                 corner_radius=20,
                                 fg_color="#171717",
                                 )
@@ -350,21 +348,20 @@ class RecoverEdge(tk.Toplevel):
                                 width=70,
                                 height=40,
                                 text="Enviar",
-                                font=("Arial", 15),
+                                font=("Roboto", 15, "bold"),
                                 command=lambda: self.open_check(self.email_entry.get().lower(), self.user_entry.get().lower()),
                                 border_width=2,
                                 corner_radius=20,
                                 fg_color="#171717",
-                                border_color="white",
-                                text_color="#0d9488",
-                                hover_color='#115e59',
+                                border_color='#FB9C8D',
+                                hover_color='#454545',
                                    )
         self.send_btn.place(x=109, y=220)
 
         self.frame2 = ctk.CTkFrame(self,
                                    width=0,
                                    height=200,
-                                   fg_color="#0d9488",
+                                   fg_color="#0891b2",
 
                                    )
         self.frame2.place(x=0,y=0)
@@ -372,7 +369,7 @@ class RecoverEdge(tk.Toplevel):
         self.lb2 = ctk.CTkLabel(self.frame2,
                 text="Verificar Código",
                 text_color="black",
-                font=("Arial", 25)
+                font=("Roboto", 25, "bold")
                                 )
         self.lb2.place(x=55, y=10)
 
@@ -381,10 +378,10 @@ class RecoverEdge(tk.Toplevel):
                         width=200,
                         height=40,
                         placeholder_text="Código recebido",
-                        placeholder_text_color='#0d9488',
-                        font=("Arial", 14),
+                        
+                        font=("Roboto", 14, "bold"),
                         border_width=2,
-                        border_color='white',
+                        border_color='#FB9C8D',
                         corner_radius=20,
                         fg_color="#171717",
                           )
@@ -395,30 +392,29 @@ class RecoverEdge(tk.Toplevel):
                         width=70,
                         height=40,
                         text="Verificar",
-                        font=("Arial", 15),
+                        font=("Roboto", 15, "bold"),
                         command=lambda: self.verify(self.email_entry.get().lower(),
                                                     self.user_entry.get().lower(),
                                                     self.code_entry.get().upper()),
                         border_width=2,
                         corner_radius=20,
                         fg_color="#171717",
-                        border_color="white",
-                        text_color="#0d9488",
-                        hover_color='#115e59',
+                        border_color='#FB9C8D',
+                        hover_color='#454545',
                           )
         self.check_btn.place(x=102, y=140)
 
         self.frame3 = ctk.CTkFrame(self,
                                    width=0,
                                    height=300,
-                                   fg_color="#0d9488",
+                                   fg_color="#0891b2",
         )
         self.frame3.place(x=0,y=0)
 
         self.lb3 = ctk.CTkLabel(self.frame3,
                 text="Redefinir Senha",
                 text_color="black",
-                font=("Arial", 25)
+                font=("Roboto", 25, "bold")
                                 )
         self.lb3.place(x=46, y=10)
 
@@ -428,11 +424,11 @@ class RecoverEdge(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                border_color="white",
-                                font=("Arial", 15),
+                                border_color='#FB9C8D',
+                                font=("Roboto", 15, "bold"),
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
+                                
                                 placeholder_text="Nova Senha",
                                 show="*"
                                 )
@@ -444,12 +440,12 @@ class RecoverEdge(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                border_color="white",
-                                font=("Arial", 15),
+                                border_color='#FB9C8D',
+                                font=("Roboto", 13, "bold"),
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
-                                placeholder_text="Confirmar Senha",
+                                
+                                placeholder_text="Repetir Senha",
                                 show="*"
                                 )
         self.c_senha_entry.place(x=50, y=130)
@@ -462,7 +458,7 @@ class RecoverEdge(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=lambda: self.show_hide_senha(),
                                            )
         self.show_btn1.place(x=185,y=74)
@@ -476,7 +472,7 @@ class RecoverEdge(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=lambda: self.show_hide_senha(),
                                             )
         self.hide_btn1.place(x=185,y=74)
@@ -490,7 +486,7 @@ class RecoverEdge(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=lambda: self.show_hide_c_senha(),                                            
                                             )
         self.show_btn2.place(x=185,y=139)
@@ -504,7 +500,7 @@ class RecoverEdge(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=lambda: self.show_hide_c_senha(),                                            
                                             )
         self.hide_btn2.place(x=185,y=139)
@@ -514,7 +510,7 @@ class RecoverEdge(tk.Toplevel):
                         width=70,
                         height=40,
                         text="Redefinir",
-                        font=("Arial", 15),
+                        font=("Roboto", 15, "bold"),
                         command=lambda: self.redefinir(self.email_entry.get().lower(),
                                                        self.user_entry.get().lower(),
                                                        self.senha_entry.get(),
@@ -523,9 +519,8 @@ class RecoverEdge(tk.Toplevel):
                         border_width=2,
                         corner_radius=20,
                         fg_color="#171717",
-                        border_color="white",
-                        text_color="#0d9488",
-                        hover_color='#115e59',
+                        border_color='#FB9C8D',
+                        hover_color='#454545',
                           )
         self.red_btn.place(x=90, y=210)
 
@@ -611,27 +606,27 @@ class ADM(tk.Toplevel):
         self.geometry("577x400")
         self.iconbitmap(r'Icons\imgs\icons8-admin-90.ico')
         self.resizable(False, False)
-        self.configure(bg="#0d9488")
+        self.configure(bg="#0891b2")
         self.senha_oculta = True
         self.c_senha_oculta = True
 
         #Texto maior
         self.adm_lb = ctk.CTkLabel(self,
                       text="Administrador",
-                      font=("Bold", 27),
+                      font=("Roboto", 27, "bold"),
                       text_color="black",
                       anchor="center",
                       )
         self.adm_lb.place(x=211, y=6)
 
-        #texto menor
+        # Texto menor
         self.cad_lb = ctk.CTkLabel(self,
                             text="Cadastrar ADM",
-                            font=("Bold", 17),
+                            font=("Roboto", 17, "bold"),
                             text_color="black",
                             anchor="center",
                             )
-        self.cad_lb.place(x=238, y=85)
+        self.cad_lb.place(x=230, y=85)
 
         #Entry do nome
         self.nome_entry = ctk.CTkEntry(self,
@@ -639,11 +634,11 @@ class ADM(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                border_color="white",
-                                font=("Arial", 15),
+                                border_color='#FB9C8D',
+                                font=("Roboto", 15, "bold"),
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
+                                
                                 placeholder_text="Nome",
                                 )
         self.nome_entry.place(x=4,y=130)
@@ -654,11 +649,11 @@ class ADM(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                font=("Arial", 15),
-                                border_color="white",
+                                font=("Roboto", 15, "bold"),
+                                border_color='#FB9C8D',
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
+                                
                                 placeholder_text="Usuário",
                                 )
         self.user_entry.place(x=202,y=130)
@@ -669,11 +664,11 @@ class ADM(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                border_color="white",
-                                font=("Arial", 15),
+                                border_color='#FB9C8D',
+                                font=("Roboto", 15, "bold"),
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
+                                
                                 placeholder_text="E-mail",
                                 )
         self.email_entry.place(x=397,y=130)
@@ -684,11 +679,11 @@ class ADM(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                border_color="white",
-                                font=("Arial", 15),
+                                border_color='#FB9C8D',
+                                font=("Roboto", 15, "bold"),
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
+                                
                                 placeholder_text="Senha",
                                 show="*"
                                 )
@@ -700,12 +695,12 @@ class ADM(tk.Toplevel):
                                 height=40,
                                 corner_radius=20,
                                 border_width=2,
-                                border_color="white",
-                                font=("Arial", 15),
+                                border_color='#FB9C8D',
+                                font=("Roboto", 15, "bold"),
                                 fg_color="#171717",
                                 text_color="white",
-                                placeholder_text_color="#0d9488",
-                                placeholder_text="Confirmar Senha",
+                                
+                                placeholder_text="Repetir Senha",
                                 show="*"
                                 )
         self.c_senha_entry.place(x=315,y=215)
@@ -723,12 +718,11 @@ class ADM(tk.Toplevel):
                                                                 self.c_senha_entry.get(),
                                                                 ),
                                     border_width=2,
-                                    border_color="white",
+                                    border_color='#FB9C8D',
                                     corner_radius=20,
-                                    font=("Arial", 16),
+                                    font=("Roboto", 16, "bold"),
                                     fg_color='#171717',
-                                    text_color='#0d9488',
-                                    hover_color='#115e59'
+                                    hover_color='#454545'
                                     )
         self.cadastrar_btn.place(x=238, y=300)
 
@@ -741,7 +735,7 @@ class ADM(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=self.show_hide_senha
                                            )
         self.show_btn1.place(x=234,y=224)
@@ -755,7 +749,7 @@ class ADM(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=self.show_hide_senha
                                             
                                             )
@@ -770,7 +764,7 @@ class ADM(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=self.show_hide_c_senha
                                             
                                             )
@@ -785,7 +779,7 @@ class ADM(tk.Toplevel):
                                             corner_radius=50,
                                             fg_color="#171717",
                                             bg_color="#171717",
-                                            hover_color="#115e59",
+                                            hover_color="#454545",
                                             command=self.show_hide_c_senha
                                             
                                             )
@@ -798,9 +792,9 @@ class ADM(tk.Toplevel):
                                           text="Deletar admin?",
                                           fg_color="transparent",
                                           text_color="white",
-                                          font=("Arial", 13),
+                                          font=("Roboto", 13, "bold"),
                                           command=lambda: self.deletar_admin(),
-                                          hover_color='#115e59',
+                                          hover_color='#155e75',
         )
         self.delete_admin.place(x=5, y=378)
     
