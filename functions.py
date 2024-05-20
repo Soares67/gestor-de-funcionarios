@@ -436,7 +436,7 @@ def plotnsave_salaries_id():
     plt.savefig(r"Charts\salary_chart")
 
 # Converte um intervalo em uma sequência
-def interval_to_sequence(start_date: str, end_date: str):
+def interval_to_sequence(intervals):
     def is_leap_year(year):
         """Verifica se um ano é bissexto.
 
@@ -466,14 +466,14 @@ def interval_to_sequence(start_date: str, end_date: str):
             return 29 if is_leap_year(year) else 28
 
     def convert(start_date, end_date):
-        """Converte um intervalo de datas em um dicionário com a sequencia de datas entre os intervalos
+        """Converte um intervalo de datas em um dicionário com a sequência de datas entre os intervalos.
 
         Args:
             start_date (str): Data inicial do intervalo no formato DD/MM/YYYY
             end_date (str): Data final do intervalo no formato DD/MM/YYYY
 
         Returns:
-            result_dict (dict): Dicionário com a sequência de datas
+            dict: Dicionário com a sequência de datas.
         """
         start_day, start_month, start_year = map(int, start_date.split('/'))
         end_day, end_month, end_year = map(int, end_date.split('/'))
@@ -485,7 +485,10 @@ def interval_to_sequence(start_date: str, end_date: str):
 
         while current_year < end_year or (current_year == end_year and current_month <= end_month):
             days_in_current_month = days_in_month(current_month, current_year)
-            while current_day <= days_in_current_month and ((current_year < end_year) or (current_year == end_year and current_month < end_month) or (current_year == end_year and current_month == end_month and current_day <= end_day)):
+            while current_day <= days_in_current_month and (
+                    (current_year < end_year) or 
+                    (current_year == end_year and current_month < end_month) or 
+                    (current_year == end_year and current_month == end_month and current_day <= end_day)):
                 result_dict[(current_day, current_month, current_year)] = 10
                 current_day += 1
             current_day = 1
@@ -495,4 +498,10 @@ def interval_to_sequence(start_date: str, end_date: str):
                 current_year += 1
 
         return result_dict
-    return convert(start_date, end_date)
+
+    final_result = {}
+    for start_date, end_date in intervals:
+        interval_result = convert(start_date, end_date)
+        final_result.update(interval_result)
+
+    return final_result

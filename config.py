@@ -44,7 +44,7 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
     else:
         
         cursor.execute(f"""
-    INSERT INTO Funcionarios ('nome', 'dataNascimento', 'genero', 'email', 'area', 'cargo', 'salario', 'dataAdmissao', 'statusEmprego')
+    INSERT INTO Funcionarios ('nome', 'dataNascimento', 'genero', 'email', 'area', 'cargo', 'salario', 'dataAdmissao')
     VALUES
     (?, ?, ?, ?, ?, ?, ?, ?)
     """, (str(nome), str(data_nascimento), str(genero), str(email), str(area), str(cargo), salario, str(data_admissao)))
