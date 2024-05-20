@@ -174,34 +174,33 @@ class CTkCalendarStat(ctk.CTkFrame):
     # setting up date labels if certain data exists
     def setup_label_with_data(self, frame, day, row, column):
         fg_color = '#2b2b2b'
+        border_width = 0
+        border_color = None
 
         if self.data.get((day, self.month, self.year)) is not None:
             if self.data[(day, self.month, self.year)] < self.avg * 0.8:
-                fg_color = 'red'
+                fg_color = self.data_colors[0]  # Primeira cor de dados
             elif self.data[(day, self.month, self.year)] > self.avg * 1.2:
-                fg_color = 'red'
+                fg_color = self.data_colors[2]  # Terceira cor de dados
             else:
-                fg_color = 'red'
-        
-        
-
-        label = ctk.CTkButton(frame, text=str(day), corner_radius=5,
-                             fg_color=fg_color, font=ctk.CTkFont("Arial", 13, "bold"),
-                             text_color=self.calendar_text_color,
-                             hover=False)
-        
-        data_days = [i[0] for i in self.data.keys()]  # Dias no dicionário de datas
-        data_months = [i[1] for i in self.data.keys()]  # Meses no dicionario de datas
-        data_years = [i[2] for i in self.data.keys()]  # Anos no dicionario de datas
+                fg_color = self.data_colors[1]  # Segunda cor de dados
         
         if (day, self.month, self.year) == (self.day, self.month, self.year):
-            label.configure(fg_color='#595656')
-        if (day, self.month, self.year) == (self.day, self.month, self.year) and day in data_days and self.month in data_months and self.year in data_years:
-            label.configure(fg_color='#595656', border_width=2, border_color="red")
+            fg_color = '#6e6b6b'  # Cor cinza claro para o dia atual
+            if (day, self.month, self.year) in self.data.keys():
+                border_width = 2
+                border_color = "red"  # Cor da borda para o dia atual
 
-
+        label = ctk.CTkButton(frame, text=str(day), corner_radius=5,
+                            fg_color=fg_color, font=ctk.CTkFont("Arial", 13, "bold"),
+                            text_color=self.calendar_text_color,
+                            hover=False,
+                            border_width=border_width,
+                            border_color=border_color)
+        
         label.grid(row=row, column=column, sticky="nsew", padx=self.calendar_label_pad,
-                   pady=self.calendar_label_pad)
+                pady=self.calendar_label_pad)
+
 
     def find_avg(self):
         s = 0
