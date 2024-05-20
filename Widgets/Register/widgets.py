@@ -74,8 +74,7 @@ Deseja confirmar a ação?
                                                            area,
                                                            position,
                                                            functions.convert_salary(salary),
-                                                           config.timenow()[:10],
-                                                           "Empregado"):
+                                                           config.timenow()[:10]):
                                             msg.showinfo("Atenção", "Funcionário cadastrado com sucesso")
                                             name_entry.delete(0, "end")
                                             bdt_entry.delete(0, "end")

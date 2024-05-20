@@ -16,7 +16,7 @@ from private import APP_KEY, MAIL
 
 
 # Cria um usuário
-def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data_admissao, status_emprego):
+def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data_admissao):
     """Cadastra um funcionário no banco de dados
 
     Args:
@@ -28,7 +28,6 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
         cargo (str): Cargo do funcionário
         salario (int/float): Salário do funcionário
         data_admissao (str): Data de admissão do funcionário no formato DD/MM/AAAA H:M:S
-        status_emprego (str): Status de emprego do funcionário (empregado/afastado/aposentado)
     """
     # Cria a conexão
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
@@ -47,13 +46,14 @@ def create_user(nome, data_nascimento, genero, email, area, cargo, salario, data
         cursor.execute(f"""
     INSERT INTO Funcionarios ('nome', 'dataNascimento', 'genero', 'email', 'area', 'cargo', 'salario', 'dataAdmissao', 'statusEmprego')
     VALUES
-    (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, (str(nome), str(data_nascimento), str(genero), str(email), str(area), str(cargo), salario, str(data_admissao), str(status_emprego)))
+    (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (str(nome), str(data_nascimento), str(genero), str(email), str(area), str(cargo), salario, str(data_admissao)))
         
 
         cursor.commit()
 
         cursor.close()
+        conexao.close
         return True
 
 # Lê o banco de dados
@@ -146,7 +146,6 @@ def auth_admin(login, password):
     except pyodbc.Error as e:
         print(f"Erro ao autenticar o administrador: {e}")
         return False
-
 
 # Criptografa uma determinada senha
 def hash_password(password):
@@ -513,29 +512,42 @@ def fire_employee(key, motivo, obs):
     conexao = pyodbc.connect(dados_conexao)
 
     cursor = conexao.cursor()
-    cursor.execute(f"SELECT [statusEmprego] FROM Funcionarios WHERE id = ?", (key))
-    status = cursor.fetchval()
+    cursor.execute(f"SELECT nome, email FROM Funcionarios WHERE id = ?", (key))
+    resultado = cursor.fetchall()
 
-    # Se o status atual for diferente de Demitido irá executar a ação
-    if status != "Demitido":
+    nome = resultado[0][0]
+    email = resultado[0][1]
+
+    try:
 
         # Atualiza o status do funcionário
         cursor.execute(f"""
-    UPDATE Funcionarios 
-    SET [statusEmprego] = ? 
+    DELETE FROM Funcionarios 
     WHERE id = ?
-    """, ("Demitido", key))
+    """, (key))
+        
+        # Atualiza a tabela de férias
+        cursor.execute("""
+    DELETE FROM Ferias
+    WHERE Id_funcionario = ?
+    """, (key))
+        
+        # Atualiza a tabela de horas extras
+        cursor.execute("""
+    DELETE FROM HorasExtras
+    WHERE Id_funcionario = ?
+    """, (key))
         
         # Atualiza a tabela de demissões
-        cursor.execute(f"""
-    INSERT INTO DemissoesFuncionarios ([Id_funcionario], [dataDemissao], motivo, obs)
-    VALUES ({key}, '{timenow()[:10]}', '{motivo}', '{obs}')
-    """)
+        cursor.execute("""
+    INSERT INTO DemissoesFuncionarios (nome, email, [dataDemissao], motivo, obs)
+    VALUES (?, ?, ?, ?, ?)
+    """, (str(nome), str(email), timenow()[:10], str(motivo), obs))
         cursor.commit()
         cursor.close()
         conexao.close()
         return True
-    else:
+    except:
         cursor.close()
         conexao.close()
         return False
@@ -776,7 +788,7 @@ def get_vacations(id):
 
     cursor.execute(f"SELECT [dataInicio], [dataFim] FROM Ferias WHERE [Id_funcionario] = ?", (id))
     resultado = cursor.fetchall()  #Resultado da busca
-    resultado_tratado = [i for i in resultado[0]]
+    resultado_tratado = [i for i in resultado]
     cursor.close()
     conexao.close()
     return resultado_tratado
