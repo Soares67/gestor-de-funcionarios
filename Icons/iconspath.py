@@ -2,8 +2,8 @@ from customtkinter import CTkImage
 from PIL import Image
  
 
-img = Image.open(r"Icons\imgs\icons8-menu-250.png")
-SIDEBAR_ICON = CTkImage(light_image=img, size=(32, 31))
+img = Image.open(r"Icons\imgs\icons8-home-24.png")
+HOME_ICON = CTkImage(light_image=img, size=(32, 31))
 
 img1 = Image.open(r'Icons\imgs\icons8-settings-144.png')
 SETTINGS_ICON = CTkImage(light_image=img1, size=(32, 31))

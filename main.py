@@ -933,29 +933,18 @@ class Gestor(tk.Tk):
                                         )
         self.sidebar_del.place(x=50,y=0)
         
-        # Botão da barra lateral
-        self.sidebar_btn = ctk.CTkButton(master=self.sidebar_bg,
+        # Botão da página inicial
+        self.homepage_btn = ctk.CTkButton(master=self.sidebar_bg,
                                          width=45,
                                          height=45,
                                          text="",
-                                         image=iconspath.SIDEBAR_ICON,
+                                         image=iconspath.HOME_ICON,
                                          fg_color="transparent",
                                          hover_color="#155e75",
-                                         command=self.onclick,
+                                         command= self.gohome,
                                          )
-        self.sidebar_btn.pack(pady=5)
-
-        #Botão de Fechar a barra lateral
-        self.close_sidebar = ctk.CTkButton(self.sidebar_bg,
-                                           width=45,
-                                           height=45,
-                                           fg_color="transparent",
-                                           hover_color="#155e75",
-                                           text="",
-                                           image=iconspath.CLOSE_ICON,
-                                           command=self.onclick,
-                                           )
-        # self.close_sidebar.pack()
+        self.tooltipx = CTkToolTip(self.homepage_btn, "Página inicial", delay=0.1)
+        self.homepage_btn.pack(pady=5)
 
         #Botão de cadastro
         self.cadastro_btn = ctk.CTkButton(self.sidebar_bg,
@@ -1031,7 +1020,7 @@ class Gestor(tk.Tk):
         self.limitador = ctk.CTkFrame(self.sidebar_bg,
                                       width=30,
                                       height=3,
-                                      fg_color="#ffa500",
+                                      fg_color="#FB9C8D",
                                       corner_radius=20,
                                       )
         self.limitador.pack(pady=30)
@@ -1059,23 +1048,15 @@ class Gestor(tk.Tk):
 
         }
                
-    #Recua/Expande a barra lateral
-    def onclick(self):
-        if self.bar_status == "reduced":
-            self.sidebar_bg.configure(width=300)
-            self.bar_status = "expanded"
-            self.sidebar_btn.place_forget()
-            self.admin_btn.place(x=70, y=675)
-            self.limitador.configure(width=300, height=3)
-            self.limitador.place(x=0,y=650)
+    # Vai para a página inicial
+    def gohome(self):
+        # Fecha os demais frames
+        for i in self.states:
+            if self.states[i][1] == "expanded":
+                self.states[i][0].configure(width=1)
+                self.states[i][1] = "reduced"
 
-        elif self.bar_status == "expanded":
-            self.sidebar_bg.configure(width=55)
-            self.bar_status = "reduced"
-            self.sidebar_btn.place(x=2, y=3)
-            self.admin_btn.place(x=2, y=600)
-            self.limitador.configure(width=30, height=3)
-            self.limitador.place(x=12,y=561)
+        # Atualiza os status dos demais frames
   
     #Abre a janela de adm (Se estiver logado), se não estiver, abre a janela de autenticação
     def admin_cmd(self):
