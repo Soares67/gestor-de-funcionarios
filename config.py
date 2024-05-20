@@ -124,33 +124,29 @@ def delete_admin(user, email):
 
 # Autentica um admin
 def auth_admin(login, password):
-
     # Conexão com o banco de dados
     dados_conexao = ("Driver={SQLite3 ODBC Driver};"
-                "Server=localhost;"
-                r"Database=DB\gerenciador.db")
-    conexao = pyodbc.connect(dados_conexao)
+                     "Server=localhost;"
+                     r"Database=DB\gerenciador.db")
+    try:
+        conexao = pyodbc.connect(dados_conexao)
+        cursor = conexao.cursor()
 
-    cursor = conexao.cursor()
+        cursor.execute("SELECT senha FROM Admins WHERE usuario = ? OR email = ?", (login, login))
+        resultado = cursor.fetchone()  # Resultado da busca
+        cursor.close()
+        conexao.close()
 
-    cursor.execute(f"SELECT senha FROM Admins WHERE usuario = ? OR email = ?", (login, login))
-    resultado = cursor.fetchone()  # Resultado da busca
-    cursor.close()
-    conexao.close()
-
-    # Checagem dos dados
-    def autenticar():
         if resultado:
-            senha = resultado.Senha
-            if bcrypt.checkpw(password.encode("utf-8"), senha.encode("utf-8")):
+            senha_hash = resultado[0].strip()  # Obter senha e remover espaços extras
+            if bcrypt.checkpw(password.encode("utf-8"), senha_hash.encode("utf-8")):
                 return True
         return False
-    
-    # Autenticação
-    if autenticar():
-        return True
-    else:
+
+    except pyodbc.Error as e:
+        print(f"Erro ao autenticar o administrador: {e}")
         return False
+
 
 # Criptografa uma determinada senha
 def hash_password(password):
